@@ -3,7 +3,7 @@ package com.sytoss.model;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "lookup")
 public class Lookup {
 
     @Id
