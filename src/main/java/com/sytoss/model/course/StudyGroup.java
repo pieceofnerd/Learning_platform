@@ -12,28 +12,28 @@ import java.util.List;
 public class StudyGroup {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "course_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Course course;
 
-    @Column(name = "place_number", nullable = false)
+    @Column(name = "place_number")
     private Integer placeNumber;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date")
     private Date startDate;
 
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "end_date")
     private Date endDate;
 
     @CreationTimestamp
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date")
     private Date createdDate;
 
-    @Column(name = "updated_date", nullable = false)
+    @Column(name = "updated_date")
     private Date updatedDate;
 
     @OneToMany(mappedBy = "studyGroup")
@@ -41,6 +41,10 @@ public class StudyGroup {
 
     @OneToMany(mappedBy = "studyGroup")
     private List<Lesson> lessons;
+
+    public StudyGroup() {
+
+    }
 
     public List<Study> getStudies() {
         return studies;

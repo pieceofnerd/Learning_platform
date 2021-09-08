@@ -2,6 +2,7 @@ package com.sytoss.model.communication;
 
 import com.sytoss.model.Lookup;
 import com.sytoss.model.education.UserAccount;
+import jakarta.validation.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,21 +18,22 @@ public class Communication {
 
 
     @JoinColumn(name = "sender_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserAccount sender;
 
     @Column(name = "send_date", nullable = false)
     private Date sendDate;
 
     @Column(name = "content", nullable = false)
+    @NotBlank
     private String content;
 
     @JoinColumn(name = "communication_type", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lookup lookup;
 
     @JoinColumn(name = "receiver_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserAccount receiver;
 
     @Column(name = "lesson_id")
@@ -42,6 +44,9 @@ public class Communication {
 
     @Column(name = "update_date")
     private Date updateDate;
+
+    public Communication() {
+    }
 
     public Long getId() {
         return id;
