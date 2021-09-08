@@ -89,4 +89,18 @@ public class Homework {
     public void setHomeTask(HomeTask homeTask) {
         this.homeTask = homeTask;
     }
+
+    @Override
+    public String toString() {
+        return "Homework{" +
+                "id=" + id +
+                ", author=" + author +
+                ", homeworkState=" + homeworkState +
+                ", answerPath='" + answerPath + '\'' +
+                ", fulfillmentDate=" + fulfillmentDate +
+                ", createdDate=" + createdDate +
+                ", updatedDate=" + updatedDate +
+                ", homeTask=" + homeTask +
+                '}';
+    }
 }
