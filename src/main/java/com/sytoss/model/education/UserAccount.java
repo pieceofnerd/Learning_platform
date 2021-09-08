@@ -2,6 +2,7 @@ package com.sytoss.model.education;
 
 import com.sytoss.model.Lookup;
 import com.sytoss.model.Media;
+import com.sytoss.model.course.Lesson;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
@@ -61,6 +62,9 @@ public class UserAccount {
 
     @Column(name = "updated_date")
     private Date updatedDate;
+    
+    @OneToMany(mappedBy = "mentor")
+    private List<Lesson> lessons;
 
     @OneToMany(mappedBy = "student")
     private List<Study> studies;
