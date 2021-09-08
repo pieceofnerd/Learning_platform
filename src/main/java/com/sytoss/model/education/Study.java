@@ -31,7 +31,7 @@ public class Study {
     @Column(name = "assessment")
     private Double assessment;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Media certificate;
 
     @CreationTimestamp

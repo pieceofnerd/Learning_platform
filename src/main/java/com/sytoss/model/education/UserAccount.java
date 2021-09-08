@@ -4,9 +4,11 @@ import com.sytoss.model.Lookup;
 import com.sytoss.model.Media;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "user_account")
@@ -54,13 +56,21 @@ public class UserAccount {
     private Media media;
 
     @Column(name = "created_date")
+    @CreationTimestamp
     private Date createdDate;
 
     @Column(name = "updated_date")
     private Date updatedDate;
 
-    public UserAccount() {
-        this.createdDate = new Date();
-        this.lastActivity = new Date();
+    @OneToMany(mappedBy = "student")
+    private List<Study> studies;
+
+
+    public List<Study> getStudies() {
+        return studies;
+    }
+
+    public void setStudies(List<Study> studies) {
+        this.studies = studies;
     }
 }

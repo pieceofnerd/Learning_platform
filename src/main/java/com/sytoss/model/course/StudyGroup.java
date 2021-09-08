@@ -1,9 +1,11 @@
 package com.sytoss.model.course;
 
+import com.sytoss.model.education.Study;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "study_group")
@@ -33,6 +35,17 @@ public class StudyGroup {
 
     @Column(name = "updated_date", nullable = false)
     private Date updatedDate;
+
+    @OneToMany(mappedBy = "studyGroup")
+    private List<Study> studies;
+
+    public List<Study> getStudies() {
+        return studies;
+    }
+
+    public void setStudies(List<Study> studies) {
+        this.studies = studies;
+    }
 
     public Long getId() {
         return id;
