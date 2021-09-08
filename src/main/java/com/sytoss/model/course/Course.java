@@ -1,6 +1,7 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.Lookup;
+import com.sytoss.model.Media;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,18 +23,17 @@ public class Course {
 
     @JoinColumn(name = "course_photo_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Lookup coursePhoto;
+    private Media coursePhoto;
 
     @Column(name = "recommended_literature")
     private String recommendedLiterature;
 
     @JoinColumn(name = "certificate_template_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Lookup certificateTemplate;
+    private Media certificateTemplate;
 
     @Column
     private Double rating;
-
 
     @JoinColumn(name = "category_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -44,7 +44,6 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Price> prices;
-
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Promotion promotion;
@@ -68,11 +67,11 @@ public class Course {
         this.description = description;
     }
 
-    public Lookup getCoursePhoto() {
+    public Media getCoursePhoto() {
         return coursePhoto;
     }
 
-    public void setCoursePhoto(Lookup coursePhoto) {
+    public void setCoursePhoto(Media coursePhoto) {
         this.coursePhoto = coursePhoto;
     }
 
@@ -84,11 +83,11 @@ public class Course {
         this.recommendedLiterature = recommendedLiterature;
     }
 
-    public Lookup getCertificateTemplate() {
+    public Media getCertificateTemplate() {
         return certificateTemplate;
     }
 
-    public void setCertificateTemplate(Lookup certificateTemplate) {
+    public void setCertificateTemplate(Media certificateTemplate) {
         this.certificateTemplate = certificateTemplate;
     }
 

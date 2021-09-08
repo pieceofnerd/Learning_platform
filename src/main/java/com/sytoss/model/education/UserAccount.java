@@ -55,7 +55,7 @@ public class UserAccount {
 
     @JoinColumn(name = "image_path")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Media media;
+    private Media photo;
 
     @Column(name = "created_date")
     @CreationTimestamp
@@ -156,12 +156,20 @@ public class UserAccount {
         this.lastActivity = lastActivity;
     }
 
-    public Media getMedia() {
-        return media;
+    public Media getPhoto() {
+        return photo;
     }
 
-    public void setMedia(Media media) {
-        this.media = media;
+    public void setPhoto(Media photo) {
+        this.photo = photo;
+    }
+
+    public List<Homework> getHomeworks() {
+        return homeworks;
+    }
+
+    public void setHomeworks(List<Homework> homeworks) {
+        this.homeworks = homeworks;
     }
 
     public Date getCreatedDate() {
