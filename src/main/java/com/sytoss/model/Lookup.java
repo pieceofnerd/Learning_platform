@@ -19,4 +19,20 @@ public class Lookup {
 
     public Lookup() {
     }
+
+    public LookupName getLookupName() {
+        return lookupName;
+    }
+
+    public void setLookupName(LookupName lookupName) {
+        this.lookupName = lookupName;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

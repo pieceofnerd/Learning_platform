@@ -15,4 +15,12 @@ public class Media {
 
     public Media() {
     }
+
+    public String getMediaPath() {
+        return mediaPath;
+    }
+
+    public void setMediaPath(String mediaPath) {
+        this.mediaPath = mediaPath;
+    }
 }
