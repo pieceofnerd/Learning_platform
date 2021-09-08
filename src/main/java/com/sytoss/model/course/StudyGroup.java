@@ -1,5 +1,7 @@
 package com.sytoss.model.course;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,8 +14,9 @@ public class StudyGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "course_id", nullable = false)
-    private Long courseId;
+    @JoinColumn(name = "course_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Course course;
 
     @Column(name = "place_number", nullable = false)
     private Integer placeNumber;
@@ -24,6 +27,7 @@ public class StudyGroup {
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
+    @CreationTimestamp
     @Column(name = "created_date", nullable = false)
     private Date createdDate;
 
@@ -38,12 +42,12 @@ public class StudyGroup {
         this.id = id;
     }
 
-    public Long getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public Integer getPlaceNumber() {

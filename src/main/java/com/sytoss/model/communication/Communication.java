@@ -1,5 +1,8 @@
 package com.sytoss.model.communication;
 
+import com.sytoss.model.Lookup;
+import com.sytoss.model.education.UserAccount;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -12,8 +15,10 @@ public class Communication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "sender_id", nullable = false)
-    private Long senderId;
+
+    @JoinColumn(name = "sender_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserAccount sender;
 
     @Column(name = "send_date", nullable = false)
     private Date sendDate;
@@ -21,17 +26,19 @@ public class Communication {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "communication_type", nullable = false)
-    private Long communicationTypeId;
+    @JoinColumn(name = "communication_type", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Lookup lookup;
 
-    @Column(name = "receiver_id")
-    private Long receiverId;
+    @JoinColumn(name = "receiver_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserAccount receiver;
 
     @Column(name = "lesson_id")
-    private Long lessonId;
+    private Long lesson;
 
     @Column(name = "homework_id")
-    private Long homeworkId;
+    private Long homework;
 
     @Column(name = "update_date")
     private Date updateDate;
@@ -44,12 +51,12 @@ public class Communication {
         this.id = id;
     }
 
-    public Long getSenderId() {
-        return senderId;
+    public UserAccount getSender() {
+        return sender;
     }
 
-    public void setSenderId(Long senderId) {
-        this.senderId = senderId;
+    public void setSender(UserAccount sender) {
+        this.sender = sender;
     }
 
     public Date getSendDate() {
@@ -68,36 +75,36 @@ public class Communication {
         this.content = content;
     }
 
-    public Long getCommunicationTypeId() {
-        return communicationTypeId;
+    public Lookup getLookup() {
+        return lookup;
     }
 
-    public void setCommunicationTypeId(Long communicationTypeId) {
-        this.communicationTypeId = communicationTypeId;
+    public void setLookup(Lookup lookup) {
+        this.lookup = lookup;
     }
 
-    public Long getReceiverId() {
-        return receiverId;
+    public UserAccount getReceiver() {
+        return receiver;
     }
 
-    public void setReceiverId(Long receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiver(UserAccount receiver) {
+        this.receiver = receiver;
     }
 
-    public Long getLessonId() {
-        return lessonId;
+    public Long getLesson() {
+        return lesson;
     }
 
-    public void setLessonId(Long lessonId) {
-        this.lessonId = lessonId;
+    public void setLesson(Long lesson) {
+        this.lesson = lesson;
     }
 
-    public Long getHomeworkId() {
-        return homeworkId;
+    public Long getHomework() {
+        return homework;
     }
 
-    public void setHomeworkId(Long homeworkId) {
-        this.homeworkId = homeworkId;
+    public void setHomework(Long homework) {
+        this.homework = homework;
     }
 
     public Date getUpdateDate() {

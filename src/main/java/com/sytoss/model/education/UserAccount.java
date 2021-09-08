@@ -25,7 +25,7 @@ public class UserAccount {
     private String secondName;
 
 
-    @Column(name = "birtday_date")
+    @Column(name = "birthday_date")
     private Date birthday;
 
     @Column
