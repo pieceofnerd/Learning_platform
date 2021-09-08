@@ -5,6 +5,7 @@ import com.sytoss.model.Lookup;
 import com.sytoss.model.LookupName;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
+import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.course.*;
 import com.sytoss.model.education.*;
 import org.hibernate.Session;
@@ -42,8 +43,17 @@ public class Run {
         sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Homework homework = session.find(Homework.class, 1L);
-        System.out.println(homework.getFeedbacks());
+
+        Feedback feedback = new Feedback();
+        feedback.setContent("Hello test");
+        feedback.setSender(session.find(UserAccount.class, 12L));
+        feedback.setHomework(session.find(Homework.class, 5L));
+        feedback.setScore(5);
+        session.save(feedback);
+//
+//        Feedback feedback1 = session.find(Feedback.class, 1L);
+//        System.out.println(feedback1.getScore());
+
         session.getTransaction().commit();
         session.close();
 

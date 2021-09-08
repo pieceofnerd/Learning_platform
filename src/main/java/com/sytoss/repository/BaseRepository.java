@@ -1,15 +1,15 @@
 package com.sytoss.repository;
 
 
- interface BaseRepository<T> {
+interface BaseRepository<T, R> {
 
-    T getById(Long id);
+    T getById(R id);
 
     T create(T saveRecord);
 
-    void update(Long id, T saveRecord);
+    void update(R id, T saveRecord);
 
-    void delete(Long id);
+    void delete(R id);
 
 }
 
