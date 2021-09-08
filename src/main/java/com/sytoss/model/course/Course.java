@@ -3,6 +3,7 @@ package com.sytoss.model.course;
 import com.sytoss.model.Lookup;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -37,6 +38,9 @@ public class Course {
     @JoinColumn(name = "category_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Category category;
+
+    @OneToMany(mappedBy = "course")
+    private List<Topic> topics;
 
     public Course() {
     }
