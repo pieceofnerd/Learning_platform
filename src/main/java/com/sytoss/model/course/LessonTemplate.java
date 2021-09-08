@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "lesson_template")
 public class LessonTemplate {
 
     @Id

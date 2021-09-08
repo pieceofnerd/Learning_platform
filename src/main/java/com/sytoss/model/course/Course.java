@@ -7,7 +7,7 @@ import java.util.List;
 
 
 @Entity
-@Table
+@Table(name = "course")
 public class Course {
 
     @Id
@@ -41,6 +41,13 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Topic> topics;
+
+    @OneToMany(mappedBy = "course")
+    private List<Price> prices;
+
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Promotion promotion;
 
     public Course() {
     }

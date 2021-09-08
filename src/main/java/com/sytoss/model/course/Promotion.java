@@ -7,9 +7,10 @@ import jakarta.validation.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table
+@Table(name = "promotion")
 public class Promotion {
 
     @Id
@@ -34,6 +35,9 @@ public class Promotion {
     @JoinColumn(name = "promotion_state_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lookup promotionState;
+
+    @OneToMany(mappedBy = "promotion")
+    private List<Course> courses;
 
     public Promotion() {
     }
