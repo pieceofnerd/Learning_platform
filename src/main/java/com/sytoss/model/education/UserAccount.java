@@ -2,11 +2,13 @@ package com.sytoss.model.education;
 
 import com.sytoss.model.Lookup;
 import com.sytoss.model.Media;
+import com.sytoss.model.course.Lesson;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "user_account")
@@ -58,6 +60,9 @@ public class UserAccount {
 
     @Column(name = "updated_date")
     private Date updatedDate;
+    
+    @OneToMany(mappedBy = "mentor")
+    private List<Lesson> lessons;
 
     public UserAccount() {
         this.createdDate = new Date();
