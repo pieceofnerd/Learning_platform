@@ -18,7 +18,8 @@ public class Lesson {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserAccount mentor;
 
-    @OneToOne(mappedBy = "lesson")
+    @OneToOne
+    @JoinColumn(name = "home_task",referencedColumnName = "id")
     private HomeTask homeTask;
 
     @JoinColumn(name = "lesson_template")

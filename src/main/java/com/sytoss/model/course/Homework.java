@@ -1,6 +1,7 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.Lookup;
+import com.sytoss.model.Media;
 import com.sytoss.model.education.UserAccount;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,6 +23,9 @@ public class Homework {
     @JoinColumn(name = "homework_state_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lookup homeworkState;
+
+    @Column(name = "answer_path")
+    private String answerPath;
 
     @Column(name = "fulfillment_date")
     private Date fulfillmentDate;

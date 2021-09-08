@@ -1,6 +1,7 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.Lookup;
+import com.sytoss.model.Media;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,7 +20,7 @@ public class HomeTask {
 
     @JoinColumn(name = "file_path")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Lookup filePath;
+    private Media filePath;
 
     @Column(name = "deadline_date")
     private Date deadlineDate;
@@ -38,11 +39,19 @@ public class HomeTask {
         this.task = task;
     }
 
-    public Lookup getFilePath() {
+    public Media getFilePath() {
         return filePath;
     }
 
-    public void setFilePath(Lookup filePath) {
+    public List<Homework> getHomework() {
+        return homework;
+    }
+
+    public void setHomework(List<Homework> homework) {
+        this.homework = homework;
+    }
+
+    public void setFilePath(Media filePath) {
         this.filePath = filePath;
     }
 

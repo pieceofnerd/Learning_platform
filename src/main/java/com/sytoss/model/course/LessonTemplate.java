@@ -1,6 +1,7 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.Lookup;
+import com.sytoss.model.Media;
 import jakarta.validation.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class LessonTemplate {
 
     @JoinColumn(name = "media_type")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Lookup media;
+    private Media media;
 
     @Column
     private Integer duration;
@@ -54,12 +55,20 @@ public class LessonTemplate {
         this.description = description;
     }
 
-    public Lookup getMedia() {
+    public Media getMedia() {
         return media;
     }
 
-    public void setMedia(Lookup media) {
+    public void setMedia(Media media) {
         this.media = media;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
     public Integer getDuration() {
