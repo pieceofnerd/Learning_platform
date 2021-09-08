@@ -4,6 +4,7 @@ import com.sytoss.model.Lookup;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "home_task")
@@ -25,5 +26,8 @@ public class HomeTask {
 
     @OneToOne(mappedBy = "homeTask")
     private Lesson lesson;
+
+    @OneToMany(mappedBy = "homeTask")
+    private List<Homework> homework;
 
 }
