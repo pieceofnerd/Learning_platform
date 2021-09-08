@@ -2,7 +2,6 @@ package com.sytoss.model.education;
 
 import com.sytoss.model.Lookup;
 import com.sytoss.model.Media;
-import com.sytoss.model.course.Homework;
 import com.sytoss.model.course.Lesson;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -188,6 +187,7 @@ public class UserAccount {
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
     }
+
 
     public List<Lesson> getLessons() {
         return lessons;

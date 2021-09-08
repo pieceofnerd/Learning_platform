@@ -1,10 +1,12 @@
 package com.sytoss.model.course;
 
+import com.sytoss.model.communication.Comment;
 import com.sytoss.model.education.UserAccount;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "lesson")
@@ -39,6 +41,9 @@ public class Lesson {
 
     @Column(name = "updated_date")
     private Date updatedDate;
+
+    @OneToMany(mappedBy = "lesson")
+    private List<Comment> comments;
 
     public Lesson() {
     }

@@ -5,10 +5,7 @@ import com.sytoss.model.LookupName;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.course.*;
-import com.sytoss.model.education.Address;
-import com.sytoss.model.education.Purchase;
-import com.sytoss.model.education.Study;
-import com.sytoss.model.education.UserAccount;
+import com.sytoss.model.education.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 

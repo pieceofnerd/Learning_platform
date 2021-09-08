@@ -1,7 +1,7 @@
 package com.sytoss.model.course;
 
-import com.sytoss.model.Lookup;
 import com.sytoss.model.Media;
+import com.sytoss.model.education.Homework;
 
 import javax.persistence.*;
 import java.util.Date;

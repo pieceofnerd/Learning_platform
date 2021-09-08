@@ -6,10 +6,7 @@ import com.sytoss.model.LookupName;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.course.*;
-import com.sytoss.model.education.Address;
-import com.sytoss.model.education.Purchase;
-import com.sytoss.model.education.Study;
-import com.sytoss.model.education.UserAccount;
+import com.sytoss.model.education.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -41,11 +38,12 @@ public class Run {
 //                .addAnnotatedClass(LookupName.class)
 //                .addAnnotatedClass(Media.class)
 //                .buildSessionFactory();
+
         sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        UserAccount userAccount = session.find(UserAccount.class, 2L);
-        System.out.println(userAccount.getBio());
+        Homework homework = session.find(Homework.class, 1L);
+        System.out.println(homework.getFeedbacks());
         session.getTransaction().commit();
         session.close();
 

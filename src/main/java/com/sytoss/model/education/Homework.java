@@ -1,12 +1,16 @@
-package com.sytoss.model.course;
+package com.sytoss.model.education;
 
 import com.sytoss.model.Lookup;
 import com.sytoss.model.Media;
+import com.sytoss.model.communication.Feedback;
+import com.sytoss.model.communication.Message;
+import com.sytoss.model.course.HomeTask;
 import com.sytoss.model.education.UserAccount;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "homework")
@@ -30,6 +34,12 @@ public class Homework {
     @Column(name = "fulfillment_date")
     private Date fulfillmentDate;
 
+    @OneToMany(mappedBy = "homework")
+    private List<Message> dialog;
+
+    @OneToMany(mappedBy = "homework")
+    private List<Feedback> feedbacks;
+
     @CreationTimestamp
     @Column(name = "created_date")
     private Date createdDate;
@@ -37,6 +47,13 @@ public class Homework {
     @Column(name = "updated_date")
     private Date updatedDate;
 
+    public List<Message> getDialog() {
+        return dialog;
+    }
+
+    public void setDialog(List<Message> dialog) {
+        this.dialog = dialog;
+    }
 
     @JoinColumn(name = "home_task_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -80,6 +97,14 @@ public class Homework {
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    public List<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
     }
 
     public HomeTask getHomeTask() {

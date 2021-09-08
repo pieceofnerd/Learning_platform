@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "communication_type")
 @Table(name = "communication")
 public class Communication {
 
@@ -15,7 +17,6 @@ public class Communication {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @JoinColumn(name = "sender_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -28,19 +29,10 @@ public class Communication {
     @NotBlank
     private String content;
 
-    @JoinColumn(name = "communication_type", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Lookup lookup;
+//    @JoinColumn(name = "communication_type")
+//    @ManyToOne()
+//    private Lookup communication_type;
 
-    @JoinColumn(name = "receiver_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private UserAccount receiver;
-
-    @Column(name = "lesson_id")
-    private Long lesson;
-
-    @Column(name = "homework_id")
-    private Long homework;
 
     @Column(name = "update_date")
     private Date updateDate;
@@ -78,38 +70,6 @@ public class Communication {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Lookup getLookup() {
-        return lookup;
-    }
-
-    public void setLookup(Lookup lookup) {
-        this.lookup = lookup;
-    }
-
-    public UserAccount getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(UserAccount receiver) {
-        this.receiver = receiver;
-    }
-
-    public Long getLesson() {
-        return lesson;
-    }
-
-    public void setLesson(Long lesson) {
-        this.lesson = lesson;
-    }
-
-    public Long getHomework() {
-        return homework;
-    }
-
-    public void setHomework(Long homework) {
-        this.homework = homework;
     }
 
     public Date getUpdateDate() {

@@ -14,7 +14,7 @@
         <mapping class="com.sytoss.model.course.Category"/>
         <mapping class="com.sytoss.model.course.Course"/>
         <mapping class="com.sytoss.model.course.HomeTask"/>
-        <mapping class="com.sytoss.model.course.Homework"/>
+        <mapping class="com.sytoss.model.education.Homework"/>
         <mapping class="com.sytoss.model.course.Lesson"/>
         <mapping class="com.sytoss.model.course.LessonTemplate"/>
         <mapping class="com.sytoss.model.course.Price"/>
@@ -28,5 +28,8 @@
         <mapping class="com.sytoss.model.Lookup"/>
         <mapping class="com.sytoss.model.LookupName"/>
         <mapping class="com.sytoss.model.Media"/>
+        <mapping class="com.sytoss.model.communication.Comment"/>
+        <mapping class="com.sytoss.model.communication.Message"/>
+        <mapping class="com.sytoss.model.communication.Feedback"/>
     </session-factory>
 </hibernate-configuration>
