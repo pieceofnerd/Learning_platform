@@ -51,4 +51,84 @@ public class Course {
 
     public Course() {
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Lookup getCoursePhoto() {
+        return coursePhoto;
+    }
+
+    public void setCoursePhoto(Lookup coursePhoto) {
+        this.coursePhoto = coursePhoto;
+    }
+
+    public String getRecommendedLiterature() {
+        return recommendedLiterature;
+    }
+
+    public void setRecommendedLiterature(String recommendedLiterature) {
+        this.recommendedLiterature = recommendedLiterature;
+    }
+
+    public Lookup getCertificateTemplate() {
+        return certificateTemplate;
+    }
+
+    public void setCertificateTemplate(Lookup certificateTemplate) {
+        this.certificateTemplate = certificateTemplate;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public List<Price> getPrices() {
+        return prices;
+    }
+
+    public void setPrices(List<Price> prices) {
+        this.prices = prices;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(Promotion promotion) {
+        this.promotion = promotion;
+    }
 }

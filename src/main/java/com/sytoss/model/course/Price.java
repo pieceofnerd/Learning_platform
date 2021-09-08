@@ -30,4 +30,36 @@ public class Price {
 
     public Price() {
     }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Lookup getPriceType() {
+        return priceType;
+    }
+
+    public void setPriceType(Lookup priceType) {
+        this.priceType = priceType;
+    }
+
+    public Lookup getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(Lookup promotion) {
+        this.promotion = promotion;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
 }

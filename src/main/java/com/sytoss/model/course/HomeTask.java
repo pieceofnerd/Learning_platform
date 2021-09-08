@@ -30,4 +30,36 @@ public class HomeTask {
     @OneToMany(mappedBy = "homeTask")
     private List<Homework> homework;
 
+    public String getTask() {
+        return task;
+    }
+
+    public void setTask(String task) {
+        this.task = task;
+    }
+
+    public Lookup getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(Lookup filePath) {
+        this.filePath = filePath;
+    }
+
+    public Date getDeadlineDate() {
+        return deadlineDate;
+    }
+
+    public void setDeadlineDate(Date deadlineDate) {
+        this.deadlineDate = deadlineDate;
+    }
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
+
 }

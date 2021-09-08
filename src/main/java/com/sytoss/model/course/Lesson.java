@@ -41,4 +41,60 @@ public class Lesson {
 
     public Lesson() {
     }
+
+    public UserAccount getMentor() {
+        return mentor;
+    }
+
+    public void setMentor(UserAccount mentor) {
+        this.mentor = mentor;
+    }
+
+    public HomeTask getHomeTask() {
+        return homeTask;
+    }
+
+    public void setHomeTask(HomeTask homeTask) {
+        this.homeTask = homeTask;
+    }
+
+    public LessonTemplate getLessonTemplate() {
+        return lessonTemplate;
+    }
+
+    public void setLessonTemplate(LessonTemplate lessonTemplate) {
+        this.lessonTemplate = lessonTemplate;
+    }
+
+    public StudyGroup getStudyGroup() {
+        return studyGroup;
+    }
+
+    public void setStudyGroup(StudyGroup studyGroup) {
+        this.studyGroup = studyGroup;
+    }
+
+    public Date getLessonDate() {
+        return lessonDate;
+    }
+
+    public void setLessonDate(Date lessonDate) {
+        this.lessonDate = lessonDate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
 }
