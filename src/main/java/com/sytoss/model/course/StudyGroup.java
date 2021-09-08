@@ -109,4 +109,17 @@ public class StudyGroup {
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
     }
+
+    @Override
+    public String toString() {
+        return "StudyGroup{" +
+                "id=" + id +
+                ", course=" + course +
+                ", placeNumber=" + placeNumber +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", createdDate=" + createdDate +
+                ", updatedDate=" + updatedDate +
+                '}';
+    }
 }
