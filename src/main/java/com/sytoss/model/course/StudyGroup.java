@@ -39,6 +39,9 @@ public class StudyGroup {
     @OneToMany(mappedBy = "studyGroup")
     private List<Study> studies;
 
+    @OneToMany(mappedBy = "studyGroup")
+    private List<Lesson> lessons;
+
     public List<Study> getStudies() {
         return studies;
     }

@@ -4,6 +4,7 @@ import com.sytoss.model.Lookup;
 import jakarta.validation.constraints.NotBlank;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "lesson_template")
@@ -30,6 +31,9 @@ public class LessonTemplate {
     @JoinColumn(name = "topic_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Topic topic;
+
+    @OneToMany(mappedBy = "lessonTemplate")
+    private List<Lesson> lessons;
 
     public LessonTemplate() {
     }
