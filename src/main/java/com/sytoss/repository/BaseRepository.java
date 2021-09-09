@@ -1,15 +1,19 @@
 package com.sytoss.repository;
 
 
-interface BaseRepository<T, R> {
+import java.util.List;
 
-    T getById(R id);
+interface BaseRepository<E, K> {
 
-    T create(T saveRecord);
+    E getById(K id);
 
-    void update(R id, T saveRecord);
+    List<E> getAll();
 
-    void delete(R id);
+    boolean create(E entity);
+
+    boolean update(K id, E entity);
+
+    boolean delete(K id);
 
 }
 

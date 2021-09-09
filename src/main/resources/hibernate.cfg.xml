@@ -10,6 +10,7 @@
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.useUnicode">true</property>
+
         <mapping class="com.sytoss.model.communication.Communication"/>
         <mapping class="com.sytoss.model.course.Category"/>
         <mapping class="com.sytoss.model.course.Course"/>
