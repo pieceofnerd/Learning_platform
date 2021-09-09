@@ -13,7 +13,7 @@ interface BaseRepository<E, K> {
 
     boolean update(K id, E entity);
 
-    boolean delete(K id);
+    boolean delete(E entity);
 
 }
 
