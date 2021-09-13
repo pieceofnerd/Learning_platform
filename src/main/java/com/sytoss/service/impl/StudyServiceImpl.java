@@ -37,10 +37,10 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public Study findStudyById(Long id) throws Exception {
-        if (!studyRepository.existsById(id)) {
+        if (!studyRepository.exists(id)) {
             throw new Exception("Study with id = " + id + " not found!");
         }
-        Study study = studyRepository.getOne(id);
+        Study study = studyRepository.findOne(id);
         return study;
     }
 
