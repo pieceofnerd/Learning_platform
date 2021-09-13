@@ -1,20 +1,10 @@
-package com.sytoss.repository;
-
-
-import java.util.List;
-
-interface BaseRepository<E, K> {
-
-    E getById(K id);
-
-    List<E> getAll();
-
-    boolean create(E entity);
-
-    boolean update(K id, E entity);
-
-    boolean delete(E entity);
-
-}
-
-
+//package com.sytoss.repository;
+//
+//
+//import org.springframework.data.jpa.repository.JpaRepository;
+//
+//interface BaseRepository<T,ID> extends JpaRepository<T,ID> {
+//
+//}
+//
+//

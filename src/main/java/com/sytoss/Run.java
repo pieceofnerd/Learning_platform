@@ -1,30 +1,21 @@
 package com.sytoss;
 
-import com.sytoss.model.communication.Feedback;
-import com.sytoss.model.education.Homework;
-import com.sytoss.model.education.UserAccount;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import com.sytoss.config.Config;
+import com.sytoss.repository.StudyRepository;
+import com.sytoss.service.StudyService;
+import com.sytoss.service.impl.StudyServiceImpl;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 
 public class Run {
-    public static SessionFactory sessionFactory = null;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext(Config.class);
 
-        Feedback feedback = new Feedback();
-        feedback.setContent("Hello test");
-        feedback.setSender(session.find(UserAccount.class, 12L));
-        feedback.setHomework(session.find(Homework.class, 5L));
-        feedback.setScore(5);
-        session.save(feedback);
+        final StudyService bean = appContext.getBean(StudyService.class);
 
-        session.getTransaction().commit();
-        session.close();
+        System.out.println(bean.findStudyById(2L));
 
     }
 }
