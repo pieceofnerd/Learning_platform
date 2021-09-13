@@ -1,5 +1,7 @@
 package com.sytoss.config;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +15,12 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
-
+import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
 @Configuration
-@ComponentScan(basePackages = {"com.sytoss.service"})
 @EnableJpaRepositories(basePackages = {"com.sytoss.repository"})
+@ComponentScan(basePackages = {"com.sytoss.service", "com.sytoss.mapper"})
+
 public class Config {
     @Bean
     public DataSource dataSource() {
@@ -29,6 +32,7 @@ public class Config {
         dataSource.setSchema("learning_platform");
         return dataSource;
     }
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em
@@ -50,6 +54,18 @@ public class Config {
 
         return transactionManager;
     }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setFieldMatchingEnabled(true)
+                .setSkipNullEnabled(true)
+                .setFieldAccessLevel(PRIVATE);
+        return mapper;
+    }
+
     Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
@@ -57,5 +73,3 @@ public class Config {
         return properties;
     }
 }
-
-
