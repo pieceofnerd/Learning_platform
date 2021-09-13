@@ -5,5 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class FilterDTO {
+public class MediaDTO {
+
+    private  String path;
+
 }
