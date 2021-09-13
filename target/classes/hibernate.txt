@@ -1,0 +1,36 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://192.168.21.125:3306/learning_platform</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="show_sql">true</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.useUnicode">true</property>
+
+        <mapping class="com.sytoss.model.communication.Communication"/>
+        <mapping class="com.sytoss.model.course.Category"/>
+        <mapping class="com.sytoss.model.course.Course"/>
+        <mapping class="com.sytoss.model.course.HomeTask"/>
+        <mapping class="com.sytoss.model.education.Homework"/>
+        <mapping class="com.sytoss.model.course.Lesson"/>
+        <mapping class="com.sytoss.model.course.LessonTemplate"/>
+        <mapping class="com.sytoss.model.course.Price"/>
+        <mapping class="com.sytoss.model.course.Promotion"/>
+        <mapping class="com.sytoss.model.course.StudyGroup"/>
+        <mapping class="com.sytoss.model.course.Topic"/>
+        <mapping class="com.sytoss.model.education.Address"/>
+        <mapping class="com.sytoss.model.education.Purchase"/>
+        <mapping class="com.sytoss.model.education.Study"/>
+        <mapping class="com.sytoss.model.education.UserAccount"/>
+        <mapping class="com.sytoss.model.Lookup"/>
+        <mapping class="com.sytoss.model.LookupName"/>
+        <mapping class="com.sytoss.model.Media"/>
+        <mapping class="com.sytoss.model.communication.Comment"/>
+        <mapping class="com.sytoss.model.communication.Message"/>
+        <mapping class="com.sytoss.model.communication.Feedback"/>
+    </session-factory>
+</hibernate-configuration>
