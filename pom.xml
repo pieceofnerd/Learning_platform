@@ -14,18 +14,21 @@
 <!--        <spring.version>5.3.9</spring.version>-->
 <!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
 <!--        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>-->
+        <spring-context.version>5.1.4.RELEASE</spring-context.version>
+        <spring-orm.version>5.1.4.RELEASE</spring-orm.version>
+        <lombok.version>1.18.20</lombok.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.1.4.RELEASE</version>
+            <version>${spring-context.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>5.1.4.RELEASE</version>
+            <version>${spring-orm.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -46,7 +49,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
