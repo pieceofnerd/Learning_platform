@@ -44,9 +44,6 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private List<Price> prices;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Promotion promotion;
-
     public Course() {
     }
 
@@ -130,11 +127,5 @@ public class Course {
         this.prices = prices;
     }
 
-    public Promotion getPromotion() {
-        return promotion;
-    }
 
-    public void setPromotion(Promotion promotion) {
-        this.promotion = promotion;
-    }
 }

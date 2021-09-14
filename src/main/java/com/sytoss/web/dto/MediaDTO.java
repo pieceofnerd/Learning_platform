@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MediaDTO {
 
+    private Long id;
+
     private  String path;
 
 }

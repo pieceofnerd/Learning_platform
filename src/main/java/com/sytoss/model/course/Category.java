@@ -18,6 +18,7 @@ public class Category {
     private List<Course> courses;
 
     public Category() {
+
     }
 
     public Long getId() {

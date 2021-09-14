@@ -17,6 +17,7 @@
         <spring-context.version>5.1.4.RELEASE</spring-context.version>
         <spring-orm.version>5.1.4.RELEASE</spring-orm.version>
         <lombok.version>1.18.20</lombok.version>
+        <modelmapper.version>2.4.4</modelmapper.version>
     </properties>
 
     <dependencies>
@@ -51,6 +52,11 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>${modelmapper.version}</version>
         </dependency>
     </dependencies>
 

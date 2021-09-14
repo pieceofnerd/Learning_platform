@@ -21,7 +21,7 @@ public class Price {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lookup priceType;
 
-    @JoinColumn(name = "promotion_id")
+    @JoinColumn(name = "promotion_id", nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lookup promotion;
 

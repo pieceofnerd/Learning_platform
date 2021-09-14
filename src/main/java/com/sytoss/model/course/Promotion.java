@@ -14,10 +14,10 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "percent")
     private Integer percent;
 
     @Column(name = "start_date")
@@ -31,7 +31,7 @@ public class Promotion {
     private Lookup promotionState;
 
     @OneToMany(mappedBy = "promotion")
-    private List<Course> courses;
+    private List<Price> prices;
 
     public Promotion() {
     }
@@ -84,11 +84,4 @@ public class Promotion {
         this.promotionState = promotionState;
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
 }

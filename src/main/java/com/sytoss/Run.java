@@ -1,10 +1,14 @@
 package com.sytoss;
 
 import com.sytoss.config.Config;
-import com.sytoss.repository.StudyRepository;
-import com.sytoss.service.StudyService;
-import com.sytoss.service.impl.StudyServiceImpl;
+
+import com.sytoss.service.CourseService;
+import com.sytoss.service.impl.CourseServiceImpl;
+import com.sytoss.web.dto.*;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.math.BigDecimal;
+import java.util.Collections;
 
 
 public class Run {
@@ -13,9 +17,17 @@ public class Run {
 
         AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext(Config.class);
 
-        final StudyService bean = appContext.getBean(StudyService.class);
+        MediaDTO photo = new MediaDTO(1L,"bvgdevui");
+        MediaDTO cert = new MediaDTO(2L,"rg");
+        MediaDTO lesson = new MediaDTO(3L,"lesson is cool");
+        CategoryDTO categoryDTO = new CategoryDTO(1L,"guibvgui");
+        PriceDTO priceDTO= new PriceDTO("Regular", new BigDecimal("250"));
+        LessonTemplateDTO lessonTemplateDTO= new LessonTemplateDTO("Hello","How low", lesson, 40);
+        TopicDTO topicDTO= new TopicDTO("brf", "Bear", Collections.singletonList(lessonTemplateDTO));
+        CourseDTO courseDTO= new CourseDTO("bt5gbymnu11698cr11111o,lfki", "HBGOI", "bguig", categoryDTO, cert, photo, Collections.singletonList(topicDTO),Collections.singletonList(priceDTO));
 
-        System.out.println(bean.findStudyById(2L));
+        CourseService courseService = appContext.getBean(CourseService.class);
 
+        courseService.createCourse(courseDTO);
     }
 }

@@ -4,6 +4,7 @@ import com.sytoss.model.education.Study;
 import com.sytoss.repository.StudyRepository;
 import com.sytoss.service.StudyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class StudyServiceImpl implements StudyService {
 
 
+    @Autowired
     private final StudyRepository studyRepository;
 
     @Override

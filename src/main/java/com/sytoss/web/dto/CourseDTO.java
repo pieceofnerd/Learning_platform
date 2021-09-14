@@ -20,7 +20,7 @@ public class CourseDTO {
 
     private MediaDTO certificateTemplate;
 
-    private MediaDTO photo;
+    private MediaDTO coursePhoto;
 
     private List<TopicDTO> topics;
 
