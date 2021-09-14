@@ -1,8 +1,10 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.model.education.Purchase;
+import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.PurchaseRepository;
 import com.sytoss.service.PurchaseService;
+import com.sytoss.web.dto.FilterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +21,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     @Override
-    public Purchase payCourse(Purchase purchase) throws Exception {
+    public Purchase payCourse(Purchase purchase) throws Exception { //TODO
         if (purchase == null) {
             throw new Exception("Purchase is null");
         }
@@ -28,7 +30,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public boolean updatePurchase(Purchase purchase) {
+    public boolean updatePurchase(Purchase purchase) { //TODO
         if (purchase == null) {
             return false;
         }
@@ -37,12 +39,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<Purchase> findPurchaseByFilter() {
+    public List<Purchase> findPurchaseByFilter(UserAccount student, FilterDTO filter) { //TODO
         return null;
     }
 
     @Override
-    public boolean refundMoney(Purchase purchase) {
+    public boolean refundMoney(Purchase purchase) { //TODO
         return false;
     }
 }

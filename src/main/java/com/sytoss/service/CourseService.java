@@ -2,7 +2,8 @@ package com.sytoss.service;
 
 import com.sytoss.model.course.Course;
 import com.sytoss.web.dto.save.CourseSaveDTO;
-import com.sytoss.web.dto.save.FilterSaveDTO;
+import com.sytoss.web.dto.FilterDTO;
+
 
 import java.util.List;
 
