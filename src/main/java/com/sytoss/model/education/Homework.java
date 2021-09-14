@@ -4,6 +4,7 @@ import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.course.HomeTask;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.communication.Message;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -39,7 +40,8 @@ public class Homework {
 
 
     @Column(name = "created_date")
-    private Date createdDate = new Date();
+    @CreationTimestamp
+    private Date createdDate;
 
     @Column(name = "updated_date")
     private Date updatedDate;

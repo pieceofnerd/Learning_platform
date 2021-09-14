@@ -9,7 +9,7 @@ public interface PurchaseService {
 
     boolean updatePurchase(Purchase purchase);
 
-    List<Purchase> findPurchaseByFilter(); // need to add arg
+    List<Purchase> findPurchaseByFilter(); //TODO need to add arg
 
     boolean refundMoney(Purchase purchase);
 }

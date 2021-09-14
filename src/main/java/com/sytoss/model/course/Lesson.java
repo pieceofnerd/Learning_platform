@@ -2,6 +2,7 @@ package com.sytoss.model.course;
 
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.education.UserAccount;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -34,8 +35,9 @@ public class Lesson {
     @Column(name = "lesson_date")
     private Date lessonDate;
 
+    @CreationTimestamp
     @Column(name = "created_date")
-    private Date createdDate = new Date();
+    private Date createdDate;
 
     @Column(name = "updated_date")
     private Date updatedDate;

@@ -1,6 +1,7 @@
 package com.sytoss.model.communication;
 
 import com.sytoss.model.education.UserAccount;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,8 +21,9 @@ public class Communication {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserAccount sender;
 
+    @CreationTimestamp
     @Column(name = "send_date", nullable = false)
-    private Date sendDate = new Date();
+    private Date sendDate;
 
     @Column(name = "content", nullable = false)
     private String content;
