@@ -11,6 +11,7 @@ import com.sytoss.model.course.Price;
 import com.sytoss.model.course.Topic;
 import com.sytoss.repository.*;
 import com.sytoss.service.CourseService;
+import com.sytoss.web.dto.FilterDTO;
 import com.sytoss.web.dto.save.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean createCourse(CourseSaveDTO courseDTO) {
-        if (!validateCourseName(courseDTO.getName())) return false;
+        if (validateCourseName(courseDTO.getName())) return false;
 
         Course course = courseRepository.save(courseMapper.toEntity(courseDTO));
 
@@ -77,25 +78,28 @@ public class CourseServiceImpl implements CourseService {
         if (courseDTO == null) {
             return false;
         } else {
-            if (!validateCourseName(courseDTO.getName())) return false;
-          //  courseRepository.save(course);
+            if (validateCourseName(courseDTO.getName())) return false;
+            //  courseRepository.save(course);
+            //TODO
             return true;
         }
     }
 
     @Override
     public boolean closeCourse(Course course) {
-        return false;
+        course.setActive(false);
+        return true;
     }
 
     @Override
-    public Course findByFilter(FilterSaveDTO filter) {
+    public Course findByFilter(FilterDTO filter) {
+        //TODO
         return null;
     }
 
     @Override
     public List<Course> getAll() {
-        return null;
+        return courseRepository.findAll();
     }
 
     private boolean validateCourseName(String courseName) {
@@ -103,10 +107,10 @@ public class CourseServiceImpl implements CourseService {
         for (Course course : courses) {
             if (course.getName().equals(courseName)) {
                 //TODO
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private Topic addTopic(Course course, TopicSaveDTO currentTopic) {
