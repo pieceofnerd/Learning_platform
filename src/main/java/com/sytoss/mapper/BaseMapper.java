@@ -6,17 +6,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public abstract class BaseMapper<E, D> implements Mapper<E, D> {
-
-    private final ModelMapper mapper;
+    @Autowired
+    private ModelMapper mapper;
 
     private Class<E> entityClass;
     private Class<D> dtoClass;
 
-    @Autowired
-    BaseMapper(Class<E> entityClass, Class<D> dtoClass, ModelMapper modelMapper) {
+    BaseMapper(Class<E> entityClass, Class<D> dtoClass) {
         this.entityClass = entityClass;
         this.dtoClass = dtoClass;
-        this.mapper = modelMapper;
     }
 
     protected BaseMapper(ModelMapper mapper) {
@@ -25,7 +23,6 @@ public abstract class BaseMapper<E, D> implements Mapper<E, D> {
 
     @Override
     public E toEntity(D dto) {
-
         if (dto == null) return null;
         else return mapper.map(dto, entityClass);
 

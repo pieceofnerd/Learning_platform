@@ -1,26 +1,29 @@
 package com.sytoss.mapper;
 
+
+import com.sytoss.model.course.Category;
 import com.sytoss.model.course.Course;
+import com.sytoss.web.dto.CategoryDTO;
 import com.sytoss.web.dto.CourseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CourseMapper extends BaseMapper<Course, CourseDTO> {
+public class CategoryMapper extends BaseMapper<Category, CategoryDTO> {
 
     @Autowired
-    public CourseMapper(ModelMapper mapper) {
-        super(Course.class, CourseDTO.class);
+    public CategoryMapper(ModelMapper mapper) {
+        super(Category.class, CategoryDTO.class);
     }
 
     @Override
-    public Course toEntity(CourseDTO dto) {
+    public Category toEntity(CategoryDTO dto) {
         return super.toEntity(dto);
     }
 
     @Override
-    public CourseDTO toDTO(Course entity) {
+    public CategoryDTO toDTO(Category entity) {
         return super.toDTO(entity);
     }
 }
