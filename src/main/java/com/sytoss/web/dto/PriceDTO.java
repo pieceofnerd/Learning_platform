@@ -13,4 +13,6 @@ public class PriceDTO {
 
     private BigDecimal cost;
 
+    private PromotionDTO promotion;
+
 }
