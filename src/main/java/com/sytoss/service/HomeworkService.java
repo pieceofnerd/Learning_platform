@@ -1,6 +1,11 @@
 package com.sytoss.service;
 
+import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.Homework;
+import com.sytoss.model.education.UserAccount;
+import com.sytoss.web.dto.FilterDTO;
+
+import java.util.List;
 
 public interface HomeworkService {
 
@@ -10,6 +15,8 @@ public interface HomeworkService {
 
     boolean deleteHomework(Homework homework);
 
-    //findHome
+    List<Homework> findHomeworkFindByFilter(UserAccount student, FilterDTO filer);
+
+    boolean leaveFeedback(Communication feedback);
 
 }
