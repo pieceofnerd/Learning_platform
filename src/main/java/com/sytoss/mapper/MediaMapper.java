@@ -1,26 +1,29 @@
 package com.sytoss.mapper;
 
+import com.sytoss.model.Media;
 import com.sytoss.model.course.Course;
 import com.sytoss.web.dto.CourseDTO;
+import com.sytoss.web.dto.MediaDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CourseMapper extends BaseMapper<Course, CourseDTO> {
+public class MediaMapper extends BaseMapper<Media, MediaDTO> {
+
 
     @Autowired
-    public CourseMapper(ModelMapper mapper) {
-        super(Course.class, CourseDTO.class);
+    public MediaMapper(ModelMapper mapper) {
+        super(Media.class, MediaDTO.class);
     }
 
     @Override
-    public Course toEntity(CourseDTO dto) {
+    public Media toEntity(MediaDTO dto) {
         return super.toEntity(dto);
     }
 
     @Override
-    public CourseDTO toDTO(Course entity) {
+    public MediaDTO toDTO(Media entity) {
         return super.toDTO(entity);
     }
 }
