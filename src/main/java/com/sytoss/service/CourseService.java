@@ -15,7 +15,7 @@ public interface CourseService {
 
     boolean closeCourse(Course course);
 
-    Course findByFilter(FilterSaveDTO filter);
+    Course findByFilter(FilterDTO filter);
 
     List<Course> getAll();
 

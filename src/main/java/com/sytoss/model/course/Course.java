@@ -34,6 +34,9 @@ public class Course {
     @Column
     private Double rating;
 
+    @Column(name = "active")
+    private Boolean active;
+
     @JoinColumn(name = "category_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Category category;
@@ -127,5 +130,11 @@ public class Course {
         this.prices = prices;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
 
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
