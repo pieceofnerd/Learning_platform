@@ -1,10 +1,13 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.Lookup;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+@NoArgsConstructor
 
 @Entity
 @Table(name = "promotion")
@@ -30,11 +33,9 @@ public class Promotion {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lookup promotionState;
 
-    @OneToMany(mappedBy = "promotion")
+    @OneToMany(mappedBy = "promotion",fetch = FetchType.LAZY)
     private List<Price> prices;
 
-    public Promotion() {
-    }
 
     public Long getId() {
         return id;
@@ -84,4 +85,11 @@ public class Promotion {
         this.promotionState = promotionState;
     }
 
+    public List<Price> getPrices() {
+        return prices;
+    }
+
+    public void setPrices(List<Price> prices) {
+        this.prices = prices;
+    }
 }
