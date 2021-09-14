@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "role_id")
 @Table(name = "user_account")
 public class UserAccount {
 
@@ -39,9 +41,6 @@ public class UserAccount {
     @Column
     private char[] password;
 
-    @JoinColumn(name = "role_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Lookup role;
 
     @JoinColumn(name = "address_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -128,13 +127,6 @@ public class UserAccount {
         this.password = password;
     }
 
-    public Lookup getRole() {
-        return role;
-    }
-
-    public void setRole(Lookup role) {
-        this.role = role;
-    }
 
     public Address getAddress() {
         return address;
@@ -203,7 +195,6 @@ public class UserAccount {
                 ", bio='" + bio + '\'' +
                 ", email='" + email + '\'' +
                 ", password=" + Arrays.toString(password) +
-                ", role=" + role +
                 ", address=" + address +
                 ", lastActivity=" + lastActivity +
                 ", photo=" + photo +

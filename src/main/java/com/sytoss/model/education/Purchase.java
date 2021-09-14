@@ -30,6 +30,7 @@ public class Purchase {
     @Column(name = "cost")
     private Double cost;
 
+    @Column(name = "purchase_date")
     private Date purchaseDate = new Date();
 
     public Purchase() {
