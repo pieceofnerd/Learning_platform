@@ -1,4 +1,4 @@
-package com.sytoss.web.dto;
+package com.sytoss.web.dto.save;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,10 +7,10 @@ import java.util.Date;
 
 @AllArgsConstructor
 @Getter
-public class PurchaseDTO {
+public class PurchaseSaveDTO {
 //    private StudentDTO student;
 
-    private CourseDTO course;
+    private CourseSaveDTO course;
 
     private String purchaseStatus;
 

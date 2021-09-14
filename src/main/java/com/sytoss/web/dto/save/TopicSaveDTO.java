@@ -1,18 +1,18 @@
-package com.sytoss.web.dto;
+package com.sytoss.web.dto.save;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class TopicDTO {
+public class TopicSaveDTO {
 
     private String name;
 
     private  String description;
 
-    private List<LessonTemplateDTO> lessonTemplates;
+    private List<LessonTemplateSaveDTO> lessonTemplates;
 
 }

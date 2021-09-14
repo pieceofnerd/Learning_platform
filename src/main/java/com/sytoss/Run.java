@@ -17,17 +17,17 @@ public class Run {
 
         AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext(Config.class);
 
-        MediaDTO photo = new MediaDTO(1L,"bvgdevui");
-        MediaDTO cert = new MediaDTO(2L,"rg");
-        MediaDTO lesson = new MediaDTO(3L,"lesson is cool");
-        CategoryDTO categoryDTO = new CategoryDTO(1L,"guibvgui");
-        PriceDTO priceDTO= new PriceDTO("Regular", new BigDecimal("250"));
-        LessonTemplateDTO lessonTemplateDTO= new LessonTemplateDTO("Hello","How low", lesson, 40);
-        TopicDTO topicDTO= new TopicDTO("brf", "Bear", Collections.singletonList(lessonTemplateDTO));
-        CourseDTO courseDTO= new CourseDTO("bt5gbymnu11698cr11111o,lfki", "HBGOI", "bguig", categoryDTO, cert, photo, Collections.singletonList(topicDTO),Collections.singletonList(priceDTO));
-
-        CourseService courseService = appContext.getBean(CourseService.class);
-
-        courseService.createCourse(courseDTO);
+//        MediaDTO photo = new MediaDTO(1L,"bvgdevui");
+//        MediaDTO cert = new MediaDTO(2L,"rg");
+//        MediaDTO lesson = new MediaDTO(3L,"lesson is cool");
+//        CategoryDTO categoryDTO = new CategoryDTO(1L,"guibvgui");
+//        PriceDTO priceDTO= new PriceDTO("Regular", new BigDecimal("250"));
+//        LessonTemplateDTO lessonTemplateDTO= new LessonTemplateDTO("Hello","How low", lesson, 40);
+//        TopicDTO topicDTO= new TopicDTO("brf", "Bear", Collections.singletonList(lessonTemplateDTO));
+//        CourseDTO courseDTO= new CourseDTO("bt5gbymn0jyhicfvigiihgf2u11698cr11111o,lfki", "HBGOI", "bguig", categoryDTO, cert, photo, Collections.singletonList(topicDTO),Collections.singletonList(priceDTO));
+//
+//        CourseService courseService = appContext.getBean(CourseService.class);
+//
+//        courseService.createCourse(courseDTO);
     }
 }

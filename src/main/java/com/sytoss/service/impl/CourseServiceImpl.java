@@ -11,12 +11,11 @@ import com.sytoss.model.course.Price;
 import com.sytoss.model.course.Topic;
 import com.sytoss.repository.*;
 import com.sytoss.service.CourseService;
-import com.sytoss.web.dto.*;
+import com.sytoss.web.dto.save.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -54,29 +53,34 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean createCourse(CourseDTO courseDTO) {
-        if (!validate(courseDTO)) return false;
+    public boolean createCourse(CourseSaveDTO courseDTO) {
+        if (!validateCourseName(courseDTO.getName())) return false;
 
         Course course = courseRepository.save(courseMapper.toEntity(courseDTO));
 
-        for (TopicDTO currentTopic : courseDTO.getTopics()) {
+        for (TopicSaveDTO currentTopic : courseDTO.getTopics()) {
             Topic topic = addTopic(course, currentTopic);
-            for (LessonTemplateDTO currentLesson : currentTopic.getLessonTemplates()) {
+            for (LessonTemplateSaveDTO currentLesson : currentTopic.getLessonTemplates()) {
                 addLessonTemplate(topic, currentLesson);
             }
         }
 
-        for (PriceDTO currentPrice : courseDTO.getPrices()) {
+        for (PriceSaveDTO currentPrice : courseDTO.getPrices()) {
             addPrice(course, currentPrice);
         }
 
         return true;
     }
 
-
     @Override
-    public boolean updateCourse(Course course) {
-        return false;
+    public boolean updateCourse(CourseSaveDTO courseDTO) {
+        if (courseDTO == null) {
+            return false;
+        } else {
+            if (!validateCourseName(courseDTO.getName())) return false;
+          //  courseRepository.save(course);
+            return true;
+        }
     }
 
     @Override
@@ -85,7 +89,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course findByFilter(FilterDTO filter) {
+    public Course findByFilter(FilterSaveDTO filter) {
         return null;
     }
 
@@ -94,10 +98,10 @@ public class CourseServiceImpl implements CourseService {
         return null;
     }
 
-    private boolean validate(CourseDTO courseDTO) {
+    private boolean validateCourseName(String courseName) {
         List<Course> courses = courseRepository.findAll();
         for (Course course : courses) {
-            if (course.getName().equals(courseDTO.getName())) {
+            if (course.getName().equals(courseName)) {
                 //TODO
                 return false;
             }
@@ -105,7 +109,7 @@ public class CourseServiceImpl implements CourseService {
         return true;
     }
 
-    private Topic addTopic(Course course, TopicDTO currentTopic) {
+    private Topic addTopic(Course course, TopicSaveDTO currentTopic) {
 
         Topic topic = topicMapper.toEntity(currentTopic);
         topic.setCourse(course);
@@ -113,13 +117,13 @@ public class CourseServiceImpl implements CourseService {
         return topic;
     }
 
-    private void addLessonTemplate(Topic topic, LessonTemplateDTO currentLesson) {
+    private void addLessonTemplate(Topic topic, LessonTemplateSaveDTO currentLesson) {
         LessonTemplate lesson = lessonTemplateMapper.toEntity(currentLesson);
         lesson.setTopic(topic);
         lessonTemplateRepository.save(lesson);
     }
 
-    private void addPrice(Course course, PriceDTO currentPrice) {
+    private void addPrice(Course course, PriceSaveDTO currentPrice) {
         Price price = priceMapper.toEntity(currentPrice);
         for (PriceType value : PriceType.values()) {
             if (value.name().equals(currentPrice.getPriceType().toUpperCase())) {
@@ -128,7 +132,7 @@ public class CourseServiceImpl implements CourseService {
                 break;
             }
         }
-        if(price.getPriceType()==null){
+        if (price.getPriceType() == null) {
             //TODO
         }
         price.setCourse(course);

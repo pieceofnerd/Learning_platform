@@ -1,9 +1,9 @@
-package com.sytoss.web.dto;
+package com.sytoss.web.dto.save;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class FilterDTO {
+public class FilterSaveDTO {
 }
