@@ -1,20 +1,20 @@
 package com.sytoss.service;
 
 import com.sytoss.model.course.Course;
-import com.sytoss.web.dto.CourseDTO;
-import com.sytoss.web.dto.FilterDTO;
+import com.sytoss.web.dto.save.CourseSaveDTO;
+import com.sytoss.web.dto.save.FilterSaveDTO;
 
 import java.util.List;
 
 public interface CourseService {
 
-    boolean createCourse(CourseDTO course);
+    boolean createCourse(CourseSaveDTO course);
 
-    boolean updateCourse(Course course);
+    boolean updateCourse(CourseSaveDTO courseDTO);
 
     boolean closeCourse(Course course);
 
-    Course findByFilter(FilterDTO filter);
+    Course findByFilter(FilterSaveDTO filter);
 
     List<Course> getAll();
 

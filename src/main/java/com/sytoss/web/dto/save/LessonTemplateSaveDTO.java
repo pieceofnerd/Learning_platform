@@ -1,18 +1,17 @@
-package com.sytoss.web.dto;
+package com.sytoss.web.dto.save;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
-public class LessonTemplateDTO {
+public class LessonTemplateSaveDTO {
 
     private String name;
 
     private  String description;
 
-    private MediaDTO media;
+    private MediaSaveDTO media;
 
     private Integer duration;
 
