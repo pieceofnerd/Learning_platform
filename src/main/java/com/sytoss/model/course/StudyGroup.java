@@ -1,6 +1,7 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.education.Study;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -28,9 +29,9 @@ public class StudyGroup {
     @Column(name = "end_date")
     private Date endDate;
 
-
+    @CreationTimestamp
     @Column(name = "created_date")
-    private Date createdDate = new Date();
+    private Date createdDate;
 
     @Column(name = "updated_date")
     private Date updatedDate;

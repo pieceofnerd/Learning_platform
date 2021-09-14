@@ -17,4 +17,19 @@ public class Message extends Communication {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Homework homework;
 
+    public UserAccount getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(UserAccount receiver) {
+        this.receiver = receiver;
+    }
+
+    public Homework getHomework() {
+        return homework;
+    }
+
+    public void setHomework(Homework homework) {
+        this.homework = homework;
+    }
 }

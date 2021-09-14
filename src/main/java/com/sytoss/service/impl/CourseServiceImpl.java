@@ -106,6 +106,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private Topic addTopic(Course course, TopicDTO currentTopic) {
+
         Topic topic = topicMapper.toEntity(currentTopic);
         topic.setCourse(course);
         topicRepository.save(topic);

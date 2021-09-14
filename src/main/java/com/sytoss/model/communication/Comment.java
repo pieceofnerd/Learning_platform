@@ -11,4 +11,12 @@ public class Comment extends Communication {
     @JoinColumn(name = "lesson_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lesson lesson;
+
+    public Lesson getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
+    }
 }
