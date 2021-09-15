@@ -1,8 +1,12 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.model.course.Course;
+import com.sytoss.model.course.StudyGroup;
+import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.UserAccountRepository;
 import com.sytoss.service.StudentService;
+import com.sytoss.web.dto.FilterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,30 +18,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    private final UserAccountRepository userAccountRepository;
 
     @Override
-    public boolean saveUserAccount(UserAccount userAccount) {
-        return false;
+    public void rateCourse(UserAccount student, Course course, Integer rateValue) {
+
     }
 
     @Override
-    public boolean updateUserAccount(Long id, UserAccount userAccount) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteUserAccount(UserAccount userAccount) {
-        return false;
-    }
-
-    @Override
-    public UserAccount findUserAccountById(Long id) throws Exception {
-        return userAccountRepository.findOne(id);
-    }
-
-    @Override
-    public List<UserAccount> findAll() {
+    public List<Course> findCoursesByStudentByFilter(UserAccount student, FilterDTO filter) {
         return null;
+    }
+
+    @Override
+    public Purchase payCourse(UserAccount student, Course course) {
+        return null;
+    }
+
+    @Override
+    public boolean returnCourse(UserAccount student, Course course) {
+        return false;
+    }
+
+    @Override
+    public boolean joinStudyGroup(UserAccount student, Course course) {
+        return false;
+    }
+
+    @Override
+    public boolean leaveStudyGroup(UserAccount student, StudyGroup studyGroup) {
+        return false;
     }
 }
