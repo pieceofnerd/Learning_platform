@@ -1,5 +1,6 @@
 package com.sytoss.web.dto.save;
 
+import com.sytoss.web.dto.MediaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ public class LessonTemplateSaveDTO {
 
     private  String description;
 
-    private MediaSaveDTO media;
+    private MediaDTO media;
 
     private Integer duration;
 

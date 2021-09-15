@@ -10,7 +10,7 @@ import java.util.Date;
 public class PurchaseSaveDTO {
 //    private StudentDTO student;
 
-    private CourseSaveDTO course;
+//    private CourseSaveDTO course;
 
     private String purchaseStatus;
 

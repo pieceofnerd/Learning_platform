@@ -1,11 +1,13 @@
-package com.sytoss.web.dto.save;
+package com.sytoss.web.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-public class MediaSaveDTO {
+@NoArgsConstructor
+public class MediaDTO {
 
     private Long id;
 

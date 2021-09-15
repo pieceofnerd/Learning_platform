@@ -1,5 +1,6 @@
 package com.sytoss.web.dto.save;
 
+import com.sytoss.web.dto.MediaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,9 +18,9 @@ public class CourseSaveDTO {
 
     private CategorySaveDTO category;
 
-    private MediaSaveDTO certificateTemplate;
+    private MediaDTO certificateTemplate;
 
-    private MediaSaveDTO coursePhoto;
+    private MediaDTO coursePhoto;
 
     private List<TopicSaveDTO> topics;
 

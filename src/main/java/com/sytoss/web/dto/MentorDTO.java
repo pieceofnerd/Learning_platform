@@ -2,13 +2,12 @@ package com.sytoss.web.dto;
 
 
 import com.sytoss.model.course.Lesson;
-import com.sytoss.web.dto.save.UserAccountSaveDTO;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
-public class MentorDTO extends UserAccountSaveDTO {
+public class MentorDTO extends UserAccountDTO {
     private String bio;
 
     private List<Lesson> lessons;
