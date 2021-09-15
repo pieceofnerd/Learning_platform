@@ -4,7 +4,7 @@ import org.modelmapper.ModelMapper;
 
 public interface Mapper<E, D> {
 
-    E toEntity(D dto);
+    E toEntity(Object dto);
 
     D toDTO(E entity);
 

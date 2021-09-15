@@ -22,7 +22,7 @@ public abstract class BaseMapper<E, D> implements Mapper<E, D> {
     }
 
     @Override
-    public E toEntity(D dto) {
+    public E toEntity(Object dto) {
         if (dto == null) return null;
         else return mapper.map(dto, entityClass);
 
