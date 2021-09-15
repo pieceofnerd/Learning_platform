@@ -1,26 +1,29 @@
 package com.sytoss.mapper;
 
 import com.sytoss.model.course.Topic;
+import com.sytoss.model.education.Study;
+import com.sytoss.web.dto.StudyDTO;
 import com.sytoss.web.dto.TopicDTO;
+import com.sytoss.web.dto.save.PriceSaveDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TopicMapper extends BaseMapper<Topic, TopicDTO> {
+public class StudyMapper extends BaseMapper<Study,StudyDTO>{
 
     @Autowired
-    public TopicMapper(ModelMapper mapper) {
-        super(Topic.class, TopicDTO.class);
+    public StudyMapper(ModelMapper mapper) {
+        super(Study.class, StudyDTO.class);
     }
 
     @Override
-    public Topic toEntity(Object dto) {
+    public Study toEntity(Object dto) {
         return super.toEntity(dto);
     }
 
     @Override
-    public TopicDTO toDTO(Topic entity) {
+    public StudyDTO toDTO(Study entity) {
         return super.toDTO(entity);
     }
 }

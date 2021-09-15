@@ -1,6 +1,7 @@
 package com.sytoss.service;
 
 import com.sytoss.model.education.Study;
+import com.sytoss.web.dto.FilterDTO;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface StudyService {
 
     Study findStudyById(Long id) throws Exception;
 
-    List<Study> findAll();
+    List<Study> findStudiesByFilter(FilterDTO filter) throws Exception;
 }

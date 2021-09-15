@@ -4,6 +4,7 @@ import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.course.HomeTask;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.communication.Message;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -38,6 +39,9 @@ public class Homework {
     @OneToMany(mappedBy = "homework")
     private List<Feedback> feedbacks;
 
+    @Column(name = "active")
+    @ColumnDefault(value = "1")
+    private boolean isActive;
 
     @Column(name = "created_date")
     @CreationTimestamp
@@ -112,6 +116,30 @@ public class Homework {
 
     public void setHomeTask(HomeTask homeTask) {
         this.homeTask = homeTask;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getAnswerPath() {
+        return answerPath;
+    }
+
+    public void setAnswerPath(String answerPath) {
+        this.answerPath = answerPath;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override

@@ -1,8 +1,12 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.mapper.StudyMapper;
 import com.sytoss.model.education.Study;
+import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.StudyRepository;
 import com.sytoss.service.StudyService;
+import com.sytoss.service.UserAccountService;
+import com.sytoss.web.dto.FilterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +19,9 @@ import java.util.List;
 @Transactional
 public class StudyServiceImpl implements StudyService {
 
-
-    @Autowired
     private final StudyRepository studyRepository;
+    private final UserAccountService userAccountService;
+    private final StudyMapper studyMapper;
 
     @Override
     public boolean saveStudy(Study study) {
@@ -47,7 +51,8 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public List<Study> findAll() {
-        return studyRepository.findAll();
+    public List<Study> findStudiesByFilter(FilterDTO filter) throws Exception {
+        Student student = (Student) userAccountService.findUserAccountById(filter.getStudent());
+        return student.getStudies();
     }
 }

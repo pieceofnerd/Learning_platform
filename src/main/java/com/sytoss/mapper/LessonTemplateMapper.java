@@ -1,8 +1,7 @@
 package com.sytoss.mapper;
 
 import com.sytoss.model.course.LessonTemplate;
-import com.sytoss.web.dto.LessonTemplateDTO.LessonTemplateDTO;
-import com.sytoss.web.dto.save.LessonTemplateSaveDTO;
+import com.sytoss.web.dto.LessonTemplateDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
