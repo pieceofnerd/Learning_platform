@@ -8,4 +8,8 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("1")
 public class Admin extends UserAccount {
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

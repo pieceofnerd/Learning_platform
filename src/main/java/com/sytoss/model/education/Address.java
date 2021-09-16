@@ -32,6 +32,14 @@ public class Address {
     public Address() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getCountry() {
         return country;
     }
@@ -78,5 +86,18 @@ public class Address {
 
     public void setHouseNumber(Integer houseNumber) {
         this.houseNumber = houseNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", country='" + country + '\'' +
+                ", region='" + region + '\'' +
+                ", locality='" + locality + '\'' +
+                ", postcode='" + postcode + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", houseNumber=" + houseNumber +
+                '}';
     }
 }

@@ -1,13 +1,15 @@
 package com.sytoss.web.dto.save;
 
-import com.sytoss.web.dto.CourseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class PriceSaveDTO {
 
@@ -15,7 +17,6 @@ public class PriceSaveDTO {
 
     private BigDecimal cost;
 
-    @Setter
     private Long courseId;
 
     private PromotionSaveDTO promotion;

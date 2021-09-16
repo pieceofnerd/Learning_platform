@@ -46,4 +46,13 @@ public class Student extends UserAccount {
     public void setHomeworks(List<Homework> homeworks) {
         this.homeworks = homeworks;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "bio='" + bio + '\'' +
+                ", studies=" + studies +
+                ", homeworks=" + homeworks +
+                '}';
+    }
 }
