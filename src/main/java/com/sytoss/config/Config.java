@@ -19,7 +19,7 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"com.sytoss.repository"})
-@ComponentScan(basePackages = {"com.sytoss.service", "com.sytoss.mapper"})
+@ComponentScan(basePackages = {"com.sytoss.service", "com.sytoss.mapper","com.sytoss.controller"})
 
 public class Config {
     @Bean
@@ -69,7 +69,7 @@ public class Config {
     Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
-        //   properties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
+//          properties.setProperty("hibernate.enable_lazy_load_no_trans", "false");
         return properties;
     }
 }

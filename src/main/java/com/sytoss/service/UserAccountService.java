@@ -10,17 +10,18 @@ import java.util.List;
 
 public interface UserAccountService {
 
-//    UserAccount findUserAccountById(Long id) throws Exception;
+    UserAccount findUserAccountById(Long id) throws Exception;
 
-    List<UserAccountDTO> findByFilter(FilterDTO filter);
+    List<UserAccount> findByFilter(FilterDTO filter);
 
-    boolean saveUserAccount(UserAccountSaveDTO userAccountSaveDTO);
 
-    boolean updateUserAccount(UserAccountDTO userAccountDTO);
+    boolean saveUserAccount(UserAccount userAccount);
 
-    boolean deleteUserAccount(UserAccountDTO userAccountDTO);
+    boolean updateUserAccount(UserAccount userAccount);
 
-    boolean resetPassword(UserAccountDTO userAccountDTO, char[] newPassword);
+    boolean deleteUserAccount(UserAccount userAccount);
+
+    boolean resetPassword(UserAccount userAccount, char[] newPassword);
 
     boolean forgotPassword(String email);
 

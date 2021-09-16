@@ -27,49 +27,55 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 
     @Override
-    public List<UserAccountDTO> findByFilter(FilterDTO filter) {
+    public List<UserAccount> findByFilter(FilterDTO filter) {
         return null;
     }
 
     @Override
-    public boolean saveUserAccount(UserAccountSaveDTO userAccountSaveDTO) {
-        if (userAccountSaveDTO == null)
+    public UserAccount findUserAccountById(Long id) throws Exception {
+        if (!userAccountRepository.exists(id)) {
+            throw new Exception("User with id = " + id + " not found");
+        }
+        UserAccount userAccount = userAccountRepository.findOne(id);
+        return userAccount;
+    }
+
+    @Override
+    public boolean saveUserAccount(UserAccount userAccount) {
+        if (userAccount == null)
             return false;
-        UserAccount userAccount = mapper.toEntity(userAccountSaveDTO);
         userAccountRepository.save(userAccount);
         return true;
     }
 
     @Override
-    public boolean updateUserAccount(UserAccountDTO userAccountDTO) {
-        if (userAccountDTO == null)
+    public boolean updateUserAccount(UserAccount userAccount) {
+        if (userAccount == null)
             return false;
-        if (!userAccountRepository.exists(userAccountDTO.getId()))
+        if (!userAccountRepository.exists(userAccount.getId()))
             return false;
-        UserAccount userAccount = mapper.toEntity(userAccountDTO);
         userAccountRepository.save(userAccount);
         return true;
     }
 
     @Override
-    public boolean deleteUserAccount(UserAccountDTO userAccountDTO) {
-        if (userAccountDTO == null)
+    public boolean deleteUserAccount(UserAccount userAccount) {
+        if (userAccount == null)
             return false;
-        if (!userAccountRepository.exists(userAccountDTO.getId()))
+        if (!userAccountRepository.exists(userAccount.getId()))
             return false;
-        UserAccount userAccount = mapper.toEntity(userAccountDTO);
         userAccount.setDeleted(true);
         userAccountRepository.save(userAccount);
         return true;
     }
 
     @Override
-    public boolean resetPassword(UserAccountDTO userAccountDTO, char[] newPassword) {
-        if (userAccountDTO == null)
+    public boolean resetPassword(UserAccount userAccount, char[] newPassword) {
+        if (userAccount == null)
             return false;
-        if (!userAccountRepository.exists(userAccountDTO.getId()))
+        if (!userAccountRepository.exists(userAccount.getId()))
             return false;
-        UserAccount userAccount = userAccountRepository.findOne(userAccountDTO.getId());
+
         userAccount.setPassword(newPassword);
         userAccountRepository.save(userAccount);
         return true;

@@ -112,11 +112,8 @@ public class Study {
     public String toString() {
         return "Study{" +
                 "\nid=" + id +
-                "\n, student=" + student +
-                "\n, studyGroup=" + studyGroup +
                 "\n, progress=" + progress +
                 "\n, assessment=" + assessment +
-                "\n, certificate=" + certificate +
                 "\n, createdDate=" + createdDate +
                 "\n, updatedDate=" + updatedDate +
                 '}';
