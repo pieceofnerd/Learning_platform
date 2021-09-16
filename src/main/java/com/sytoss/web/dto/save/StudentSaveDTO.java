@@ -1,15 +1,12 @@
-package com.sytoss.web.dto;
+package com.sytoss.web.dto.save;
 
 import lombok.Getter;
-
-import java.util.List;
+import lombok.Setter;
 
 
 @Getter
-public class StudentSaveDTO {
+@Setter
+public class StudentSaveDTO extends UserAccountSaveDTO {
     private String bio;
-    private List<StudyDTO> studies;
-    private List<HomeworkDTO> homeworks;
-
 
 }

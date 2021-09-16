@@ -9,6 +9,7 @@ import com.sytoss.web.dto.FilterDTO;
 import java.util.List;
 
 public interface StudentService {
+
     void rateCourse(UserAccount student, Course course, Integer rateValue);
 
     List<Course> findCoursesByStudentByFilter(UserAccount student, FilterDTO filter);

@@ -1,11 +1,17 @@
 package com.sytoss.service;
 
+import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.web.dto.FilterDTO;
 
 import java.util.List;
 
 public interface UserAccountService {
+
+//    UserAccount findUserAccountById(Long id) throws Exception;
+
+    List<UserAccount> findByFilter(FilterDTO filter);
 
     boolean saveUserAccount(UserAccount userAccount);
 
@@ -13,7 +19,9 @@ public interface UserAccountService {
 
     boolean deleteUserAccount(UserAccount userAccount);
 
-    UserAccount findUserAccountById(Long id) throws Exception;
+    boolean resetPassword(Long id);
 
-    List<UserAccount> findAll();
+    boolean forgotPassword(Long id);
+
+    boolean leaveComment(Communication comment);
 }

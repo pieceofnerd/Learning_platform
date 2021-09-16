@@ -20,27 +20,23 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name = "first_name")
     private String firstName;
-
 
     @Column(name = "second_name")
     private String secondName;
 
-
     @Column(name = "birthday_date")
     private Date birthday;
 
-    @Column
-    private String bio;
+//    @Column(name = "bio")
+//    private String bio;
 
-    @Column
+    @Column(name = "email")
     private String email;
 
-    @Column
+    @Column(name = "password")
     private char[] password;
-
 
     @JoinColumn(name = "address_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -58,26 +54,19 @@ public class UserAccount {
 
     @Column(name = "updated_date")
     private Date updatedDate;
-    
-    @OneToMany(mappedBy = "mentor")
-    private List<Lesson> lessons;
-
-    @OneToMany(mappedBy = "student")
-    private List<Study> studies;
-    
-    @OneToMany(mappedBy = "author")
-    private List<Homework> homeworks;
+//
+//    @OneToMany(mappedBy = "mentor")
+//    private List<Lesson> lessons;
+//
+//    @OneToMany(mappedBy = "student")
+//    private List<Study> studies;
+//
+//    @OneToMany(mappedBy = "author")
+//    private List<Homework> homeworks;
 
     public UserAccount() {
     }
 
-    public List<Study> getStudies() {
-        return studies;
-    }
-
-    public void setStudies(List<Study> studies) {
-        this.studies = studies;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -103,13 +92,6 @@ public class UserAccount {
         this.birthday = birthday;
     }
 
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
 
     public String getEmail() {
         return email;
@@ -152,14 +134,6 @@ public class UserAccount {
         this.photo = photo;
     }
 
-    public List<Homework> getHomeworks() {
-        return homeworks;
-    }
-
-    public void setHomeworks(List<Homework> homeworks) {
-        this.homeworks = homeworks;
-    }
-
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -176,15 +150,6 @@ public class UserAccount {
         this.updatedDate = updatedDate;
     }
 
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
-
     @Override
     public String toString() {
         return "UserAccount{" +
@@ -192,7 +157,6 @@ public class UserAccount {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", birthday=" + birthday +
-                ", bio='" + bio + '\'' +
                 ", email='" + email + '\'' +
                 ", password=" + Arrays.toString(password) +
                 ", address=" + address +

@@ -34,4 +34,12 @@ public class Mentor extends UserAccount {
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
     }
+
+    @Override
+    public String toString() {
+        return "Mentor{" +
+                "bio='" + bio + '\'' +
+                ", lessons=" + lessons +
+                '}';
+    }
 }
