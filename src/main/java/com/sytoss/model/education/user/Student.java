@@ -48,8 +48,6 @@ public class Student extends UserAccount {
     public String toString() {
         return "Student{" +
                 "bio='" + bio + '\'' +
-                ", studies=" + studies +
-                ", homeworks=" + homeworks +
                 '}';
     }
 }

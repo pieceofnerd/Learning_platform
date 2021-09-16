@@ -12,15 +12,15 @@ public interface UserAccountService {
 
 //    UserAccount findUserAccountById(Long id) throws Exception;
 
-    List<UserAccountDTO> findByFilter(FilterDTO filter);
+    List<UserAccount> findByFilter(FilterDTO filter);
 
-    boolean saveUserAccount(UserAccountSaveDTO userAccountSaveDTO);
+    boolean saveUserAccount(UserAccount userAccount);
 
-    boolean updateUserAccount(UserAccountDTO userAccountDTO);
+    boolean updateUserAccount(UserAccount userAccount);
 
-    boolean deleteUserAccount(UserAccountDTO userAccountDTO);
+    boolean deleteUserAccount(UserAccount userAccount);
 
-    boolean resetPassword(UserAccountDTO userAccountDTO, char[] newPassword);
+    boolean resetPassword(UserAccount userAccount, char[] newPassword);
 
     boolean forgotPassword(String email);
 
