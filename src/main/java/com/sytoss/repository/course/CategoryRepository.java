@@ -1,4 +1,4 @@
-package com.sytoss.repository;
+package com.sytoss.repository.course;
 
 import com.sytoss.model.course.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

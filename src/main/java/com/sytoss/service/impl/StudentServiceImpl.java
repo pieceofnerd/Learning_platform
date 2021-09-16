@@ -4,7 +4,6 @@ import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.UserAccount;
-import com.sytoss.repository.UserAccountRepository;
 import com.sytoss.service.StudentService;
 import com.sytoss.web.dto.FilterDTO;
 import lombok.RequiredArgsConstructor;
