@@ -16,11 +16,11 @@ public class CourseSaveDTO {
 
     private String description;
 
-    private CategorySaveDTO category;
+    private Long categoryId;
 
-    private MediaDTO certificateTemplate;
+    private MediaSaveDTO certificateTemplate;
 
-    private MediaDTO coursePhoto;
+    private MediaSaveDTO coursePhoto;
 
     private List<TopicSaveDTO> topics;
 

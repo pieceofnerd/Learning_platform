@@ -12,7 +12,7 @@ public class LessonTemplateSaveDTO {
 
     private  String description;
 
-    private MediaDTO media;
+    private MediaSaveDTO media;
 
     private Integer duration;
 
