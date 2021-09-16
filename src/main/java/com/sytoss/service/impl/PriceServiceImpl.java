@@ -2,7 +2,7 @@ package com.sytoss.service.impl;
 
 import com.sytoss.mapper.PriceMapper;
 import com.sytoss.model.course.Price;
-import com.sytoss.repository.PriceRepository;
+import com.sytoss.repository.course.PriceRepository;
 import com.sytoss.service.PriceService;
 import com.sytoss.web.dto.PriceDTO;
 import com.sytoss.web.dto.save.PriceSaveDTO;

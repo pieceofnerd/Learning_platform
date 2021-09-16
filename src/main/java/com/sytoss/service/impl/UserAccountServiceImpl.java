@@ -2,9 +2,10 @@ package com.sytoss.service.impl;
 
 import com.sytoss.mapper.UserAccountMapper;
 import com.sytoss.model.communication.Communication;
-import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
-import com.sytoss.repository.UserAccountRepository;
+import com.sytoss.repository.communication.CommunicationRepository;
+import com.sytoss.repository.education.UserAccountRepository;
+import com.sytoss.service.CommunicationService;
 import com.sytoss.service.UserAccountService;
 import com.sytoss.web.dto.FilterDTO;
 import com.sytoss.web.dto.UserAccountDTO;
@@ -21,6 +22,7 @@ import java.util.List;
 public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
+    private final CommunicationService communicationService;
     private final UserAccountMapper mapper;
 
 
@@ -88,7 +90,8 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public boolean leaveComment(Communication comment) {
-
-        return false;
+        if (comment == null)
+            return false;
+        return communicationService.createComment(comment);
     }
 }

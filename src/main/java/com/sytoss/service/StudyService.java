@@ -14,5 +14,7 @@ public interface StudyService {
 
     Study findStudyById(Long id) throws Exception;
 
+    List<Study> findAll();
+
     List<Study> findStudiesByFilter(FilterDTO filter) throws Exception;
 }

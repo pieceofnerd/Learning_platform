@@ -2,7 +2,7 @@ package com.sytoss.service.impl;
 
 import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.UserAccount;
-import com.sytoss.repository.PurchaseRepository;
+import com.sytoss.repository.education.PurchaseRepository;
 import com.sytoss.service.PurchaseService;
 import com.sytoss.web.dto.FilterDTO;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.sytoss.repository;
+package com.sytoss.repository.education;
 
 import com.sytoss.model.education.Study;
 import org.springframework.data.jpa.repository.JpaRepository;

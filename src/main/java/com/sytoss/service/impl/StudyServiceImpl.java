@@ -2,13 +2,11 @@ package com.sytoss.service.impl;
 
 import com.sytoss.mapper.StudyMapper;
 import com.sytoss.model.education.Study;
-import com.sytoss.model.education.user.Student;
-import com.sytoss.repository.StudyRepository;
+import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.service.StudyService;
 import com.sytoss.service.UserAccountService;
 import com.sytoss.web.dto.FilterDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,8 +49,14 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
+    public List<Study> findAll() {
+        return studyRepository.findAll();
+    }
+
+    @Override
     public List<Study> findStudiesByFilter(FilterDTO filter) throws Exception {
-        Student student = (Student) userAccountService.findUserAccountById(filter.getStudent());
-        return student.getStudies();
+//        Student student = (Student) userAccountService.findUserAccountById(filter.getStudent());
+//        return student.getStudies();
+        return null;
     }
 }
