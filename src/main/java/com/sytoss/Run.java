@@ -52,7 +52,7 @@ public class Run {
                 final StudyService studyService = getStudyService();
                 if (methodNumber == 1) {
                     System.out.print("Enter user id - ");
-                    System.out.println(userAccountService.findUserAccountById(sc.nextLong()));
+                   // System.out.println(userAccountService.findUserAccountById(sc.nextLong()));
                 }
                 if (methodNumber == 2) {
                     System.out.print("Enter user id - ");

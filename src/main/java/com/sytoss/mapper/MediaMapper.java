@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 public class MediaMapper extends BaseMapper<Media, MediaDTO> {
 
 
-    @Autowired
-    public MediaMapper(ModelMapper mapper) {
+    public MediaMapper() {
         super(Media.class, MediaDTO.class);
     }
 

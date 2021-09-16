@@ -2,15 +2,12 @@ package com.sytoss.mapper;
 
 import com.sytoss.model.course.Topic;
 import com.sytoss.web.dto.TopicDTO;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TopicMapper extends BaseMapper<Topic, TopicDTO> {
 
-    @Autowired
-    public TopicMapper(ModelMapper mapper) {
+    public TopicMapper() {
         super(Topic.class, TopicDTO.class);
     }
 
