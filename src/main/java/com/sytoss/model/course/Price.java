@@ -21,15 +21,15 @@ public class Price {
     private Long id;
 
     @JoinColumn(name = "course_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Course course;
 
     @JoinColumn(name = "price_type")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Lookup priceType;
 
     @JoinColumn(name = "promotion_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Promotion promotion;
 
     @Column(name = "cost")

@@ -20,7 +20,7 @@ public interface UserAccountService {
 
     boolean deleteUserAccount(UserAccountDTO userAccountDTO);
 
-    boolean resetPassword(Long id);
+    boolean resetPassword(UserAccountDTO userAccountDTO, char[] newPassword);
 
     boolean forgotPassword(String email);
 

@@ -30,7 +30,7 @@ public class Promotion {
     private Date endDate;
 
     @JoinColumn(name = "promotion_state_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Lookup promotionState;
 
     @OneToMany(mappedBy = "promotion",fetch = FetchType.LAZY)

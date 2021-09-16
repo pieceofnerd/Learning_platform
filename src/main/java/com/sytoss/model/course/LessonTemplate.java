@@ -20,14 +20,14 @@ public class LessonTemplate {
     private String description;
 
     @JoinColumn(name = "media")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Media media;
 
     @Column
     private Integer duration;
 
     @JoinColumn(name = "topic_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Topic topic;
 
     @OneToMany(mappedBy = "lessonTemplate")

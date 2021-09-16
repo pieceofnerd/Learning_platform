@@ -18,7 +18,7 @@ public class Communication {
     private Long id;
 
     @JoinColumn(name = "sender_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private UserAccount sender;
 
     @CreationTimestamp

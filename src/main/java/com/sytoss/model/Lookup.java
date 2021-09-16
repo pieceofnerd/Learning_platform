@@ -11,7 +11,7 @@ public class Lookup {
     private Long id;
 
     @JoinColumn(name = "lookup_name_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private LookupName lookupName;
     
     @Column

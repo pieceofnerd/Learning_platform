@@ -14,7 +14,7 @@ public class Category {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Course> courses;
 
     public Category() {
