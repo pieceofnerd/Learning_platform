@@ -19,7 +19,7 @@ public class HomeTask {
     private String task;
 
     @JoinColumn(name = "file_path")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Media filePath;
 
     @Column(name = "deadline_date")
@@ -28,7 +28,7 @@ public class HomeTask {
     @OneToOne(mappedBy = "homeTask")
     private Lesson lesson;
 
-    @OneToMany(mappedBy = "homeTask")
+    @OneToMany(mappedBy = "homeTask",fetch = FetchType.LAZY)
     private List<Homework> homework;
 
     public Long getId() {

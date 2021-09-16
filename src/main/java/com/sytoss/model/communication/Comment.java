@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Comment extends Communication {
 
     @JoinColumn(name = "lesson_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Lesson lesson;
 
     public Lesson getLesson() {

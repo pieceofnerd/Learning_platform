@@ -21,14 +21,14 @@ public class Course {
     private String description;
 
     @JoinColumn(name = "course_photo_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Media coursePhoto;
 
     @Column(name = "recommended_literature")
     private String recommendedLiterature;
 
     @JoinColumn(name = "certificate_template_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Media certificateTemplate;
 
     @Column

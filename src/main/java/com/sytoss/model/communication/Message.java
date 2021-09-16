@@ -10,11 +10,11 @@ import javax.persistence.*;
 public class Message extends Communication {
 
     @JoinColumn(name = "receiver_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private UserAccount receiver;
 
     @JoinColumn(name = "homework_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Homework homework;
 
     public UserAccount getReceiver() {

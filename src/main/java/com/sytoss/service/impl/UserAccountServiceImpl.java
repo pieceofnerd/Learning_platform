@@ -62,17 +62,33 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public boolean resetPassword(Long id) {
-        return false;
+    public boolean resetPassword(UserAccountDTO userAccountDTO, char[] newPassword) {
+        if (userAccountDTO == null)
+            return false;
+        if (!userAccountRepository.exists(userAccountDTO.getId()))
+            return false;
+        UserAccount userAccount = userAccountRepository.findOne(userAccountDTO.getId());
+        userAccount.setPassword(newPassword);
+        userAccountRepository.save(userAccount);
+        return true;
     }
 
     @Override
     public boolean forgotPassword(String email) {
-        return false;
+
+        if (email.isEmpty()) {
+            return false;
+        }
+        UserAccount userAccount = userAccountRepository.findUserAccountByEmail(email);
+        if (userAccount == null)
+            return false;
+        //send email
+        return true;
     }
 
     @Override
     public boolean leaveComment(Communication comment) {
+
         return false;
     }
 }

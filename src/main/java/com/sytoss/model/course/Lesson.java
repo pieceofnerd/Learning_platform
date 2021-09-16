@@ -17,7 +17,7 @@ public class Lesson {
     private Long id;
 
     @JoinColumn(name = "mentor")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private UserAccount mentor;
 
     @OneToOne
@@ -25,11 +25,11 @@ public class Lesson {
     private HomeTask homeTask;
 
     @JoinColumn(name = "lesson_template")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private LessonTemplate lessonTemplate;
 
     @JoinColumn(name = "study_group")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private StudyGroup studyGroup;
 
     @Column(name = "lesson_date")
@@ -42,7 +42,7 @@ public class Lesson {
     @Column(name = "updated_date")
     private Date updatedDate;
 
-    @OneToMany(mappedBy = "lesson")
+    @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY)
     private List<Comment> comments;
 
     public Lesson() {

@@ -36,10 +36,10 @@ public class StudyGroup {
     @Column(name = "updated_date")
     private Date updatedDate;
 
-    @OneToMany(mappedBy = "studyGroup")
+    @OneToMany(mappedBy = "studyGroup",fetch = FetchType.LAZY)
     private List<Study> studies;
 
-    @OneToMany(mappedBy = "studyGroup")
+    @OneToMany(mappedBy = "studyGroup",fetch = FetchType.LAZY)
     private List<Lesson> lessons;
 
     public StudyGroup() {

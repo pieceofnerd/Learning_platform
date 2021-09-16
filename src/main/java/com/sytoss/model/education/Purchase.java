@@ -16,15 +16,15 @@ public class Purchase {
     private Long id;
 
     @JoinColumn(name = "student_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private UserAccount student;
 
     @JoinColumn(name = "course_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Course course;
 
     @JoinColumn(name = "purchase_status_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Lookup purchaseStatus;
 
     @Column(name = "cost")

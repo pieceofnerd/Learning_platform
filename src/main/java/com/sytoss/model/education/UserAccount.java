@@ -39,14 +39,14 @@ public class UserAccount {
     private char[] password;
 
     @JoinColumn(name = "address_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Address address;
 
     @Column(name = "last_activity")
     private Date lastActivity;
 
     @JoinColumn(name = "image_path")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Media photo;
 
     @Column(name = "deleted")

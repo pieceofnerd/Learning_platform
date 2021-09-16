@@ -20,11 +20,11 @@ public class Homework {
     private Long id;
 
     @JoinColumn(name = "author_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private UserAccount author;
 
     @JoinColumn(name = "homework_state_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Lookup homeworkState;
 
     @Column(name = "answer_path")
@@ -33,10 +33,10 @@ public class Homework {
     @Column(name = "fulfillment_date")
     private Date fulfillmentDate;
 
-    @OneToMany(mappedBy = "homework")
+    @OneToMany(mappedBy = "homework", fetch = FetchType.LAZY)
     private List<Message> dialog;
 
-    @OneToMany(mappedBy = "homework")
+    @OneToMany(mappedBy = "homework", fetch = FetchType.LAZY)
     private List<Feedback> feedbacks;
 
     @Column(name = "active")

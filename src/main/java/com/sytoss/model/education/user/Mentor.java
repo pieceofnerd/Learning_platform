@@ -3,10 +3,7 @@ package com.sytoss.model.education.user;
 import com.sytoss.model.course.Lesson;
 import com.sytoss.model.education.UserAccount;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -16,7 +13,7 @@ public class Mentor extends UserAccount {
     @Column
     private String bio;
 
-    @OneToMany(mappedBy = "mentor")
+    @OneToMany(mappedBy = "mentor", fetch = FetchType.LAZY)
     private List<Lesson> lessons;
 
     public String getBio() {

@@ -18,10 +18,10 @@ public class Topic {
     private String description;
 
     @JoinColumn(name = "course_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Course course;
 
-    @OneToMany(mappedBy = "topic")
+    @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY)
     private List<LessonTemplate> lessonTemplates;
 
     public Topic() {

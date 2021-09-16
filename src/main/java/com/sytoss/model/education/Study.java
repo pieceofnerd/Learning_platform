@@ -18,11 +18,11 @@ public class Study {
     private Long id;
 
     @JoinColumn(name = "student_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private UserAccount student;
 
     @JoinColumn(name = "study_group_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private StudyGroup studyGroup;
 
     @Column(name = "progress", nullable = false)
@@ -31,7 +31,7 @@ public class Study {
     @Column(name = "assessment")
     private Double assessment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Media certificate;
 
     @CreationTimestamp
