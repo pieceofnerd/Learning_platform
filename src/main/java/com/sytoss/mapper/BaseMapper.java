@@ -4,6 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public abstract class BaseMapper<E, D> implements Mapper<E, D> {
     @Autowired
@@ -32,5 +35,27 @@ public abstract class BaseMapper<E, D> implements Mapper<E, D> {
     public D toDTO(E entity) {
         if (entity == null) return null;
         else return mapper.map(entity, dtoClass);
+    }
+
+    @Override
+    public List<E> toListEntity(List<D> dList) {
+        if (dList.isEmpty()) return null;
+        List<E> eList = new ArrayList<>();
+        for (D d :
+                dList) {
+            eList.add(mapper.map(d, entityClass));
+        }
+        return eList;
+    }
+
+    @Override
+    public List<D> toListDTO(List<E> eList) {
+        if (eList.isEmpty()) return null;
+        List<D> dList = new ArrayList<>();
+        for (E e :
+                eList) {
+            dList.add(mapper.map(e, dtoClass));
+        }
+        return dList;
     }
 }

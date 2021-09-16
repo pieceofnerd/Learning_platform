@@ -19,7 +19,7 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"com.sytoss.repository"})
-@ComponentScan(basePackages = {"com.sytoss.service", "com.sytoss.mapper"})
+@ComponentScan(basePackages = {"com.sytoss.service", "com.sytoss.mapper","com.sytoss.controller"})
 
 public class Config {
     @Bean

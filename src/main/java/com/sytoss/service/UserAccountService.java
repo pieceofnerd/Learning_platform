@@ -10,9 +10,10 @@ import java.util.List;
 
 public interface UserAccountService {
 
-//    UserAccount findUserAccountById(Long id) throws Exception;
+    UserAccount findUserAccountById(Long id) throws Exception;
 
     List<UserAccount> findByFilter(FilterDTO filter);
+
 
     boolean saveUserAccount(UserAccount userAccount);
 

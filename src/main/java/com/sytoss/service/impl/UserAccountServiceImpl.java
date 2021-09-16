@@ -32,6 +32,15 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
+    public UserAccount findUserAccountById(Long id) throws Exception {
+        if (!userAccountRepository.exists(id)) {
+            throw new Exception("User with id = " + id + " not found");
+        }
+        UserAccount userAccount = userAccountRepository.findOne(id);
+        return userAccount;
+    }
+
+    @Override
     public boolean saveUserAccount(UserAccount userAccount) {
         if (userAccount == null)
             return false;
