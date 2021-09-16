@@ -4,6 +4,7 @@ package com.sytoss.model.education;
 import com.sytoss.model.course.Lesson;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.Media;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -29,9 +30,8 @@ public class UserAccount {
     @Column(name = "birthday_date")
     private Date birthday;
 
-//    @Column(name = "bio")
+    //    @Column(name = "bio")
 //    private String bio;
-
     @Column(name = "email")
     private String email;
 
@@ -48,6 +48,9 @@ public class UserAccount {
     @JoinColumn(name = "image_path")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Media photo;
+
+    @Column(name = "deleted")
+    private boolean deleted;
 
     @Column(name = "created_date")
     private Date createdDate = new Date();
@@ -150,6 +153,22 @@ public class UserAccount {
         this.updatedDate = updatedDate;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public String toString() {
         return "UserAccount{" +
@@ -160,8 +179,9 @@ public class UserAccount {
                 ", email='" + email + '\'' +
                 ", password=" + Arrays.toString(password) +
                 ", address=" + address +
-                ", lastActivity=" + lastActivity +
                 ", photo=" + photo +
+                ", lastActivity=" + lastActivity +
+                ", deleted= " + deleted +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
                 '}';
