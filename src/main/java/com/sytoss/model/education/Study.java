@@ -29,10 +29,13 @@ public class Study {
     private Double progress;
 
     @Column(name = "assessment")
-    private Double assessment;
+    private Integer assessment;
 
     @ManyToOne
     private Media certificate;
+
+    @Column(name = "deleted")
+    private boolean deleted;
 
     @CreationTimestamp
     @Column(name = "created_date", nullable = false)
@@ -76,11 +79,11 @@ public class Study {
         this.progress = progress;
     }
 
-    public Double getAssessment() {
+    public Integer getAssessment() {
         return assessment;
     }
 
-    public void setAssessment(Double assessment) {
+    public void setAssessment(Integer assessment) {
         this.assessment = assessment;
     }
 
@@ -108,5 +111,11 @@ public class Study {
         this.updatedDate = updatedDate;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
 
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 }

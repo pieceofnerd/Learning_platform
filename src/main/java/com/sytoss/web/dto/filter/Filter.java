@@ -5,5 +5,8 @@ public enum Filter {
     STUDENT,
     TIME_PERIOD,
     NEWEST,
-    COST_RANGE
+    COST_RANGE,
+    COURSE,
+    DELETED
+
 }

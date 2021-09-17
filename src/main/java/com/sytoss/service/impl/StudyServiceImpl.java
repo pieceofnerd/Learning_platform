@@ -1,9 +1,10 @@
 package com.sytoss.service.impl;
 
-import com.sytoss.mapper.StudyMapper;
+import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Study;
-import com.sytoss.repository.course.StudyGroupRepository;
+import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.education.StudyRepository;
+import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
 import com.sytoss.service.UserAccountService;
 import com.sytoss.web.dto.filter.Filter;
@@ -16,55 +17,76 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
     private final UserAccountService userAccountService;
-    private final StudyGroupRepository studyGroupRepository;
+    private final StudyGroupService studyGroupService;
+
 
     @Override
-    public boolean saveStudy(Study study) {
-        if (study == null)
+    public boolean saveStudy(UserAccount student, StudyGroup studyGroup) {
+        if (student == null)
             return false;
+        if (studyGroup == null)
+            return false;
+
+        Study study = new Study();
+        study.setStudent(student);
+        study.setStudyGroup(studyGroup);
         studyRepository.save(study);
         return true;
     }
 
     @Override
-    public boolean updateStudy(Long id, Study study) {
+    public boolean deleteStudy(Study study) {
+        if (study == null)
+            return false;
+        if (!studyRepository.exists(study.getId()))
+            return false;
+        study.setDeleted(true);
+        studyRepository.save(study);
+        return true;
+    }
+
+    @Override
+    public boolean updateProgress(UserAccount student, StudyGroup studyGroup) {
+        //TODO
         return false;
     }
 
     @Override
-    public boolean deleteStudy(Study study) {
-        return false;
+    @Transactional
+    public void updateAssessment(UserAccount student, StudyGroup studyGroup) {
+        final Study study = studyRepository.findOne(student.getId());
+        for (Study studyGroupStudy : studyGroup.getStudies()) {
+
+        }
+//        studyRepository.save(study);
+        //TODO
     }
 
     @Override
     public Study findStudyById(Long id) throws Exception {
-        if (!studyRepository.exists(id)) {
+        if (!studyRepository.exists(id))
             throw new Exception("Study with id = " + id + " not found!");
-        }
-        Study study = studyRepository.findOne(id);
-        return study;
-    }
-
-    @Override
-    public List<Study> findAll() {
-        return studyRepository.findAll();
+        return studyRepository.findOne(id);
     }
 
     @Override
     public List<Study> findStudiesByFilter(FilterStudyDTO filter) throws Exception {
-        final Filter f = filter.getFilter();
         List<Study> studies = new ArrayList<>();
-        if (f == Filter.STUDENT) {
-            studies.addAll(studyRepository.findStudiesByStudent(userAccountService.findUserAccountById(filter.getStudent())));
-        }
-        if (f == Filter.STUDY_GROUP) {
-            studies.addAll(studyRepository.findStudiesByStudyGroup(studyGroupRepository.findOne(filter.getStudyGroup())));
+        switch (filter.getFilter()) {
+            case STUDENT: {
+                studies.addAll(studyRepository.findStudiesByStudent(userAccountService.findUserAccountById(filter.getStudent())));
+                break;
+            }
+            case STUDY_GROUP: {
+                studies.addAll(studyRepository.findStudiesByStudyGroup(studyGroupService.findStudyGroupById(filter.getStudyGroup())));
+                break;
+            }
         }
         return studies;
     }

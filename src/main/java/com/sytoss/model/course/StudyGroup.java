@@ -29,6 +29,9 @@ public class StudyGroup {
     @Column(name = "end_date")
     private Date endDate;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
     @CreationTimestamp
     @Column(name = "created_date")
     private Date createdDate;
@@ -86,6 +89,14 @@ public class StudyGroup {
         this.endDate = endDate;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -117,6 +128,4 @@ public class StudyGroup {
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
     }
-
-
 }

@@ -50,6 +50,10 @@ public class Homework {
     @Column(name = "updated_date")
     private Date updatedDate;
 
+    @JoinColumn(name = "home_task_id")
+    @ManyToOne(optional = false)
+    private HomeTask homeTask;
+
     public List<Message> getDialog() {
         return dialog;
     }
@@ -57,10 +61,6 @@ public class Homework {
     public void setDialog(List<Message> dialog) {
         this.dialog = dialog;
     }
-
-    @JoinColumn(name = "home_task_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private HomeTask homeTask;
 
     public UserAccount getAuthor() {
         return author;
@@ -142,17 +142,4 @@ public class Homework {
         isActive = active;
     }
 
-    @Override
-    public String toString() {
-        return "Homework{" +
-                "id=" + id +
-                ", author=" + author +
-                ", homeworkState=" + homeworkState +
-                ", answerPath='" + answerPath + '\'' +
-                ", fulfillmentDate=" + fulfillmentDate +
-                ", createdDate=" + createdDate +
-                ", updatedDate=" + updatedDate +
-                ", homeTask=" + homeTask +
-                '}';
-    }
 }

@@ -25,6 +25,8 @@ public class StudyDTO {
 
     private MediaDTO certificate;
 
+    private boolean deleted;
+
     private Date createdDate;
 
     private Date updatedDate;
