@@ -17,7 +17,7 @@ public class StudyGroup {
     private Long id;
 
     @JoinColumn(name = "course_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Course course;
 
     @Column(name = "place_number")
@@ -118,16 +118,5 @@ public class StudyGroup {
         this.lessons = lessons;
     }
 
-    @Override
-    public String toString() {
-        return "StudyGroup{" +
-                "id=" + id +
-                ", course=" + course +
-                ", placeNumber=" + placeNumber +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", createdDate=" + createdDate +
-                ", updatedDate=" + updatedDate +
-                '}';
-    }
+
 }

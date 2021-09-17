@@ -2,12 +2,21 @@ package com.sytoss;
 
 import com.sytoss.config.Config;
 
+import com.sytoss.controller.StudyController;
+import com.sytoss.mapper.CourseMapper;
+import com.sytoss.mapper.StudyMapper;
+import com.sytoss.model.course.Course;
 import com.sytoss.model.education.Study;
+import com.sytoss.repository.course.CourseRepository;
+import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.service.CourseService;
 import com.sytoss.service.StudyService;
 import com.sytoss.service.UserAccountService;
 import com.sytoss.service.impl.CourseServiceImpl;
 import com.sytoss.web.dto.*;
+import com.sytoss.web.dto.filter.Filter;
+import com.sytoss.web.dto.filter.FilterStudyDTO;
+import org.hibernate.Hibernate;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.math.BigDecimal;
@@ -22,12 +31,26 @@ public class Run {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         String exit = "";
-        do {
-            showMenu();
-            choiceBetweenServices(scanner.nextInt(),scanner.nextInt());
-            System.out.println("To exit enter -> ex , to continue enter any symbol.");
-            exit = scanner.next();
-        } while (!exit.equals("ex"));
+//        do {
+//            showMenu();
+//            choiceBetweenServices(scanner.nextInt(),scanner.nextInt());
+//            System.out.println("To exit enter -> ex , to continue enter any symbol.");
+//            exit = scanner.next();
+//        } while (!exit.equals("ex"));
+        final StudyController bean = context.getBean(StudyController.class);
+        final CourseRepository courseRepository = context.getBean(CourseRepository.class);
+        final StudyRepository studyRepository = context.getBean(StudyRepository.class);
+        final StudyMapper studyMapper = context.getBean(StudyMapper.class);
+        final CourseMapper courseMapper = context.getBean(CourseMapper.class);
+
+        System.out.println(courseRepository.findOne(2L).getActive());
+        FilterStudyDTO filterStudyDTO = new FilterStudyDTO();
+        filterStudyDTO.setFilter(Filter.STUDENT);
+        filterStudyDTO.setStudent(1L);
+        for (StudyDTO s:
+                bean.findStudiesByFilter(filterStudyDTO)) {
+            System.out.println(s);
+        }
     }
 
 
@@ -52,21 +75,21 @@ public class Run {
                 final StudyService studyService = getStudyService();
                 if (methodNumber == 1) {
                     System.out.print("Enter user id - ");
-                   // System.out.println(userAccountService.findUserAccountById(sc.nextLong()));
+
+                    for (Study s :
+                            studyService.findAll()) {
+                        System.out.println(s);
+                    }
                 }
                 if (methodNumber == 2) {
                     System.out.print("Enter user id - ");
                     FilterDTO filter = new FilterDTO();
                     filter.setStudent(sc.nextLong());
-                    for (Study study :
-                            studyService.findStudiesByFilter(filter)) {
-                        System.out.println(study);
-                    }
+
                 }
                 break;
             }
             case 2: {
-
                 break;
             }
             default: {

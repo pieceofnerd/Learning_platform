@@ -38,10 +38,10 @@ public class Course {
     private Boolean active;
 
     @JoinColumn(name = "category_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Category category;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
     private List<Topic> topics;
 
     @OneToMany(mappedBy = "course")
@@ -137,4 +137,6 @@ public class Course {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+
 }

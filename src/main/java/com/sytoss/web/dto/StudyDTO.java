@@ -13,6 +13,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class StudyDTO {
 
+    private Long id;
+
     private UserAccountDTO student;
 
     private StudyGroupDTO studyGroup;
