@@ -11,8 +11,8 @@ import java.util.List;
 @Component
 public class StudyMapper extends BaseMapper<Study,StudyDTO>{
 
-    @Autowired
-    public StudyMapper(ModelMapper mapper) {
+
+    public StudyMapper() {
         super(Study.class, StudyDTO.class);
     }
 

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryMapper extends BaseMapper<Category, CategoryDTO> {
 
-    @Autowired
-    public CategoryMapper(ModelMapper mapper) {
+
+    public CategoryMapper() {
         super(Category.class, CategoryDTO.class);
     }
 

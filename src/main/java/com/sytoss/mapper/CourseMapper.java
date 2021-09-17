@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class CourseMapper extends BaseMapper<Course, CourseDTO> {
 
     @Autowired
-    public CourseMapper(ModelMapper mapper) {
+    public CourseMapper() {
         super(Course.class, CourseDTO.class);
     }
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PriceMapper extends BaseMapper<Price, PriceDTO> {
 
-    protected PriceMapper(ModelMapper mapper) {
+    protected PriceMapper() {
         super(Price.class, PriceDTO.class);
     }
 

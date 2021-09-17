@@ -75,11 +75,11 @@ public class Run {
                 final StudyService studyService = getStudyService();
                 if (methodNumber == 1) {
                     System.out.print("Enter user id - ");
+
                     for (Study s :
                             studyService.findAll()) {
                         System.out.println(s);
                     }
-//                    System.out.println(userAccountService.findUserAccountById(sc.nextLong()));
                 }
                 if (methodNumber == 2) {
                     System.out.print("Enter user id - ");

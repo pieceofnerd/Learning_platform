@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LessonTemplateMapper extends BaseMapper<LessonTemplate, LessonTemplateDTO> {
-    protected LessonTemplateMapper(ModelMapper mapper) {
+
+    protected LessonTemplateMapper() {
         super(LessonTemplate.class, LessonTemplateDTO.class);
     }
 

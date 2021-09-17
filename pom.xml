@@ -16,6 +16,7 @@
 <!--        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>-->
         <spring-context.version>5.1.4.RELEASE</spring-context.version>
         <spring-orm.version>5.1.4.RELEASE</spring-orm.version>
+        <junit-jupiter-api.version>5.7.2</junit-jupiter-api.version>
         <lombok.version>1.18.20</lombok.version>
         <modelmapper.version>2.4.4</modelmapper.version>
     </properties>
@@ -57,6 +58,20 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
+        </dependency>
+
+        <!--JUNIT dependencies-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit-jupiter-api.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter-api.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
