@@ -18,9 +18,6 @@ public class StudyController {
     private final StudyService studyService;
     private final StudyMapper mapper;
 
-    public List<StudyDTO> findAll() {
-        return mapper.toListDTO(studyService.findAll());
-    }
 
     public List<StudyDTO> findStudiesByFilter(FilterStudyDTO filter) throws Exception {
         final List<Study> studiesByFilter = studyService.findStudiesByFilter(filter);

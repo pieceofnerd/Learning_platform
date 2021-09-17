@@ -23,11 +23,11 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository userAccountRepository;
     private final CommunicationService communicationService;
-    private final UserAccountMapper mapper;
 
 
     @Override
     public List<UserAccount> findByFilter(FilterDTO filter) {
+        //TODO
         return null;
     }
 
@@ -44,6 +44,9 @@ public class UserAccountServiceImpl implements UserAccountService {
     public boolean saveUserAccount(UserAccount userAccount) {
         if (userAccount == null)
             return false;
+        if (userAccountRepository.findUserAccountByEmail(userAccount.getEmail()) != null)
+            return false;
+
         userAccountRepository.save(userAccount);
         return true;
     }
@@ -78,12 +81,12 @@ public class UserAccountServiceImpl implements UserAccountService {
 
         userAccount.setPassword(newPassword);
         userAccountRepository.save(userAccount);
+        //TODO
         return true;
     }
 
     @Override
     public boolean forgotPassword(String email) {
-
         if (email.isEmpty()) {
             return false;
         }
@@ -91,6 +94,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         if (userAccount == null)
             return false;
         //send email
+        //TODO
         return true;
     }
 
@@ -100,4 +104,5 @@ public class UserAccountServiceImpl implements UserAccountService {
             return false;
         return communicationService.createComment(comment);
     }
+
 }

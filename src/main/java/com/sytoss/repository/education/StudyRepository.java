@@ -16,5 +16,4 @@ public interface StudyRepository extends JpaRepository<Study,Long> {
     @Query("select s from Study s where s.studyGroup = ?1")
     List<Study> findStudiesByStudyGroup(StudyGroup studyGroup);
 
-    Study findStudyById(Long id);
 }

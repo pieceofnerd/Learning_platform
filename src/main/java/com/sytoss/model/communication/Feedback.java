@@ -12,7 +12,7 @@ public class Feedback extends Communication {
     @ManyToOne(optional = false)
     private Homework homework;
 
-    @Column
+    @Column(name = "score")
     private Integer score;
 
     public Homework getHomework() {
