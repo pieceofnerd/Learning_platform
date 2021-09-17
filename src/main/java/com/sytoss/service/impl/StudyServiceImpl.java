@@ -23,7 +23,6 @@ public class StudyServiceImpl implements StudyService {
     private final StudyRepository studyRepository;
     private final UserAccountService userAccountService;
     private final StudyGroupRepository studyGroupRepository;
-    private final StudyMapper studyMapper;
 
     @Override
     public boolean saveStudy(Study study) {
@@ -61,9 +60,6 @@ public class StudyServiceImpl implements StudyService {
     public List<Study> findStudiesByFilter(FilterStudyDTO filter) throws Exception {
         final Filter f = filter.getFilter();
         List<Study> studies = new ArrayList<>();
-        if (f == Filter.ID) {
-            studies.add(studyRepository.findStudyById(filter.getId()));
-        }
         if (f == Filter.STUDENT) {
             studies.addAll(studyRepository.findStudiesByStudent(userAccountService.findUserAccountById(filter.getStudent())));
         }

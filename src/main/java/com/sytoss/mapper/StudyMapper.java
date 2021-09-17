@@ -1,10 +1,7 @@
 package com.sytoss.mapper;
 
-import com.sytoss.model.course.Topic;
 import com.sytoss.model.education.Study;
 import com.sytoss.web.dto.StudyDTO;
-import com.sytoss.web.dto.TopicDTO;
-import com.sytoss.web.dto.save.PriceSaveDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

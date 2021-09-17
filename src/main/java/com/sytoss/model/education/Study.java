@@ -108,14 +108,5 @@ public class Study {
         this.updatedDate = updatedDate;
     }
 
-    @Override
-    public String toString() {
-        return "Study{" +
-                "\nid=" + id +
-                "\n, progress=" + progress +
-                "\n, assessment=" + assessment +
-                "\n, createdDate=" + createdDate +
-                "\n, updatedDate=" + updatedDate +
-                '}';
-    }
+
 }
