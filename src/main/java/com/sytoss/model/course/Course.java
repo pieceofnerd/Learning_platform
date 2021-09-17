@@ -1,8 +1,10 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.Media;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 
@@ -46,6 +48,13 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Price> prices;
+
+    @CreationTimestamp
+    @Column(name = "created_date")
+    private Date createdDate;
+
+    @Column(name = "updated_date")
+    private Date updatedDate;
 
     public Course() {
     }

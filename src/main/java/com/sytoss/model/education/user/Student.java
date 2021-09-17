@@ -1,5 +1,6 @@
 package com.sytoss.model.education.user;
 
+import com.sytoss.model.Lookup;
 import com.sytoss.model.education.Homework;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
@@ -13,6 +14,10 @@ public class Student extends UserAccount {
 
     @Column
     private String bio;
+
+    @JoinColumn(name = "student_status")
+    @ManyToOne(optional = false)
+    private Lookup studentStatus;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Study> studies;
@@ -42,6 +47,14 @@ public class Student extends UserAccount {
 
     public void setHomeworks(List<Homework> homeworks) {
         this.homeworks = homeworks;
+    }
+
+    public Lookup getStudentStatus() {
+        return studentStatus;
+    }
+
+    public void setStudentStatus(Lookup studentStatus) {
+        this.studentStatus = studentStatus;
     }
 
     @Override

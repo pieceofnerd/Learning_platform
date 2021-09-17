@@ -2,10 +2,16 @@ package com.sytoss.service.impl;
 
 import com.sytoss.exception.DuplicateCourseNameException;
 import com.sytoss.exception.NoSuchCourseException;
+import com.sytoss.exception.NoSuchUserAccountException;
+import com.sytoss.model.PriceType;
+import com.sytoss.model.StudentStatus;
 import com.sytoss.model.course.Course;
+import com.sytoss.model.education.UserAccount;
+import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.course.CourseRepository;
+import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.CourseService;
-import com.sytoss.web.dto.FilterDTO;
+import com.sytoss.web.dto.filter.FilterCourseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -22,10 +29,12 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
 
+    private final UserAccountRepository userAccountRepository;
 
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, UserAccountRepository userAccountRepository) {
         this.courseRepository = courseRepository;
+        this.userAccountRepository = userAccountRepository;
     }
 
     @Override
@@ -59,20 +68,44 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean closeCourse(Course course) {
+    public boolean closeCourse(Course course) throws NoSuchCourseException {
+        if (course == null)
+            throw new NoSuchCourseException();
+
         course.setActive(false);
+        courseRepository.save(course);
         return true;
     }
 
     @Override
-    public Course findByFilter(FilterDTO filter) {
-        //TODO
+    public List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException {
+        switch (filter.getFilter()) {
+            case NEWEST:
+                return courseRepository.findDistinctFirst10ByOrderByCreatedDateDesc();
+            case COST_RANGE: {
+                UserAccount student = userAccountRepository.findOne(filter.getStudentId());
+
+                if (student == null)
+                    throw new NoSuchUserAccountException();
+
+                if (!student.getClass().isAssignableFrom(Student.class)) {
+                    logger.error("Course Filter contains incorrect student id");
+                    throw new ClassCastException("Incorrect type for Student.class");
+                }
+
+                if (Objects.equals(((Student) student).getStudentStatus().getId(), StudentStatus.NEWBIE.getValue())) {
+                    return courseRepository.findCourseByPriceRange(PriceType.REGULAR.getValue(),filter.getLowCost(), filter.getHighCost());
+                }
+                else return courseRepository.findCourseByPriceRange(PriceType.PREMIUM.getValue(),filter.getLowCost(), filter.getHighCost());
+
+            }
+        }
         return null;
     }
 
     @Override
     public List<Course> getAll() {
-        return courseRepository.findAll();
+        return courseRepository.findCoursesByActiveIsTrue();
     }
 
     private void validateCourseName(Course course) throws DuplicateCourseNameException {
@@ -83,6 +116,4 @@ public class CourseServiceImpl implements CourseService {
             }
         }
     }
-
-
 }

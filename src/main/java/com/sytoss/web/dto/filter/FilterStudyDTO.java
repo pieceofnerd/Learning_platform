@@ -12,8 +12,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FilterStudyDTO {
+
     private Long id;
+
     private Long student;
+
     private Long studyGroup;
+
     private Filter filter;
+
 }
