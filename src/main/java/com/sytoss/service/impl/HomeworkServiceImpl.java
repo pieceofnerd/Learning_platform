@@ -6,11 +6,14 @@ import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.service.HomeworkService;
+import com.sytoss.service.UserAccountService;
 import com.sytoss.web.dto.FilterDTO;
+import com.sytoss.web.dto.filter.FilterHomeworkDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,6 +24,7 @@ public class HomeworkServiceImpl implements HomeworkService {
 
     private final HomeworkRepository homeworkRepository;
     private final CommunicationRepository communicationRepository;
+    private final UserAccountService userAccountService;
 
     @Override
     public boolean createHomework(Homework homework) {
@@ -51,8 +55,16 @@ public class HomeworkServiceImpl implements HomeworkService {
 
 
     @Override
-    public List<Homework> findHomeworkFindByFilter(UserAccount student, FilterDTO filer) {
-        return null;
+    public List<Homework> findHomeworkFindByFilter(FilterHomeworkDTO filter) throws Exception {
+
+        List<Homework> homeworks = new ArrayList<>();
+        switch (filter.getFilter()) {
+            case AUTHOR: {
+                homeworks.addAll(homeworkRepository.findAllByAuthor(userAccountService.findUserAccountById(filter.getAuthor())));
+                break;
+            }
+        }
+        return homeworks;
     }
 
     @Override
