@@ -21,7 +21,7 @@ public class Study {
     @ManyToOne(optional = false)
     private UserAccount student;
 
-    @JoinColumn(name = "study_group_id", nullable = false)
+    @JoinColumn(name = "study_group_id")
     @ManyToOne(optional = false)
     private StudyGroup studyGroup;
 

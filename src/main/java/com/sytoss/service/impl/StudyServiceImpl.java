@@ -1,13 +1,18 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.course.StudyGroup;
+import com.sytoss.model.education.Homework;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.repository.education.StudyRepository;
+import com.sytoss.service.HomeworkService;
 import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
 import com.sytoss.service.UserAccountService;
 import com.sytoss.web.dto.filter.Filter;
+import com.sytoss.web.dto.filter.FilterHomeworkDTO;
 import com.sytoss.web.dto.filter.FilterStudyDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,7 @@ public class StudyServiceImpl implements StudyService {
     private final StudyRepository studyRepository;
     private final UserAccountService userAccountService;
     private final StudyGroupService studyGroupService;
+    private final HomeworkRepository homeworkRepository;
 
 
     @Override
@@ -60,11 +66,10 @@ public class StudyServiceImpl implements StudyService {
     @Override
     @Transactional
     public void updateAssessment(UserAccount student, StudyGroup studyGroup) {
-        final Study study = studyRepository.findOne(student.getId());
-        for (Study studyGroupStudy : studyGroup.getStudies()) {
+        final List<Homework> homeworks = homeworkRepository.findAllByAuthor(student);
+        int size = homeworks.size();
+        int result = 0;
 
-        }
-//        studyRepository.save(study);
         //TODO
     }
 

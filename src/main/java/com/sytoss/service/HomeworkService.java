@@ -4,6 +4,7 @@ import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.Homework;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.web.dto.FilterDTO;
+import com.sytoss.web.dto.filter.FilterHomeworkDTO;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface HomeworkService {
 
     boolean deleteHomework(Homework homework);
 
-    List<Homework> findHomeworkFindByFilter(UserAccount student, FilterDTO filer);
+    List<Homework> findHomeworkFindByFilter(FilterHomeworkDTO filter) throws Exception;
 
     boolean leaveFeedback(Communication feedback);
 
