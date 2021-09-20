@@ -1,5 +1,6 @@
 package com.sytoss.service;
 
+import com.sytoss.exception.NoSuchLessonException;
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.course.Lesson;
@@ -9,15 +10,13 @@ import java.util.List;
 
 public interface LessonService {
 
-    boolean createLesson();
+    boolean createLesson(Lesson lesson) throws NoSuchLessonException;
 
-    boolean updateLesson();
+    boolean updateLesson(Lesson lesson) throws NoSuchLessonException;
 
-    boolean deleteLesson();
+    boolean deleteLesson(Lesson lesson) throws NoSuchLessonException;
 
-    List<Feedback> findFeedbacksByLesson();
-
-    boolean deleteAllComments();
+    boolean deleteAllComments(Lesson lesson) throws NoSuchLessonException;
 
     List<Lesson> findLessonsByFilter(FilterDTO filterDTO);
 

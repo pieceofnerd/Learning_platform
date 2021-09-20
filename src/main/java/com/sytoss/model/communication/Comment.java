@@ -12,11 +12,22 @@ public class Comment extends Communication {
     @ManyToOne(optional = false)
     private Lesson lesson;
 
+    @Column(name = "active")
+    private Boolean active;
+
     public Lesson getLesson() {
         return lesson;
     }
 
     public void setLesson(Lesson lesson) {
         this.lesson = lesson;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

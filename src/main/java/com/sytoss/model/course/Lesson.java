@@ -45,6 +45,9 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY)
     private List<Comment> comments;
 
+    @Column(name = "active")
+    private Boolean active;
+
     public Lesson() {
     }
 
@@ -118,5 +121,13 @@ public class Lesson {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }
