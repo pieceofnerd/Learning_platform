@@ -2,14 +2,10 @@ package com.sytoss.repository.course;
 
 import com.sytoss.model.Lookup;
 import com.sytoss.model.course.Course;
-import com.sytoss.model.course.Price;
-import com.sytoss.model.course.Topic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 

@@ -7,6 +7,7 @@ import com.sytoss.repository.course.LessonRepository;
 import com.sytoss.service.LessonService;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,8 +18,8 @@ class LessonServiceTest {
     private final LessonRepository lessonRepository = context.getBean(LessonRepository.class);
 
     @Test
+    @Transactional
     void deleteAllComments() throws NoSuchLessonException {
-        Lesson lesson = lessonRepository.findOne(5L);
-        lessonService.deleteAllComments(lesson);
+        lessonService.deleteAllComments(lessonRepository.findOne(5L));
     }
 }
