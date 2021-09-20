@@ -63,14 +63,16 @@ public class StudyServiceImpl implements StudyService {
         return false;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    @Transactional
     public void updateAssessment(UserAccount student, StudyGroup studyGroup) {
+
         final List<Homework> homeworks = homeworkRepository.findAllByAuthor(student);
         int size = homeworks.size();
         int result = 0;
 
         //TODO
+
     }
 
     @Override
