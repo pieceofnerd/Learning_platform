@@ -2,9 +2,7 @@ package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchLessonException;
 import com.sytoss.model.communication.Comment;
-import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.course.Lesson;
-import com.sytoss.model.education.Homework;
 import com.sytoss.repository.course.LessonRepository;
 import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.service.LessonService;

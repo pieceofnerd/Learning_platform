@@ -32,11 +32,5 @@ public class Mentor extends UserAccount {
         this.lessons = lessons;
     }
 
-    @Override
-    public String toString() {
-        return "Mentor{" +
-                "bio='" + bio + '\'' +
-                ", lessons=" + lessons +
-                '}';
-    }
+
 }
