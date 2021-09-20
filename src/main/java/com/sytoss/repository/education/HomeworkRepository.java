@@ -13,7 +13,10 @@ public interface HomeworkRepository extends JpaRepository<Homework, Long> {
 
 
     @Query("select h from Homework h where h.author = ?1")
-    List<Homework> findAllByAuthor(UserAccount author);
+    List<Homework> findAllByAuthorAndActiveIsTrue(UserAccount author);
+
+    @Query("select h from Homework h where h.author = ?1 and h.isActive = true and h.homeTask = ?2")
+    List<Homework>  findAllByAuthorAndActiveIsTrueAndHomeTask(UserAccount author, HomeTask homeTask);
   
    @Query("select h from Homework h where h.homeTask = ?1")
     List<Homework> findAllByHomeTask(HomeTask homeTask);

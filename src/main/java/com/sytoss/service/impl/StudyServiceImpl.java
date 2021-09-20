@@ -1,18 +1,19 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.model.communication.Feedback;
+import com.sytoss.model.course.Lesson;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Homework;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.repository.communication.CommunicationRepository;
+import com.sytoss.repository.course.LessonRepository;
+import com.sytoss.repository.course.TopicRepository;
 import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.repository.education.StudyRepository;
-import com.sytoss.service.HomeworkService;
 import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
 import com.sytoss.service.UserAccountService;
-import com.sytoss.web.dto.filter.Filter;
-import com.sytoss.web.dto.filter.FilterHomeworkDTO;
 import com.sytoss.web.dto.filter.FilterStudyDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class StudyServiceImpl implements StudyService {
     private final UserAccountService userAccountService;
     private final StudyGroupService studyGroupService;
     private final HomeworkRepository homeworkRepository;
+    private final CommunicationRepository communicationRepository;
+    private final TopicRepository topicRepository;
+    private final LessonRepository lessonRepository;
 
 
     @Override
@@ -58,21 +62,79 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public boolean updateProgress(UserAccount student, StudyGroup studyGroup) {
-        //TODO
-        return false;
+    public void updateProgress(UserAccount student, StudyGroup studyGroup) throws Exception {
+        if (student == null)
+            throw new Exception("Student is null");
+        if (studyGroup == null)
+            throw new Exception("Studygroup is null");
+
+        Study study = studyRepository.findStudyByStudentAndStudyGroup(student, studyGroup);
+
+        if (study == null)
+            throw new Exception("Study is null");
+
+
+        double numberHomeworks = 0;
+        final List<Lesson> lessons = lessonRepository.findLessonsByActiveIsTrueAndStudyGroup(studyGroup);
+        double totalNumberLessons = lessons.size();
+
+        for (Lesson lesson : lessons) {
+
+            System.out.println("lesson id - " + lesson.getId());
+
+            for (Homework homework : lesson.getHomeTask().getHomeworks()) {
+
+                if (homework.getAuthor().getId().equals(student.getId())) {
+                    for (Feedback feedback : homework.getFeedbacks()) {
+                        if (feedback.getScore() != null) {
+
+                            System.out.println("FB id - " + feedback.getId());
+                            System.out.println("HW id - " + homework.getId());
+
+                            numberHomeworks++;
+                        }
+                    }
+                }
+            }
+        }
+        double progress = progressPercentCalc(totalNumberLessons, numberHomeworks);
+        study.setProgress(progress);
+        studyRepository.save(study);
+
+        System.out.println("total number of " + studyGroup.getCourse().getName() + " lessons " + totalNumberLessons);
+        System.out.println("total number of " + studyGroup.getCourse().getName() + " homeworks " + numberHomeworks);
+        System.out.println("progress - " + progress);
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public void updateAssessment(UserAccount student, StudyGroup studyGroup) {
+    public void updateAssessment(UserAccount student, StudyGroup studyGroup) throws Exception {
+        if (student == null)
+            throw new Exception("Student is null");
+        if (studyGroup == null)
+            throw new Exception("Studygroup is null");
 
-        final List<Homework> homeworks = homeworkRepository.findAllByAuthor(student);
-        int size = homeworks.size();
-        int result = 0;
+        Study study = studyRepository.findStudyByStudentAndStudyGroup(student, studyGroup);
 
-        //TODO
+        if (study == null)
+            throw new Exception("Study is null");
 
+        //    List<Homework> homeworks = new ArrayList<>();
+        final Long studyGroupId = studyGroup.getId();
+        double result = 0;
+        int denominator = 0;
+
+        for (Homework homework : homeworkRepository.findAllByAuthorAndActiveIsTrue(student)) {
+            if (homework.getHomeTask().getLesson().getStudyGroup().getId().equals(studyGroupId)) {
+                result += communicationRepository.findFeedbackByHomework(homework).getScore();
+
+                //       homeworks.add(homework);
+                denominator++;
+            }
+        }
+
+        result /= denominator;
+        study.setAssessment(result);
+        studyRepository.save(study);
     }
 
     @Override
@@ -96,5 +158,9 @@ public class StudyServiceImpl implements StudyService {
             }
         }
         return studies;
+    }
+
+    private double progressPercentCalc(double total, double done) {
+        return (done / total) * 100;
     }
 }

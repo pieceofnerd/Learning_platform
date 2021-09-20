@@ -60,7 +60,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         List<Homework> homeworks = new ArrayList<>();
         switch (filter.getFilter()) {
             case AUTHOR: {
-                homeworks.addAll(homeworkRepository.findAllByAuthor(userAccountService.findUserAccountById(filter.getAuthor())));
+                homeworks.addAll(homeworkRepository.findAllByAuthorAndActiveIsTrue(userAccountService.findUserAccountById(filter.getAuthor())));
                 break;
             }
         }
