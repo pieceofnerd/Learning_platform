@@ -18,4 +18,5 @@ public interface StudyRepository extends JpaRepository<Study,Long> {
 
     @Query("select s from Study s where s.student = ?1 and s.studyGroup = ?2")
     Study findStudyByStudentAndStudyGroup(UserAccount student, StudyGroup studyGroup);
+
 }
