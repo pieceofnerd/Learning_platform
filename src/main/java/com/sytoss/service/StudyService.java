@@ -12,9 +12,9 @@ public interface StudyService {
 
     boolean deleteStudy(Study study);
 
-    boolean updateProgress(UserAccount student, StudyGroup studyGroup);
+    void updateProgress(UserAccount student, StudyGroup studyGroup) throws Exception;
 
-    void updateAssessment(UserAccount student, StudyGroup studyGroup);
+    void updateAssessment(UserAccount student, StudyGroup studyGroup) throws Exception;
 
     Study findStudyById(Long id) throws Exception;
 
