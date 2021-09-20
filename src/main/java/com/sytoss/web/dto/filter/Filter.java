@@ -7,6 +7,7 @@ public enum Filter {
     NEWEST,
     COST_RANGE,
     COURSE,
-    DELETED
+    DELETED,
+    AUTHOR
 
 }
