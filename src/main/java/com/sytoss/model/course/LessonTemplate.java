@@ -30,6 +30,9 @@ public class LessonTemplate {
     @ManyToOne(optional = false)
     private Topic topic;
 
+    @Column(name = "active")
+    private Boolean active;
+
     @OneToMany(mappedBy = "lessonTemplate")
     private List<Lesson> lessons;
 
@@ -86,6 +89,14 @@ public class LessonTemplate {
 
     public List<Lesson> getLessons() {
         return lessons;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public void setLessons(List<Lesson> lessons) {

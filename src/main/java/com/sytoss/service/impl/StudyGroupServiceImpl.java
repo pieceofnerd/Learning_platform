@@ -70,7 +70,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
 
     @Override
     public List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup) {
-
+        studyGroup.getStudies();
         //TODO
         return null;
     }

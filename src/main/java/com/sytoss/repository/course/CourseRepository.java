@@ -1,7 +1,9 @@
 package com.sytoss.repository.course;
 
+import com.sytoss.model.Lookup;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.Price;
+import com.sytoss.model.course.Topic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,13 +15,17 @@ import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-
     @Query("select c from Course c where c.active = true")
     List<Course> findCoursesByActiveIsTrue();
 
     List<Course> findDistinctFirst10ByOrderByCreatedDateDesc();
 
-    @Query("select с  from  Course с inner join Price on Course = Price.course where Price .priceType=?1 and Price .cost>=?2 and Price.cost>=?3")
-    List<Course> findCourseByPriceRange(Long priceType, BigDecimal lowPrice, BigDecimal highPrice);
+    @Query("select c from Course c where c.name = ?1")
+    Course findCourseByName(String name);
+
+    @Query("select c " +
+            "from Course c inner join Price  p on c = p.course " +
+            "where p.priceType=?1 and p.cost>=?2 and p.cost<=?3")
+    List<Course> findCourseByPriceRange(Lookup priceType, BigDecimal lowPrice, BigDecimal highPrice);
 
 }

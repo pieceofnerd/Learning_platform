@@ -1,6 +1,7 @@
 package com.sytoss.model.course;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,9 @@ public class Topic {
     @JoinColumn(name = "course_id")
     @ManyToOne(optional = false)
     private Course course;
+
+    @Column(name = "active")
+    private Boolean active;
 
     @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY)
     private List<LessonTemplate> lessonTemplates;
@@ -62,6 +66,24 @@ public class Topic {
     public List<LessonTemplate> getLessonTemplates() {
         return lessonTemplates;
     }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public List<LessonTemplate> getActiveLessonTemplates() {
+        List<LessonTemplate> activeLessonTemplates = new ArrayList<>();
+        for (LessonTemplate lessonTemplate : getLessonTemplates()) {
+            if (lessonTemplate.getActive())
+                activeLessonTemplates.add(lessonTemplate);
+        }
+        return activeLessonTemplates;
+    }
+
 
     public void setLessonTemplates(List<LessonTemplate> lessonTemplates) {
         this.lessonTemplates = lessonTemplates;

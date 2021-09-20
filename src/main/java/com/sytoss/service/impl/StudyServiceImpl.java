@@ -57,15 +57,18 @@ public class StudyServiceImpl implements StudyService {
         return false;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    @Transactional
     public void updateAssessment(UserAccount student, StudyGroup studyGroup) {
-        final Study study = studyRepository.findOne(student.getId());
-        for (Study studyGroupStudy : studyGroup.getStudies()) {
 
-        }
-//        studyRepository.save(study);
-        //TODO
+//       final Study study = studyRepository.findStudyByStudentAndStudyGroup(student, studyGroup);
+//       study.get
+//        List<Study> studies = studyGroup.getStudies();
+//        for (Study studyGroupStudy : studies) {
+//
+//        }
+////        studyRepository.save(study);
+//        //TODO
     }
 
     @Override

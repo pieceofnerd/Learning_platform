@@ -4,6 +4,7 @@ import com.sytoss.model.Media;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class Course {
     @ManyToOne(optional = false)
     private Category category;
 
-    @OneToMany(mappedBy = "course",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<Topic> topics;
 
     @OneToMany(mappedBy = "course")
@@ -145,6 +146,20 @@ public class Course {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public List<Topic> getActiveTopics() {
+        List<Topic> activeTopics = new ArrayList<>();
+        for (Topic topic : getTopics()) {
+            if (topic.getActive())
+                activeTopics.add(topic);
+        }
+
+        for (Topic activeTopic : activeTopics) {
+            activeTopic.setLessonTemplates(activeTopic.getActiveLessonTemplates());
+        }
+
+        return activeTopics;
     }
 
 
