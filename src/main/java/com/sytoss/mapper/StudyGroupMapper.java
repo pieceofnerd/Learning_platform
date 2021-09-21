@@ -2,13 +2,16 @@ package com.sytoss.mapper;
 
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.web.dto.StudyGroupDTO;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class StudyGroupMapper extends BaseMapper<StudyGroup, StudyGroupDTO> {
-    StudyGroupMapper(Class<StudyGroup> entityClass, Class<StudyGroupDTO> dtoClass) {
-        super(entityClass, dtoClass);
+    protected StudyGroupMapper() {
+        super(StudyGroup.class, StudyGroupDTO.class);
     }
+
 
     @Override
     public StudyGroup toEntity(Object dto) {

@@ -4,18 +4,19 @@ import com.sytoss.config.Config;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
-import com.sytoss.service.UserAccountService;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StudyServiceTest {
     private final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
     private final StudyService studyService = context.getBean(StudyService.class);
-    private final UserAccountService userAccountService = context.getBean(UserAccountService.class);
+    private final UserAccountRepository userAccountRepository = context.getBean(UserAccountRepository.class);
     private final StudyGroupService studyGroupService = context.getBean(StudyGroupService.class);
 
     private static final Long STUDY_ID = 13L;
@@ -54,6 +55,6 @@ class StudyServiceTest {
     }
 
     private UserAccount getStudent() throws Exception {
-        return userAccountService.findUserAccountById(STUDENT_ID);
+        return userAccountRepository.findOne(STUDENT_ID);
     }
 }

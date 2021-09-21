@@ -2,12 +2,10 @@ package com.sytoss.service.impl;
 
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.Homework;
-import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.education.HomeworkRepository;
+import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.HomeworkService;
-import com.sytoss.service.UserAccountService;
-import com.sytoss.web.dto.FilterDTO;
 import com.sytoss.web.dto.filter.FilterHomeworkDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +22,7 @@ public class HomeworkServiceImpl implements HomeworkService {
 
     private final HomeworkRepository homeworkRepository;
     private final CommunicationRepository communicationRepository;
-    private final UserAccountService userAccountService;
+    private final UserAccountRepository userAccountRepository;
 
     @Override
     public boolean createHomework(Homework homework) {
@@ -60,7 +58,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         List<Homework> homeworks = new ArrayList<>();
         switch (filter.getFilter()) {
             case AUTHOR: {
-                homeworks.addAll(homeworkRepository.findAllByAuthorAndActiveIsTrue(userAccountService.findUserAccountById(filter.getAuthor())));
+                homeworks.addAll(homeworkRepository.findAllByAuthorAndActiveIsTrue(userAccountRepository.findOne(filter.getAuthor())));
                 break;
             }
         }
