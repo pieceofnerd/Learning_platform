@@ -34,6 +34,11 @@ public class Communication {
     public Communication() {
     }
 
+    @Transient
+    public String getDiscriminatorValue() {
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+    }
+
     public Long getId() {
         return id;
     }
