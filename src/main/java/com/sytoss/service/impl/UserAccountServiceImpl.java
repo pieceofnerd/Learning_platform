@@ -27,15 +27,20 @@ public class UserAccountServiceImpl implements UserAccountService {
         List<UserAccount> users = new ArrayList<>();
         switch (filter.getFilter()) {
             case FULL_NAME: {
-                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndSecondNameStartingWithIgnoreCase(filter.getFirstName(),filter.getSecondName()));
+                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndSecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName(),filter.getSecondName()));
+                break;
             }
             case FIRST_NAME: {
+                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName()));
+                break;
             }
             case SECOND_NAME: {
-
+                users.addAll(userAccountRepository.findAllBySecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getSecondName()));
+                break;
             }
             case DELETED: {
-
+                //TODO
+                break;
             }
         }
         return users;
@@ -54,7 +59,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     public boolean saveUserAccount(UserAccount userAccount) {
         if (userAccount == null)
             return false;
-        if (userAccountRepository.findUserAccountByEmail(userAccount.getEmail()) != null)
+        if (userAccountRepository.findUserAccountByEmailAndDeletedIsFalse(userAccount.getEmail()) != null)
             return false;
 
         userAccountRepository.save(userAccount);
@@ -100,7 +105,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         if (email.isEmpty()) {
             return false;
         }
-        UserAccount userAccount = userAccountRepository.findUserAccountByEmail(email);
+        UserAccount userAccount = userAccountRepository.findUserAccountByEmailAndDeletedIsFalse(email);
         if (userAccount == null)
             return false;
         //send email

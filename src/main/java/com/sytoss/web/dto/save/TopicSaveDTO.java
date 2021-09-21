@@ -15,8 +15,9 @@ public class TopicSaveDTO {
 
     private String name;
 
-    private  String description;
+    private String description;
 
-    private List<LessonTemplateSaveDTO> lessonTemplates;
+    private Long course;
+
 
 }
