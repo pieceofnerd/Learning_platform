@@ -8,6 +8,9 @@ public enum Filter {
     COST_RANGE,
     COURSE,
     DELETED,
-    AUTHOR
+    AUTHOR,
+    FULL_NAME,
+    FIRST_NAME,
+    SECOND_NAME
 
 }
