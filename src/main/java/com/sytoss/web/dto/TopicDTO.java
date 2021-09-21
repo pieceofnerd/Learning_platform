@@ -6,6 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class TopicDTO {
+    private Long id;
+
+    private String name;
+
+    private String description;
+
+    private CourseDTO courseDTO;
+
+    private Boolean active;
 }
