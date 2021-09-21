@@ -16,5 +16,6 @@ public enum Filter {
     LESSON_TEMPLATE,
     FULL_NAME,
     FIRST_NAME,
-    SECOND_NAME
+    SECOND_NAME,
+    PROMOTION_STATE
 }
