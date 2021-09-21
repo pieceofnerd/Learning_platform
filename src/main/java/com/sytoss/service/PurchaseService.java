@@ -13,7 +13,6 @@ public interface PurchaseService {
     boolean updatePurchase(Purchase purchase);
 
     List<Purchase> findPurchaseByFilter(UserAccount student, FilterDTO filter);
-            
 
     boolean refundMoney(Purchase purchase);
 }
