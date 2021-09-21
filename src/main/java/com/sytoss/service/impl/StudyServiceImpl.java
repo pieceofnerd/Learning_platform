@@ -8,9 +8,9 @@ import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.course.LessonRepository;
-import com.sytoss.repository.course.TopicRepository;
 import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.repository.education.StudyRepository;
+import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
 import com.sytoss.service.UserAccountService;
@@ -28,11 +28,11 @@ import java.util.List;
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
-    private final UserAccountService userAccountService;
+//    private final UserAccountService userAccountService;
+    private final UserAccountRepository userAccountRepository;
     private final StudyGroupService studyGroupService;
     private final HomeworkRepository homeworkRepository;
     private final CommunicationRepository communicationRepository;
-    private final TopicRepository topicRepository;
     private final LessonRepository lessonRepository;
 
 
@@ -79,18 +79,14 @@ public class StudyServiceImpl implements StudyService {
         double totalNumberLessons = lessons.size();
 
         for (Lesson lesson : lessons) {
-
-            System.out.println("lesson id - " + lesson.getId());
-
             for (Homework homework : lesson.getHomeTask().getHomeworks()) {
 
                 if (homework.getAuthor().getId().equals(student.getId())) {
                     for (Feedback feedback : homework.getFeedbacks()) {
                         if (feedback.getScore() != null) {
-
-                            System.out.println("FB id - " + feedback.getId());
-                            System.out.println("HW id - " + homework.getId());
-
+//
+//                            System.out.println("FB id - " + feedback.getId());
+//                            System.out.println("HW id - " + homework.getId())
                             numberHomeworks++;
                         }
                     }
@@ -100,10 +96,9 @@ public class StudyServiceImpl implements StudyService {
         double progress = progressPercentCalc(totalNumberLessons, numberHomeworks);
         study.setProgress(progress);
         studyRepository.save(study);
-
-        System.out.println("total number of " + studyGroup.getCourse().getName() + " lessons " + totalNumberLessons);
-        System.out.println("total number of " + studyGroup.getCourse().getName() + " homeworks " + numberHomeworks);
-        System.out.println("progress - " + progress);
+//        System.out.println("total number of " + studyGroup.getCourse().getName() + " lessons " + totalNumberLessons);
+//        System.out.println("total number of " + studyGroup.getCourse().getName() + " homeworks " + numberHomeworks);
+//        System.out.println("progress - " + progress);
     }
 
     @Override
@@ -118,22 +113,22 @@ public class StudyServiceImpl implements StudyService {
         if (study == null)
             throw new Exception("Study is null");
 
-        //    List<Homework> homeworks = new ArrayList<>();
         final Long studyGroupId = studyGroup.getId();
-        double result = 0;
+        double assessment = 0;
         int denominator = 0;
 
         for (Homework homework : homeworkRepository.findAllByAuthorAndActiveIsTrue(student)) {
             if (homework.getHomeTask().getLesson().getStudyGroup().getId().equals(studyGroupId)) {
-           //     result += communicationRepository.findFeedbackByHomework(homework).getScore();
 
-                //       homeworks.add(homework);
+                Feedback feedback = (Feedback) communicationRepository.findFeedbackByHomework(homework);
+                assessment += feedback.getScore();
+
                 denominator++;
             }
         }
 
-        result /= denominator;
-        study.setAssessment(result);
+        assessment /= denominator;
+        study.setAssessment(assessment);
         studyRepository.save(study);
     }
 
@@ -149,7 +144,7 @@ public class StudyServiceImpl implements StudyService {
         List<Study> studies = new ArrayList<>();
         switch (filter.getFilter()) {
             case STUDENT: {
-                studies.addAll(studyRepository.findStudiesByStudent(userAccountService.findUserAccountById(filter.getStudent())));
+                studies.addAll(studyRepository.findStudiesByStudent(userAccountRepository.findOne(filter.getStudent())));
                 break;
             }
             case STUDY_GROUP: {

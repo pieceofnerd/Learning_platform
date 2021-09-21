@@ -16,10 +16,13 @@ public interface CommunicationRepository extends JpaRepository<Communication,Lon
     @Query("select c from Feedback  c where c.homework=?1")
     Communication findFeedbackByHomework(Homework homework);
 
+
     @Query("select c from Comment c where c.active=true order by c.sendDate")
     List<Communication> findByOrderBySendDate();
 
     @Query("select c from Comment c where c.active=true  order by c.sendDate DESC")
     List<Communication> findByOrderBySendDateDesc();
+
+
 
 }

@@ -1,19 +1,16 @@
 package com.sytoss.service.impl;
 
-import com.sytoss.mapper.UserAccountMapper;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
-import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.CommunicationService;
 import com.sytoss.service.UserAccountService;
-import com.sytoss.web.dto.FilterDTO;
-import com.sytoss.web.dto.UserAccountDTO;
-import com.sytoss.web.dto.save.UserAccountSaveDTO;
+import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,19 +23,32 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 
     @Override
-    public List<UserAccount> findByFilter(FilterDTO filter) {
-        //TODO
-        return null;
+    public List<UserAccount> findUsersByFilter(FilterUserAccountDTO filter) {
+        List<UserAccount> users = new ArrayList<>();
+        switch (filter.getFilter()) {
+            case FULL_NAME: {
+                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndSecondNameStartingWithIgnoreCase(filter.getFirstName(),filter.getSecondName()));
+            }
+            case FIRST_NAME: {
+            }
+            case SECOND_NAME: {
+
+            }
+            case DELETED: {
+
+            }
+        }
+        return users;
     }
 
-    @Override
-    public UserAccount findUserAccountById(Long id) throws Exception {
-        if (!userAccountRepository.exists(id)) {
-            throw new Exception("User with id = " + id + " not found");
-        }
-        UserAccount userAccount = userAccountRepository.findOne(id);
-        return userAccount;
-    }
+//    @Override
+//    public UserAccount findUserAccountById(Long id) throws Exception {
+//        if (!userAccountRepository.exists(id)) {
+//            throw new Exception("User with id = " + id + " not found");
+//        }
+//        UserAccount userAccount = userAccountRepository.findOne(id);
+//        return userAccount;
+//    }
 
     @Override
     public boolean saveUserAccount(UserAccount userAccount) {

@@ -25,8 +25,8 @@ public class Study {
     @ManyToOne(optional = false)
     private StudyGroup studyGroup;
 
-    @Column(name = "progress", nullable = false)
-    private Double progress;
+    @Column(name = "progress")
+    private Double progress = 0.0d;
 
     @Column(name = "assessment")
     private Double assessment;

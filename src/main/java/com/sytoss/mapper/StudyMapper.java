@@ -27,7 +27,7 @@ public class StudyMapper extends BaseMapper<Study,StudyDTO>{
     }
 
     @Override
-    public List<Study> toListEntity(List<StudyDTO> studyDTOS) {
+    public List<Study> toListEntity(List<Object> studyDTOS) {
         return super.toListEntity(studyDTOS);
     }
 

@@ -16,7 +16,7 @@ public interface StudyService {
 
     void updateAssessment(UserAccount student, StudyGroup studyGroup) throws Exception;
 
-    Study findStudyById(Long id) throws Exception;
+    Study findStudyById(Long id) throws Exception; // maybe need to delete
 
     List<Study> findStudiesByFilter(FilterStudyDTO filter) throws Exception;
 }

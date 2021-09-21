@@ -14,5 +14,7 @@ public enum Filter {
     DELETED,
     AUTHOR,
     LESSON_TEMPLATE
-
+    FULL_NAME,
+    FIRST_NAME,
+    SECOND_NAME
 }

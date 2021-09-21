@@ -4,6 +4,8 @@ import com.sytoss.model.education.UserAccount;
 import com.sytoss.web.dto.UserAccountDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserAccountMapper extends BaseMapper<UserAccount, UserAccountDTO>{
 
@@ -18,5 +20,15 @@ public class UserAccountMapper extends BaseMapper<UserAccount, UserAccountDTO>{
     @Override
     public UserAccountDTO toDTO(UserAccount entity) {
         return super.toDTO(entity);
+    }
+
+    @Override
+    public List<UserAccount> toListEntity(List<Object> dList) {
+        return super.toListEntity(dList);
+    }
+
+    @Override
+    public List<UserAccountDTO> toListDTO(List<UserAccount> userAccounts) {
+        return super.toListDTO(userAccounts);
     }
 }

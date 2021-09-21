@@ -2,18 +2,15 @@ package com.sytoss.service;
 
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
-import com.sytoss.web.dto.FilterDTO;
-import com.sytoss.web.dto.UserAccountDTO;
-import com.sytoss.web.dto.save.UserAccountSaveDTO;
+import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 
 import java.util.List;
 
 public interface UserAccountService {
 
-    UserAccount findUserAccountById(Long id) throws Exception;
+//    UserAccount findUserAccountById(Long id) throws Exception;
 
-    List<UserAccount> findByFilter(FilterDTO filter);
-
+    List<UserAccount> findUsersByFilter(FilterUserAccountDTO filter);
 
     boolean saveUserAccount(UserAccount userAccount);
 
