@@ -3,6 +3,7 @@ package com.sytoss.service.impl;
 import com.sytoss.exception.NoSuchLessonException;
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.course.Lesson;
+import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.course.LessonRepository;
 import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.service.LessonService;
@@ -21,14 +22,17 @@ public class LessonServiceImpl implements LessonService {
 
     private final HomeworkRepository homeworkRepository;
 
+    private final CommunicationRepository communicationRepository;
+
     @Autowired
-    public LessonServiceImpl(LessonRepository lessonRepository, HomeworkRepository homeworkRepository) {
+    public LessonServiceImpl(LessonRepository lessonRepository, HomeworkRepository homeworkRepository, CommunicationRepository communicationRepository) {
         this.lessonRepository = lessonRepository;
         this.homeworkRepository = homeworkRepository;
+        this.communicationRepository = communicationRepository;
     }
 
     @Override
-    public boolean createLesson(Lesson lesson) throws NoSuchLessonException {
+    public boolean createLesson(Lesson lesson) {
         return saveLesson(lesson);
     }
 
@@ -47,18 +51,17 @@ public class LessonServiceImpl implements LessonService {
         return saveLesson(lesson);
     }
 
-
     @Override
     @Transactional
     public boolean deleteAllComments(Lesson lesson) throws NoSuchLessonException {
-        if (lessonRepository.findOne(lesson.getId()) == null)
+        if (lessonRepository.findById(lesson.getId()) == null)
             throw new NoSuchLessonException();
 
         for (Comment comment : lesson.getComments()) {
             comment.setActive(false);
+            communicationRepository.save(comment);
         }
-
-       return saveLesson(lesson);
+        return true;
     }
 
     @Override
@@ -71,7 +74,7 @@ public class LessonServiceImpl implements LessonService {
         return null;
     }
 
-    private boolean saveLesson(Lesson lesson) throws NoSuchLessonException {
+    private boolean saveLesson(Lesson lesson) {
         if (lesson == null)
             throw new NullPointerException();
 

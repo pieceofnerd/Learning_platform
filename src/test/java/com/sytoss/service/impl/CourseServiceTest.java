@@ -21,7 +21,7 @@ class CourseServiceTest {
     private static AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
     private final CourseService courseService = context.getBean(CourseService.class);
     private final CourseRepository courseRepository = context.getBean(CourseRepository.class);
-    ;
+
 
 
     @org.junit.jupiter.api.Test
