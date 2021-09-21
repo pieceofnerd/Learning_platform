@@ -13,7 +13,7 @@ public enum Filter {
     COURSE,
     DELETED,
     AUTHOR,
-    LESSON_TEMPLATE
+    LESSON_TEMPLATE,
     FULL_NAME,
     FIRST_NAME,
     SECOND_NAME
