@@ -10,6 +10,7 @@ import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.course.LessonRepository;
 import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.repository.education.StudyRepository;
+import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
 import com.sytoss.service.UserAccountService;
@@ -27,7 +28,8 @@ import java.util.List;
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
-    private final UserAccountService userAccountService;
+//    private final UserAccountService userAccountService;
+    private final UserAccountRepository userAccountRepository;
     private final StudyGroupService studyGroupService;
     private final HomeworkRepository homeworkRepository;
     private final CommunicationRepository communicationRepository;
@@ -140,7 +142,7 @@ public class StudyServiceImpl implements StudyService {
         List<Study> studies = new ArrayList<>();
         switch (filter.getFilter()) {
             case STUDENT: {
-                studies.addAll(studyRepository.findStudiesByStudent(userAccountService.findUserAccountById(filter.getStudent())));
+                studies.addAll(studyRepository.findStudiesByStudent(userAccountRepository.findOne(filter.getStudent())));
                 break;
             }
             case STUDY_GROUP: {

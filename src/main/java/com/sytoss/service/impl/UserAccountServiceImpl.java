@@ -1,16 +1,11 @@
 package com.sytoss.service.impl;
 
-import com.sytoss.mapper.UserAccountMapper;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
-import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.CommunicationService;
 import com.sytoss.service.UserAccountService;
-import com.sytoss.web.dto.FilterDTO;
-import com.sytoss.web.dto.UserAccountDTO;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
-import com.sytoss.web.dto.save.UserAccountSaveDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,14 +41,14 @@ public class UserAccountServiceImpl implements UserAccountService {
         return users;
     }
 
-    @Override
-    public UserAccount findUserAccountById(Long id) throws Exception {
-        if (!userAccountRepository.exists(id)) {
-            throw new Exception("User with id = " + id + " not found");
-        }
-        UserAccount userAccount = userAccountRepository.findOne(id);
-        return userAccount;
-    }
+//    @Override
+//    public UserAccount findUserAccountById(Long id) throws Exception {
+//        if (!userAccountRepository.exists(id)) {
+//            throw new Exception("User with id = " + id + " not found");
+//        }
+//        UserAccount userAccount = userAccountRepository.findOne(id);
+//        return userAccount;
+//    }
 
     @Override
     public boolean saveUserAccount(UserAccount userAccount) {
