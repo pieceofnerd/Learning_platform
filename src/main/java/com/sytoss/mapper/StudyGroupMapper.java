@@ -24,7 +24,7 @@ public class StudyGroupMapper extends BaseMapper<StudyGroup, StudyGroupDTO> {
     }
 
     @Override
-    public List<StudyGroup> toListEntity(List<StudyGroupDTO> studyGroupDTOS) {
+    public List<StudyGroup> toListEntity(List<Object> studyGroupDTOS) {
         return super.toListEntity(studyGroupDTOS);
     }
 
