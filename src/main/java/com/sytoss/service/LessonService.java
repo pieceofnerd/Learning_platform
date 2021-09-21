@@ -5,6 +5,8 @@ import com.sytoss.model.communication.Comment;
 import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.course.Lesson;
 import com.sytoss.web.dto.FilterDTO;
+import com.sytoss.web.dto.filter.FilterCommunicationDTO;
+import com.sytoss.web.dto.filter.FilterLessonDTO;
 
 import java.util.List;
 
@@ -18,8 +20,8 @@ public interface LessonService {
 
     boolean deleteAllComments(Lesson lesson) throws NoSuchLessonException;
 
-    List<Lesson> findLessonsByFilter(FilterDTO filterDTO);
+    List<Lesson> findLessonsByFilter(FilterLessonDTO filter);
 
-    List<Comment> findCommentsByFilter(FilterDTO filterDTO);
+    List<Comment> findCommentsByFilter(FilterCommunicationDTO filter);
 
 }
