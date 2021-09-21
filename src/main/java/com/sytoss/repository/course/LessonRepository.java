@@ -10,9 +10,15 @@ import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
+
+    @Query("select l from Lesson l left  join  fetch  l.comments where l.id = ?1")
+    Lesson findById(Long id);
+
+
     @Query("select l from Lesson l where l.active = true and l.lessonTemplate = ?1 and l.studyGroup = ?2")
     List<Lesson>  findLessonsByActiveIsTrueAndLessonTemplateAndStudyGroup(LessonTemplate lessonTemplate, StudyGroup studyGroup);
 
     @Query("select l from Lesson l where l.active = true and l.studyGroup = ?1")
     List<Lesson> findLessonsByActiveIsTrueAndStudyGroup(StudyGroup studyGroup);
+
 }

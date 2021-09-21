@@ -20,6 +20,6 @@ class LessonServiceTest {
     @Test
     @Transactional
     void deleteAllComments() throws NoSuchLessonException {
-        lessonService.deleteAllComments(lessonRepository.findOne(5L));
+        lessonService.deleteAllComments(lessonRepository.findById(5L));
     }
 }
