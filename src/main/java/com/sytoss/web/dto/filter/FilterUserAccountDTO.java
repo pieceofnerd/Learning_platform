@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FilterUserAccountDTO {
     private boolean deleted;
-    private String fullName;
     private String firstName;
     private String secondName;
+    private Filter filter;
 }

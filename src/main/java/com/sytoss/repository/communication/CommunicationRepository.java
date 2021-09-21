@@ -11,6 +11,6 @@ import java.util.List;
 public interface CommunicationRepository extends JpaRepository<Communication,Long> {
 
     @Query("select c from Feedback  c where c.homework=?1")
-    Feedback findFeedbackByHomework(Homework homework);
+    Communication findFeedbackByHomework(Homework homework);
 
 }
