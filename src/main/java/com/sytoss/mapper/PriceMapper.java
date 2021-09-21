@@ -6,6 +6,8 @@ import com.sytoss.web.dto.save.PriceSaveDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class PriceMapper extends BaseMapper<Price, PriceDTO> {
 
@@ -21,5 +23,15 @@ public class PriceMapper extends BaseMapper<Price, PriceDTO> {
     @Override
     public PriceDTO toDTO(Price entity) {
         return super.toDTO(entity);
+    }
+
+    @Override
+    public List<Price> toListEntity(List<Object> dList) {
+        return super.toListEntity(dList);
+    }
+
+    @Override
+    public List<PriceDTO> toListDTO(List<Price> prices) {
+        return super.toListDTO(prices);
     }
 }

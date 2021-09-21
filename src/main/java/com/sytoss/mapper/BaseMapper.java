@@ -38,10 +38,10 @@ public abstract class BaseMapper<E, D> implements Mapper<E, D> {
     }
 
     @Override
-    public List<E> toListEntity(List<D> dList) {
+    public List<E> toListEntity(List<Object> dList) {
         if (dList.isEmpty()) return null;
         List<E> eList = new ArrayList<>();
-        for (D d :
+        for (Object d :
                 dList) {
             eList.add(mapper.map(d, entityClass));
         }

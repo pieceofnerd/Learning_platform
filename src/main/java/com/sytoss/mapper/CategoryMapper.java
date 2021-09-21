@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class CategoryMapper extends BaseMapper<Category, CategoryDTO> {
 
@@ -24,5 +26,15 @@ public class CategoryMapper extends BaseMapper<Category, CategoryDTO> {
     @Override
     public CategoryDTO toDTO(Category entity) {
         return super.toDTO(entity);
+    }
+
+    @Override
+    public List<Category> toListEntity(List<Object> dList) {
+        return super.toListEntity(dList);
+    }
+
+    @Override
+    public List<CategoryDTO> toListDTO(List<Category> categories) {
+        return super.toListDTO(categories);
     }
 }

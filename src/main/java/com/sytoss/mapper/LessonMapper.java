@@ -22,7 +22,7 @@ public class LessonMapper extends BaseMapper<Lesson, LessonDTO> {
     }
 
     @Override
-    public List<Lesson> toListEntity(List<LessonDTO> lessonDTOS) {
+    public List<Lesson> toListEntity(List<Object> lessonDTOS) {
         return super.toListEntity(lessonDTOS);
     }
 

@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class MediaMapper extends BaseMapper<Media, MediaDTO> {
 
@@ -22,5 +24,15 @@ public class MediaMapper extends BaseMapper<Media, MediaDTO> {
     @Override
     public MediaDTO toDTO(Media entity) {
         return super.toDTO(entity);
+    }
+
+    @Override
+    public List<Media> toListEntity(List<Object> dList) {
+        return super.toListEntity(dList);
+    }
+
+    @Override
+    public List<MediaDTO> toListDTO(List<Media> media) {
+        return super.toListDTO(media);
     }
 }
