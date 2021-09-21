@@ -15,4 +15,6 @@ public class FilterPromotionDTO {
 
    private Date endTimePeriod;
 
+   private Long promotionStateId;
+
 }
