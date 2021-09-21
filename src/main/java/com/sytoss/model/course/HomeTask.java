@@ -29,7 +29,7 @@ public class HomeTask {
     private Lesson lesson;
 
     @OneToMany(mappedBy = "homeTask",fetch = FetchType.LAZY)
-    private List<Homework> homework;
+    private List<Homework> homeworks;
 
     public Long getId() {
         return id;
@@ -71,11 +71,11 @@ public class HomeTask {
         this.lesson = lesson;
     }
 
-    public List<Homework> getHomework() {
-        return homework;
+    public List<Homework> getHomeworks() {
+        return homeworks;
     }
 
-    public void setHomework(List<Homework> homework) {
-        this.homework = homework;
+    public void setHomeworks(List<Homework> homeworks) {
+        this.homeworks = homeworks;
     }
 }

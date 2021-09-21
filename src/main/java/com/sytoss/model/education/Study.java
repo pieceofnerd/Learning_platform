@@ -29,7 +29,7 @@ public class Study {
     private Double progress;
 
     @Column(name = "assessment")
-    private Integer assessment;
+    private Double assessment;
 
     @ManyToOne
     private Media certificate;
@@ -79,11 +79,11 @@ public class Study {
         this.progress = progress;
     }
 
-    public Integer getAssessment() {
+    public Double getAssessment() {
         return assessment;
     }
 
-    public void setAssessment(Integer assessment) {
+    public void setAssessment(Double assessment) {
         this.assessment = assessment;
     }
 
