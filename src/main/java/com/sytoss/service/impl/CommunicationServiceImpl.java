@@ -16,23 +16,23 @@ public class CommunicationServiceImpl implements CommunicationService {
 
 
     @Override
-    public boolean createComment(Communication communication) {
-        return false;
+    public void createComment(Communication communication) {
+       //TODO
     }
 
     @Override
-    public boolean createFeedback(Communication feedback) {
-        return false;
+    public void createFeedback(Communication feedback) {
+        //TODO
     }
 
     @Override
-    public boolean updateFeedback(Communication feedback) {
-        return false;
+    public void updateFeedback(Communication feedback) {
+        //TODO
     }
 
     @Override
-    public boolean delete(Communication communication) {
-        return false;
+    public void delete(Communication communication) {
+        //TODO
     }
 
     @Override

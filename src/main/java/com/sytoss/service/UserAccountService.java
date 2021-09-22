@@ -22,5 +22,5 @@ public interface UserAccountService {
 
     boolean forgotPassword(String email);
 
-    boolean leaveComment(Communication comment);
+    void leaveComment(Communication comment);
 }

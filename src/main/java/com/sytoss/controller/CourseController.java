@@ -1,6 +1,8 @@
 package com.sytoss.controller;
 
+import com.sytoss.exception.DuplicateCourseNameException;
 import com.sytoss.exception.NoSuchCourseException;
+import com.sytoss.exception.NoSuchTopicException;
 import com.sytoss.exception.NoSuchUserAccountException;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.LessonTemplateMapper;
@@ -33,7 +35,7 @@ public class CourseController {
         final Course course = courseMapper.toEntity(courseSaveDTO);
         try {
             courseService.createCourse(course);
-        } catch (NoSuchCourseException e) {
+        } catch (NoSuchCourseException | DuplicateCourseNameException e) {
             e.printStackTrace();
         }
     }
@@ -56,7 +58,7 @@ public class CourseController {
         }
     }
 
-    public void removeTopic(TopicDTO topicDTO) {
+    public void removeTopic(TopicDTO topicDTO) throws NoSuchTopicException {
         final Topic topic = topicMapper.toEntity(topicDTO);
         courseService.removeTopic(topic);
     }

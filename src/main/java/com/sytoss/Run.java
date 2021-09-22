@@ -34,11 +34,11 @@ public class Run {
         final StudyMapper studyMapper = context.getBean(StudyMapper.class);
         final CourseMapper courseMapper = context.getBean(CourseMapper.class);
         final UserAccountService userService = context.getBean(UserAccountService.class);
-        final Student student = (Student) userService.findUserAccountById(1L);
+       // final Student student = (Student) userService.findUserAccountById(1L);
 
 
         final StudyGroupRepository studyGroupRepository = context.getBean(StudyGroupRepository.class);
-        studyService.updateAssessment(userService.findUserAccountById(1L),studyGroupRepository.findOne(2L));
+      //  studyService.updateAssessment(userService.findUserAccountById(1L),studyGroupRepository.findOne(2L));
 
 
 

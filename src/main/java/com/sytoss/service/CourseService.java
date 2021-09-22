@@ -1,6 +1,8 @@
 package com.sytoss.service;
 
+import com.sytoss.exception.DuplicateCourseNameException;
 import com.sytoss.exception.NoSuchCourseException;
+import com.sytoss.exception.NoSuchTopicException;
 import com.sytoss.exception.NoSuchUserAccountException;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.LessonTemplate;
@@ -14,15 +16,19 @@ import java.util.List;
 
 public interface CourseService {
 
-    boolean createCourse(Course course) throws NoSuchCourseException;
+    void createCourse(Course course) throws NoSuchCourseException, DuplicateCourseNameException;
 
-    boolean updateCourse(Course course) throws NoSuchCourseException;
+    void updateCourse(Course course) throws NoSuchCourseException;
 
-    boolean closeCourse(Course course) throws NoSuchCourseException;
+    void closeCourse(Course course) throws NoSuchCourseException;
 
-    boolean removeTopic(Topic topic);
+    void removeTopic(Topic topic) throws NoSuchTopicException;
 
-    boolean removeLessonTemplate(LessonTemplate lessonTemplate);
+    void removeLessonTemplate(LessonTemplate lessonTemplate);
+
+    void addTopic( Topic topic) throws NoSuchCourseException;
+
+    void addLessonTemplate( LessonTemplate lessonTemplate) throws NoSuchTopicException;
 
     List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException;
 

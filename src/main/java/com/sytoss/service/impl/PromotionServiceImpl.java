@@ -42,7 +42,6 @@ public class PromotionServiceImpl implements PromotionService {
         switch (filter.getFilter()) {
             case TIME_PERIOD:
                 return promotionRepository.findPromotionsByTimePeriod(filter.getStartTimePeriod(), filter.getEndTimePeriod());
-                case
         }
         return null;
     }

@@ -114,10 +114,10 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public boolean leaveComment(Communication comment) {
+    public void leaveComment(Communication comment) {
         if (comment == null)
-            return false;
-        return communicationService.createComment(comment);
+            return ;
+         communicationService.createComment(comment);
     }
 
 }

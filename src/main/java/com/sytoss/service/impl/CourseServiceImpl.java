@@ -2,6 +2,7 @@ package com.sytoss.service.impl;
 
 import com.sytoss.exception.DuplicateCourseNameException;
 import com.sytoss.exception.NoSuchCourseException;
+import com.sytoss.exception.NoSuchTopicException;
 import com.sytoss.exception.NoSuchUserAccountException;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.PriceType;
@@ -44,7 +45,9 @@ public class CourseServiceImpl implements CourseService {
     private final UserAccountRepository userAccountRepository;
 
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, TopicRepository topicRepository, LessonTemplateRepository lessonTemplateRepository, LookupRepository lookupRepository, UserAccountRepository userAccountRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, TopicRepository topicRepository,
+                             LessonTemplateRepository lessonTemplateRepository, LookupRepository lookupRepository,
+                             UserAccountRepository userAccountRepository) {
         this.courseRepository = courseRepository;
         this.topicRepository = topicRepository;
         this.lessonTemplateRepository = lessonTemplateRepository;
@@ -53,43 +56,30 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean createCourse(Course course) throws NoSuchCourseException {
-        boolean created = saveCourse(course);
-        if (created)
-            logger.info("Course {} was created", course.getName());
-        return created;
-    }
-
-    @Override
-    public boolean updateCourse(Course course) throws NoSuchCourseException {
-        boolean updated = saveCourse(course);
-        if (updated)
-            logger.info("Course {} was updated", course.getName());
-        return updated;
-    }
-
-    private boolean saveCourse(Course course) throws NoSuchCourseException {
-        if (course == null) {
-            throw new NoSuchCourseException();
-        }
+    public void createCourse(Course course) {
         try {
             validateCourseName(course);
-            courseRepository.save(course);
-            return true;
+            saveCourse(course);
+            logger.info("Course {} was created", course.getName());
         } catch (DuplicateCourseNameException e) {
             logger.error("Course with name {}  already exists on Platform", course.getName());
-            return false;
         }
     }
 
     @Override
-    public boolean closeCourse(Course course) throws NoSuchCourseException {
-        if (course == null)
-            throw new NoSuchCourseException();
+    public void updateCourse(Course course) throws NoSuchCourseException {
+        checkCourseExistence(course);
+        courseRepository.save(course);
+        logger.info("Course {} was updated", course.getName());
+    }
 
+
+    @Override
+    public void closeCourse(Course course) throws NoSuchCourseException {
+        checkCourseExistence(course);
         course.setActive(false);
         courseRepository.save(course);
-        return true;
+        logger.info("Course {} was disabled", course.getName());
     }
 
     @Transactional(readOnly = true)
@@ -103,23 +93,55 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean removeTopic(Topic topic) {
+    public void removeTopic(Topic topic) throws NullPointerException {
         if (topic == null) {
-            return false;
+            logger.error("Topic could not be null");
+            throw new NullPointerException();
         }
         topic.setActive(false);
         topicRepository.save(topic);
-        return true;
+        logger.info("Topic {} was removed from {} course", topic.getName(), topic.getCourse().getName());
     }
 
     @Override
-    public boolean removeLessonTemplate(LessonTemplate lessonTemplate) {
+    public void removeLessonTemplate(LessonTemplate lessonTemplate) throws NullPointerException {
         if (lessonTemplate == null) {
-            return false;
+            logger.error("Topic could not be null");
+            throw new NullPointerException();
         }
         lessonTemplate.setActive(false);
         lessonTemplateRepository.save(lessonTemplate);
-        return true;
+        logger.info("Lesson template {} was removed from {} topic", lessonTemplate.getName(), lessonTemplate.getTopic().getName());
+    }
+
+    @Override
+    public void addTopic(Topic topic) throws NoSuchCourseException, NullPointerException {
+        checkCourseExistence(topic.getCourse());
+
+        if (topic == null) {
+            logger.error("Topic must not be null");
+            throw new NullPointerException();
+        }
+        topicRepository.save(topic);
+        logger.info("Topic {} was added to {} course", topic.getName(), topic.getCourse().getName());
+    }
+
+    @Override
+    public void addLessonTemplate(LessonTemplate lessonTemplate) throws NullPointerException, NoSuchTopicException {
+
+        Topic topic = topicRepository.findOne(lessonTemplate.getTopic().getId());
+
+        if (topic == null){
+            logger.error("Couldn't find topic with id: {}", lessonTemplate.getTopic().getId());
+            throw new NoSuchTopicException();
+        }
+
+            if (lessonTemplate == null) {
+                logger.error("Lesson template must not be null");
+                throw new NullPointerException();
+            }
+        lessonTemplateRepository.save(lessonTemplate);
+        logger.info("Lesson template {} was added to {} topic", lessonTemplate.getName(), lessonTemplate.getTopic().getName());
     }
 
     @Override
@@ -135,21 +157,24 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private void validateCourseName(Course course) throws DuplicateCourseNameException {
-      String courseNameWithoutDoubleSpaces = course.getName().replace(" +"," ").trim();
-      if(courseRepository.findCourseByName(courseNameWithoutDoubleSpaces)!=null)
-          throw new DuplicateCourseNameException();
+        String courseNameWithoutDoubleSpaces = course.getName().replace(" +", " ").trim();
+        if (courseRepository.findCourseByName(courseNameWithoutDoubleSpaces) != null)
+            throw new DuplicateCourseNameException();
     }
 
-    private List<Course> findCoursesByPriceRange(FilterCourseDTO filter) {
+    private List<Course> findCoursesByPriceRange(FilterCourseDTO filter) throws NoSuchUserAccountException {
         UserAccount student = userAccountRepository.findOne(filter.getStudentId());
 
-        if (student == null)
-            return null;
+        if (student == null) {
+            logger.error("Couldn't find students account with id: {}", filter.getStudentId());
+            throw new NoSuchUserAccountException();
+        }
 
         if (!student.getClass().isAssignableFrom(Student.class)) {
             logger.error("Course Filter contains incorrect student id");
             throw new ClassCastException("Incorrect type for Student.class");
         }
+
         Lookup price;
         if (Objects.equals(((Student) student).getStudentStatus().getId(), StudentStatus.NEWBIE.getValue()))
             price = lookupRepository.findOne(PriceType.REGULAR.getValue());
@@ -158,6 +183,21 @@ public class CourseServiceImpl implements CourseService {
 
         return courseRepository.findCourseByPriceRange(price, filter.getLowCost(), filter.getHighCost());
 
+    }
+
+    private void saveCourse(Course course) throws NullPointerException {
+        if (course == null) {
+            logger.error("Course must not be null");
+            throw new NullPointerException();
+        }
+        courseRepository.save(course);
+    }
+
+    private void checkCourseExistence(Course course) throws NoSuchCourseException {
+        if (courseRepository.findOne(course.getId()) == null) {
+            logger.error("Course {} wasn't be found ", course.getId());
+            throw new NoSuchCourseException();
+        }
     }
 
 }
