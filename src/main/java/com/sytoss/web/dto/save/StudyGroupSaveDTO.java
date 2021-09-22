@@ -22,8 +22,4 @@ public class StudyGroupSaveDTO {
 
     private Date endDate;
 
-    private Date createdDate;
-
-    private Date updatedDate;
-
 }

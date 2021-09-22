@@ -1,10 +1,13 @@
 package com.sytoss.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.sytoss.model.Media;
+import com.sytoss.model.course.Lesson;
+import com.sytoss.model.education.Address;
+import com.sytoss.model.education.Homework;
+import com.sytoss.model.education.Study;
+import lombok.*;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,16 +21,31 @@ public class UserAccountDTO {
     private String secondName;
     private Date birthday;
     private String bio;
-    private AddressDTO address;
+    private Address address;
     private String email;
-    private char[] password;
-    private MediaDTO photo;
-    private List<StudyDTO> studies;
-    private List<HomeworkDTO> homeworks;
-    private List<LessonDTO> lessons;
+    private Media photo;
+    private List<Study> studies;
+    private List<Homework> homeworks;
+    private List<Lesson> lessons;
     private boolean deleted;
     private Long role;
     private Date lastActivity;
     private Date createdDate;
     private Date updatedDate;
+
+    @Override
+    public String toString() {
+        return "\nUserAccountDTO{" +
+                "\n  id=" + id +
+                "\n, firstName='" + firstName + '\'' +
+                "\n, secondName='" + secondName + '\'' +
+                "\n, birthday=" + birthday +
+                "\n, email='" + email + '\'' +
+                "\n, deleted=" + deleted +
+                "\n, role=" + role +
+                "\n, lastActivity=" + lastActivity +
+                "\n, studies=" + studies +
+                "\n, homeworks=" + homeworks +
+                "\n}";
+    }
 }
