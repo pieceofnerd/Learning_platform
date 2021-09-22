@@ -57,11 +57,11 @@ public class Homework {
 
     @Override
     public String toString() {
-        return "Homework{" +
-                "id=" + id +
-                ", author=" + author +
-                ", homeTask=" + homeTask +
-                '}';
+        return "\nHomework{" +
+                "\n  id=" + id +
+                "\n, author=" + author.getId() +
+                "\n, homeTask=" + homeTask.getId() +
+                "\n";
     }
 
     public List<Message> getDialog() {

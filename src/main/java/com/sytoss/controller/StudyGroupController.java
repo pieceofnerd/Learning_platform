@@ -41,16 +41,6 @@ public class StudyGroupController {
         studyGroupService.deleteStudyGroup(studyGroup);
     }
 
-    public List<StudyGroupDTO> findStudyGroupsByCourse(CourseDTO courseDTO) {
-        List<StudyGroupDTO> studyGroups = null;
-        final Course course = courseMapper.toEntity(courseDTO);
-        try {
-            studyGroups = studyGroupMapper.toListDTO(studyGroupService.findStudyGroupsByCourse(course));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return studyGroups;
-    }
 
     public List<UserAccountDTO> findStudentsByStudyGroup(StudyGroupDTO studyGroupDTO) {
         final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
@@ -60,7 +50,12 @@ public class StudyGroupController {
     }
 
     public List<StudyGroupDTO> findStudyGroupsByFilter(FilterStudyGroupDTO filter) {
-        List<StudyGroupDTO> studyGroups = new ArrayList<>();
-        return studyGroupMapper.toListDTO(studyGroupService.findStudyGroupsByFilter(filter));
+        final List<StudyGroupDTO> studyGroupDTOList = new ArrayList<>();
+        try {
+            studyGroupDTOList.addAll(studyGroupMapper.toListDTO(studyGroupService.findStudyGroupsByFilter(filter)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return studyGroupDTOList;
     }
 }

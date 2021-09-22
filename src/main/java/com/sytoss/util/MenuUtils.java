@@ -43,6 +43,9 @@ public class MenuUtils {
 
     public static void printField(String field, String value) {
         System.out.println(colors.ANSI_GREEN + field + " : "+colors.ANSI_CYAN + value + colors.ANSI_RESET);
+
+    }public static void printField(String field, Object value) {
+        System.out.println(colors.ANSI_GREEN + field + " : "+colors.ANSI_CYAN + value + colors.ANSI_RESET);
     }
 
     public static class colors {

@@ -2,6 +2,7 @@ package com.sytoss.service.impl;
 
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
+import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
@@ -51,25 +52,19 @@ public class StudyGroupServiceImpl implements StudyGroupService {
         return true;
     }
 
-    @Override
-    public List<StudyGroup> findStudyGroupsByCourse(Course course) throws Exception {
-        if (course == null)
-            throw new Exception("No content");
-        List<StudyGroup> studyGroups = studyGroupRepository.findStudyGroupsByCourse(course);
-        if (studyGroups.isEmpty())
-            throw new Exception("No content");
-        return studyGroups;
-    }
 
     @Override
     public List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup) {
-        studyGroup.getStudies();
+        List<UserAccount> students = new ArrayList<>();
+        for (Study study : studyGroup.getStudies()) {
+            students.add(study.getStudent());
+        }
         //TODO
-        return null;
+        return students;
     }
 
     @Override
-    public List<StudyGroup> findStudyGroupsByFilter(FilterStudyGroupDTO filter) {
+    public List<StudyGroup> findStudyGroupsByFilter(FilterStudyGroupDTO filter) throws Exception {
         List<StudyGroup> studyGroups = new ArrayList<>();
         switch (filter.getFilter()) {
             case COURSE: {
@@ -81,6 +76,9 @@ public class StudyGroupServiceImpl implements StudyGroupService {
                 break;
             }
         }
-        return studyGroups;
+        if (studyGroups == null)
+            throw new Exception("Study group has no content");
+        else
+            return studyGroups;
     }
 }

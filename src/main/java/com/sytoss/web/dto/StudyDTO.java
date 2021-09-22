@@ -1,5 +1,8 @@
 package com.sytoss.web.dto;
 
+import com.sytoss.model.Media;
+import com.sytoss.model.course.StudyGroup;
+import com.sytoss.model.education.UserAccount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,15 +18,15 @@ public class StudyDTO {
 
     private Long id;
 
-    private UserAccountDTO student;
+    private UserAccount student;
 
-    private StudyGroupDTO studyGroup;
+    private StudyGroup studyGroup;
 
     private Double progress;
 
     private Double assessment;
 
-    private MediaDTO certificate;
+    private Media certificate;
 
     private boolean deleted;
 

@@ -4,8 +4,6 @@ import com.sytoss.controller.StudyController;
 import com.sytoss.mapper.StudyGroupMapper;
 import com.sytoss.mapper.StudyMapper;
 import com.sytoss.mapper.UserAccountMapper;
-import com.sytoss.model.course.StudyGroup;
-import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.repository.education.UserAccountRepository;
@@ -15,7 +13,6 @@ import com.sytoss.web.dto.UserAccountDTO;
 import com.sytoss.web.dto.filter.Filter;
 import com.sytoss.web.dto.filter.FilterStudyDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,14 +75,20 @@ public class StudyMenu {
                 studyController.updateProgress(studentDTO, studyGroupDTO);
                 break;
             case 5:
-                FilterStudyDTO filter = new FilterStudyDTO();
                 printMenu(
                         "1. Filter by student",
                         "2. Filter by study group"
                 );
-                int f = scanInt("Select filter");
-
-
+                FilterStudyDTO filter = selectFilter(scanInt("Select filter - "));
+                for (StudyDTO s : studyController.findStudiesByFilter(filter)) {
+                    printClassName(s.getClass().getSimpleName());
+                    printField("id",s.getId());
+                    printField("student id",s.getStudent().getId());
+                    printField("study group id",s.getStudyGroup().getId());
+                    printField("progress",s.getProgress());
+                    printField("assessment",s.getAssessment());
+                    printField("certificate",s.getCertificate());
+                }
                 break;
         }
     }
@@ -96,11 +99,13 @@ public class StudyMenu {
             case 1:
 
                 filter.setFilter(Filter.STUDENT);
-                long studentId = scanInt("Write student id to filter");
+                long studentId = scanInt("Write student id to filter - ");
+                filter.setStudent(studentId);
                 break;
             case 2:
                 filter.setFilter(Filter.STUDY_GROUP);
-                long studyGroup = scanInt("Write study group id to filter");
+                long studyGroupId = scanInt("Write study group id to filter - ");
+                filter.setStudyGroup(studyGroupId);
                 break;
             default:
                 throw new Exception("FILTER ERROR");

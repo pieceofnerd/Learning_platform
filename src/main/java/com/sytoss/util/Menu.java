@@ -10,6 +10,7 @@ import static com.sytoss.util.MenuUtils.scanInt;
 public class Menu {
 
     private final StudyMenu studyMenu;
+    private final StudyGroupMenu studyGroupMenu;
 
 
     public void start() throws Exception {
@@ -27,6 +28,7 @@ public class Menu {
                     studyMenu.start();
                     break;
                 case 2:
+                    studyGroupMenu.start();
                     break;
             }
         }
