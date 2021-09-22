@@ -12,13 +12,13 @@ import java.util.List;
 
 public interface LessonService {
 
-    boolean createLesson(Lesson lesson) throws NoSuchLessonException;
+    void createLesson(Lesson lesson) throws NoSuchLessonException;
 
-    boolean updateLesson(Lesson lesson) throws NoSuchLessonException;
+    void updateLesson(Lesson lesson) throws NoSuchLessonException;
 
-    boolean deleteLesson(Lesson lesson) throws NoSuchLessonException;
+    void deleteLesson(Lesson lesson) throws NoSuchLessonException;
 
-    boolean deleteAllComments(Lesson lesson) throws NoSuchLessonException;
+    void deleteAllComments(Lesson lesson) throws NoSuchLessonException;
 
     List<Lesson> findLessonsByFilter(FilterLessonDTO filter);
 

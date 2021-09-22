@@ -1,19 +1,16 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchLessonException;
-import com.sytoss.model.Lookup;
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.course.Lesson;
 import com.sytoss.model.course.LessonTemplate;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.user.Mentor;
-import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.course.LessonRepository;
 import com.sytoss.repository.course.LessonTemplateRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
-import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.LessonService;
 import com.sytoss.web.dto.filter.FilterCommunicationDTO;
@@ -35,8 +32,6 @@ public class LessonServiceImpl implements LessonService {
 
     private final LessonRepository lessonRepository;
 
-    private final HomeworkRepository homeworkRepository;
-
     private final StudyGroupRepository studyGroupRepository;
 
     private final CommunicationRepository communicationRepository;
@@ -45,53 +40,54 @@ public class LessonServiceImpl implements LessonService {
 
     private final UserAccountRepository userAccountRepository;
 
-    private final LookupRepository lookupRepository;
-
     @Autowired
-    public LessonServiceImpl(LessonRepository lessonRepository, HomeworkRepository homeworkRepository,
-                             StudyGroupRepository studyGroupRepository, CommunicationRepository communicationRepository,
-                             LessonTemplateRepository lessonTemplateRepository, UserAccountRepository userAccountRepository,
-                             LookupRepository lookupRepository) {
+    public LessonServiceImpl(LessonRepository lessonRepository, StudyGroupRepository studyGroupRepository,
+                             CommunicationRepository communicationRepository, LessonTemplateRepository lessonTemplateRepository,
+                             UserAccountRepository userAccountRepository) {
         this.lessonRepository = lessonRepository;
-        this.homeworkRepository = homeworkRepository;
         this.studyGroupRepository = studyGroupRepository;
         this.communicationRepository = communicationRepository;
         this.lessonTemplateRepository = lessonTemplateRepository;
         this.userAccountRepository = userAccountRepository;
-        this.lookupRepository = lookupRepository;
     }
 
     @Override
-    public boolean createLesson(Lesson lesson) {
-        return saveLesson(lesson);
+    public void createLesson(Lesson lesson) {
+        saveLesson(lesson);
+        logger.info("Lesson {} was created", lesson.toString());
     }
 
     @Override
-    public boolean updateLesson(Lesson lesson) throws NoSuchLessonException {
-        if (lessonRepository.findOne(lesson.getId()) == null)
+    public void updateLesson(Lesson lesson) throws NoSuchLessonException {
+        checkExistence(lesson);
+        saveLesson(lesson);
+        logger.info("Lesson {} was updated", lesson.getId());
+    }
+
+    private void checkExistence(Lesson lesson) throws NoSuchLessonException {
+        if (lessonRepository.findOne(lesson.getId()) == null) {
+            logger.error("Couldn't find lesson with id: {}", lesson.getId());
             throw new NoSuchLessonException();
-        return saveLesson(lesson);
+        }
     }
 
     @Override
-    public boolean deleteLesson(Lesson lesson) throws NoSuchLessonException {
-        if (lessonRepository.findOne(lesson.getId()) == null)
-            throw new NoSuchLessonException();
+    public void deleteLesson(Lesson lesson) throws NoSuchLessonException {
+        checkExistence(lesson);
         lesson.setActive(false);
-        return saveLesson(lesson);
+        lessonRepository.save(lesson);
+        logger.info("Lesson {} was disabled", lesson.getId());
     }
 
     @Override
-    @Transactional
-    public boolean deleteAllComments(Lesson lesson) throws NoSuchLessonException {
-        if (lessonRepository.findById(lesson.getId()) == null)
-            throw new NoSuchLessonException();
+    public void deleteAllComments(Lesson lesson) throws NoSuchLessonException {
+        checkExistence(lesson);
 
         for (Comment comment : lesson.getComments()) {
             comment.setActive(false);
             communicationRepository.save(comment);
         }
-        return true;
+        logger.info("Comments were deleted from lesson {} ", lesson.getId());
     }
 
     @Override
@@ -99,8 +95,7 @@ public class LessonServiceImpl implements LessonService {
         switch (filter.getFilter()) {
             case TIME_PERIOD: {
                 StudyGroup studyGroup = studyGroupRepository.findOne(filter.getStudyGroupId());
-                return lessonRepository.findLessonsByTimePeriodAndStudyGroup(studyGroup, filter.getStartTimePeriod(),
-                        filter.getEndDatePeriod());
+                return lessonRepository.findLessonsByTimePeriodAndStudyGroup(studyGroup, filter.getStartTimePeriod(), filter.getEndDatePeriod());
             }
             case FUTURE_LESSONS_FOR_STUDY_GROUP: {
                 StudyGroup studyGroup = studyGroupRepository.findOne(filter.getStudyGroupId());
@@ -146,11 +141,11 @@ public class LessonServiceImpl implements LessonService {
         return comments;
     }
 
-    private boolean saveLesson(Lesson lesson) {
-        if (lesson == null)
+    private void saveLesson(Lesson lesson) {
+        if (lesson == null) {
+            logger.error("Lesson must not be null");
             throw new NullPointerException();
-
-        Lesson saveLesson = lessonRepository.save(lesson);
-        return true;
+        }
+        lessonRepository.save(lesson);
     }
 }
