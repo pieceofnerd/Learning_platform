@@ -1,6 +1,6 @@
-package com.sytoss.web.dto;
+package com.sytoss.web.dto.save;
 
-
+import com.sytoss.web.dto.CourseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,15 +12,11 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudyGroupDTO {
+public class StudyGroupSaveDTO {
 
-    private Long id;
-
-    private CourseDTO course;
+    private Long course;
 
     private Integer placeNumber;
-
-    private Boolean deleted;
 
     private Date startDate;
 
@@ -29,10 +25,5 @@ public class StudyGroupDTO {
     private Date createdDate;
 
     private Date updatedDate;
-
-//    private List<Long> studies;
-//
-//    private List<Long> lessons;
-
 
 }

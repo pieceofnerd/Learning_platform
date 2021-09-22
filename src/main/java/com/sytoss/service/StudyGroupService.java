@@ -14,8 +14,6 @@ public interface StudyGroupService {
 
     boolean deleteStudyGroup(StudyGroup studyGroup);
 
-    StudyGroup findStudyGroupById(Long id) throws Exception;
-
     List<StudyGroup> findStudyGroupsByCourse(Course course) throws Exception;
 
     List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup);

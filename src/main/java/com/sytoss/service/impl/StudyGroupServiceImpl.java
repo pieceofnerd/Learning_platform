@@ -52,13 +52,6 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     @Override
-    public StudyGroup findStudyGroupById(Long id) throws Exception {
-        if (!studyGroupRepository.exists(id))
-            throw new Exception("Study group with id = " + id + " not found!");
-        return studyGroupRepository.findOne(id);
-    }
-
-    @Override
     public List<StudyGroup> findStudyGroupsByCourse(Course course) throws Exception {
         if (course == null)
             throw new Exception("No content");
