@@ -130,4 +130,17 @@ public class Lesson {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return "\nLesson{" +
+                "\n  id=" + id +
+                "\n, mentor=" + mentor.getId() +
+                "\n, homeTask=" + homeTask.getId() +
+                "\n, studyGroup=" + studyGroup.getId() +
+                "\n, lessonDate=" + lessonDate +
+                "\n, active=" + active +
+                "\n, comments=" + comments +
+                "\n}";
+    }
 }
