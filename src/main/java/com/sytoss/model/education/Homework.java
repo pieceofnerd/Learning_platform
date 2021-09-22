@@ -54,6 +54,16 @@ public class Homework {
     @ManyToOne(optional = false)
     private HomeTask homeTask;
 
+
+    @Override
+    public String toString() {
+        return "Homework{" +
+                "id=" + id +
+                ", author=" + author +
+                ", homeTask=" + homeTask +
+                '}';
+    }
+
     public List<Message> getDialog() {
         return dialog;
     }

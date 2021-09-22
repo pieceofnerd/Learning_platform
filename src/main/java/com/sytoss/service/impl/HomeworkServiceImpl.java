@@ -1,5 +1,6 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.NoSuchHomeworkException;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.Homework;
 import com.sytoss.repository.communication.CommunicationRepository;
@@ -8,6 +9,8 @@ import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.HomeworkService;
 import com.sytoss.web.dto.filter.FilterHomeworkDTO;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,37 +23,50 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeworkServiceImpl implements HomeworkService {
 
+    private static final Logger logger = LoggerFactory.getLogger(HomeworkServiceImpl.class);
+
     private final HomeworkRepository homeworkRepository;
+
     private final CommunicationRepository communicationRepository;
+
     private final UserAccountRepository userAccountRepository;
 
     @Override
-    public boolean createHomework(Homework homework) {
-        if (homework == null)
-            return false;
+    public void createHomework(Homework homework) throws NullPointerException {
+        if (homework == null) {
+            logger.error("Homework must not be null");
+            throw new NullPointerException();
+        }
+        Homework savedHomework = homeworkRepository.save(homework);
+        logger.info("Homework {} was created", savedHomework.toString());
+    }
 
+    @Override
+    public void updateHomework(Homework homework) throws NoSuchHomeworkException {
+        checkExistence(homework);
         homeworkRepository.save(homework);
-        return true;
+        logger.info("Homework {} was updated", homework.getId());
+    }
+
+    private void checkExistence(Homework homework) throws NoSuchHomeworkException {
+        if (homeworkRepository.findOne(homework.getId()) == null) {
+            logger.error("couldn't find homework with id: {}", homework.getId());
+            throw new NoSuchHomeworkException();
+        }
     }
 
     @Override
-    public boolean updateHomework(Homework homework) {
-        return false;
-    }
+    public void deleteHomework(Homework homework) throws NoSuchHomeworkException {
+        if (homework == null) {
+            logger.error("Homework must not be null");
+            throw new NullPointerException();
+        }
 
-    @Override
-    public boolean deleteHomework(Homework homework) {
-        if (homework == null)
-            return false;
-
-        if (!homeworkRepository.exists(homework.getId()))
-            return false;
-
+        checkExistence(homework);
         homework.setActive(false);
         homeworkRepository.save(homework);
-        return true;
+        logger.info("Homework {} was disabled", homework.getId());
     }
-
 
     @Override
     public List<Homework> findHomeworkFindByFilter(FilterHomeworkDTO filter) throws Exception {
@@ -66,11 +82,12 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public boolean leaveFeedback(Communication feedback) {
+    public void leaveFeedback(Communication feedback) throws NullPointerException {
         if (feedback == null) {
-            return false;
+            logger.error("Feedback must not be null");
+            throw new NullPointerException();
         }
         communicationRepository.save(feedback);
-        return true;
+        logger.info("Feedback {} was created", feedback.toString());
     }
 }

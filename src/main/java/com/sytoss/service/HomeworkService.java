@@ -1,5 +1,6 @@
 package com.sytoss.service;
 
+import com.sytoss.exception.NoSuchHomeworkException;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.Homework;
 import com.sytoss.model.education.UserAccount;
@@ -10,14 +11,14 @@ import java.util.List;
 
 public interface HomeworkService {
 
-    boolean createHomework(Homework homework);
+    void createHomework(Homework homework);
 
-    boolean updateHomework(Homework homework);
+    void updateHomework(Homework homework) throws NoSuchHomeworkException;
 
-    boolean deleteHomework(Homework homework);
+    void deleteHomework(Homework homework) throws NoSuchHomeworkException;
 
     List<Homework> findHomeworkFindByFilter(FilterHomeworkDTO filter) throws Exception;
 
-    boolean leaveFeedback(Communication feedback);
+    void leaveFeedback(Communication feedback);
 
 }
