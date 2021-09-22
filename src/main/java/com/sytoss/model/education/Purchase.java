@@ -1,9 +1,12 @@
 package com.sytoss.model.education;
 
+import com.sytoss.model.PurchaseStatus;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.Lookup;
+import com.sytoss.model.course.StudyGroup;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -19,21 +22,26 @@ public class Purchase {
     @ManyToOne(optional = false)
     private UserAccount student;
 
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "study_group_id")
     @ManyToOne(optional = false)
-    private Course course;
+    private StudyGroup studyGroup;
 
     @JoinColumn(name = "purchase_status_id")
     @ManyToOne(optional = false)
     private Lookup purchaseStatus;
 
     @Column(name = "cost")
-    private Double cost;
+    private BigDecimal cost;
 
     @Column(name = "purchase_date")
     private Date purchaseDate = new Date();
 
     public Purchase() {
+    }
+
+    public Purchase(UserAccount student, StudyGroup studyGroup) {
+        this.student = student;
+        this.studyGroup = studyGroup;
     }
 
     public Long getId() {
@@ -52,13 +60,14 @@ public class Purchase {
         this.student = student;
     }
 
-    public Course getCourse() {
-        return course;
+    public StudyGroup getStudyGroup() {
+        return studyGroup;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setStudyGroup(StudyGroup studyGroup) {
+        this.studyGroup = studyGroup;
     }
+
 
     public Lookup getPurchaseStatus() {
         return purchaseStatus;
@@ -68,11 +77,11 @@ public class Purchase {
         this.purchaseStatus = purchaseStatus;
     }
 
-    public Double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
