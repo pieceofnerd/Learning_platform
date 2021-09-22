@@ -14,9 +14,7 @@ public interface StudyGroupService {
 
     boolean deleteStudyGroup(StudyGroup studyGroup);
 
-    List<StudyGroup> findStudyGroupsByCourse(Course course) throws Exception;
-
     List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup);
 
-    List<StudyGroup> findStudyGroupsByFilter(FilterStudyGroupDTO filter);
+    List<StudyGroup> findStudyGroupsByFilter(FilterStudyGroupDTO filter) throws Exception;
 }
