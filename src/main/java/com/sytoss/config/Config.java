@@ -11,6 +11,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -19,8 +21,8 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"com.sytoss.repository"})
-@ComponentScan(basePackages = {"com.sytoss.service", "com.sytoss.mapper","com.sytoss.controller"})
-
+@ComponentScan(basePackages = {"com.sytoss.service", "com.sytoss.mapper","com.sytoss.controller","com.sytoss.util"})
+@EnableTransactionManagement
 public class Config {
     @Bean
     public DataSource dataSource() {
@@ -29,7 +31,6 @@ public class Config {
         dataSource.setUrl("jdbc:mysql://192.168.21.125:3306/learning_platform?serverTimezone=UTC");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
-        dataSource.setSchema("learning_platform");
         return dataSource;
     }
 
@@ -51,7 +52,6 @@ public class Config {
     public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
-
         return transactionManager;
     }
 

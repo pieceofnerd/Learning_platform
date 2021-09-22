@@ -8,12 +8,11 @@ import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.course.LessonRepository;
+import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.repository.education.UserAccountRepository;
-import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
-import com.sytoss.service.UserAccountService;
 import com.sytoss.web.dto.filter.FilterStudyDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,9 +27,9 @@ import java.util.List;
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
-//    private final UserAccountService userAccountService;
+    //    private final UserAccountService userAccountService;
     private final UserAccountRepository userAccountRepository;
-    private final StudyGroupService studyGroupService;
+    private final StudyGroupRepository studyGroupRepository;
     private final HomeworkRepository homeworkRepository;
     private final CommunicationRepository communicationRepository;
     private final LessonRepository lessonRepository;
@@ -143,14 +142,14 @@ public class StudyServiceImpl implements StudyService {
     public List<Study> findStudiesByFilter(FilterStudyDTO filter) throws Exception {
         List<Study> studies = new ArrayList<>();
         switch (filter.getFilter()) {
-            case STUDENT: {
+            case STUDENT:
                 studies.addAll(studyRepository.findStudiesByStudent(userAccountRepository.findOne(filter.getStudent())));
                 break;
-            }
-            case STUDY_GROUP: {
-                studies.addAll(studyRepository.findStudiesByStudyGroup(studyGroupService.findStudyGroupById(filter.getStudyGroup())));
+            case STUDY_GROUP:
+                studies.addAll(studyRepository.findStudiesByStudyGroup(studyGroupRepository.findOne(filter.getStudyGroup())));
                 break;
-            }
+            default:
+                throw new Exception("FILTER ERROR");
         }
         return studies;
     }

@@ -57,10 +57,4 @@ public class Student extends UserAccount {
         this.studentStatus = studentStatus;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "bio='" + bio + '\'' +
-                '}';
-    }
 }

@@ -2,12 +2,14 @@ package com.sytoss.mapper;
 
 import com.sytoss.model.course.Lesson;
 import com.sytoss.web.dto.LessonDTO;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class LessonMapper extends BaseMapper<Lesson, LessonDTO> {
-    LessonMapper(Class<Lesson> entityClass, Class<LessonDTO> dtoClass) {
-        super(entityClass, dtoClass);
+    protected LessonMapper() {
+        super(Lesson.class, LessonDTO.class);
     }
 
 
