@@ -8,9 +8,6 @@ import com.sytoss.model.course.Course;
 import com.sytoss.model.course.LessonTemplate;
 import com.sytoss.model.course.Topic;
 import com.sytoss.web.dto.filter.FilterCourseDTO;
-import com.sytoss.web.dto.save.CourseSaveDTO;
-import com.sytoss.web.dto.FilterDTO;
-
 
 import java.util.List;
 
@@ -25,6 +22,8 @@ public interface CourseService {
     void removeTopic(Topic topic) throws NoSuchTopicException;
 
     void removeLessonTemplate(LessonTemplate lessonTemplate);
+
+    void updateCourseRating(Course course) throws NoSuchCourseException;
 
     void addTopic( Topic topic) throws NoSuchCourseException;
 

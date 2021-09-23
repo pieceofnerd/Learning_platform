@@ -119,7 +119,7 @@ public class StudyServiceImpl implements StudyService {
         for (Homework homework : homeworkRepository.findAllByAuthorAndActiveIsTrue(student)) {
             if (homework.getHomeTask().getLesson().getStudyGroup().getId().equals(studyGroupId)) {
 
-                Feedback feedback = (Feedback) communicationRepository.findFeedbackByHomework(homework);
+                Feedback feedback =  (Feedback) communicationRepository.findFeedbackByHomework(homework);
                 assessment += feedback.getScore();
 
                 denominator++;

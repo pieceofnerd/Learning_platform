@@ -24,11 +24,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Course> findCoursesByStudentByFilter(UserAccount student, FilterUserAccountDTO filter) {
-        return null;
-    }
-
-    @Override
     public Purchase payCourse(UserAccount student, Course course) {
         return null;
     }
@@ -46,5 +41,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public boolean leaveStudyGroup(UserAccount student, StudyGroup studyGroup) {
         return false;
+    }
+
+    @Override
+    public List<Course> findCoursesByStudentByFilter(UserAccount student, FilterUserAccountDTO filter) {
+        return null;
     }
 }

@@ -21,40 +21,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     private final UserAccountRepository userAccountRepository;
     private final CommunicationService communicationService;
 
-
-    @Override
-    public List<UserAccount> findUsersByFilter(FilterUserAccountDTO filter) {
-        List<UserAccount> users = new ArrayList<>();
-        switch (filter.getFilter()) {
-            case FULL_NAME: {
-                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndSecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName(),filter.getSecondName()));
-                break;
-            }
-            case FIRST_NAME: {
-                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName()));
-                break;
-            }
-            case SECOND_NAME: {
-                users.addAll(userAccountRepository.findAllBySecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getSecondName()));
-                break;
-            }
-            case DELETED: {
-                //TODO
-                break;
-            }
-        }
-        return users;
-    }
-
-//    @Override
-//    public UserAccount findUserAccountById(Long id) throws Exception {
-//        if (!userAccountRepository.exists(id)) {
-//            throw new Exception("User with id = " + id + " not found");
-//        }
-//        UserAccount userAccount = userAccountRepository.findOne(id);
-//        return userAccount;
-//    }
-
     @Override
     public boolean saveUserAccount(UserAccount userAccount) {
         if (userAccount == null)
@@ -116,8 +82,32 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public void leaveComment(Communication comment) {
         if (comment == null)
-            return ;
-         communicationService.createComment(comment);
+            return;
+        communicationService.createComment(comment);
+    }
+
+    @Override
+    public List<UserAccount> findUsersByFilter(FilterUserAccountDTO filter) {
+        List<UserAccount> users = new ArrayList<>();
+        switch (filter.getFilter()) {
+            case FULL_NAME: {
+                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndSecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName(), filter.getSecondName()));
+                break;
+            }
+            case FIRST_NAME: {
+                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName()));
+                break;
+            }
+            case SECOND_NAME: {
+                users.addAll(userAccountRepository.findAllBySecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getSecondName()));
+                break;
+            }
+            case DELETED: {
+                //TODO
+                break;
+            }
+        }
+        return users;
     }
 
 }

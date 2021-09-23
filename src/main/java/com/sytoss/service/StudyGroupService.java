@@ -1,6 +1,5 @@
 package com.sytoss.service;
 
-import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.web.dto.filter.FilterStudyGroupDTO;
