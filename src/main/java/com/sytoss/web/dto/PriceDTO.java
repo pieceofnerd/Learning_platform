@@ -15,12 +15,12 @@ public class PriceDTO   {
 
     private Long id;
 
-    private Long courseId;
+    private CourseDTO course;
 
-    private Long priceTypeId;
+    private LookupDTO priceType;
 
     private BigDecimal cost;
 
-    private Long promotionId;
+    private PromotionDTO promotion;
 
 }

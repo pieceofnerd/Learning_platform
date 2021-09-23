@@ -10,20 +10,21 @@ import java.util.List;
 public class LessonTemplate {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "description")
     private String description;
 
     @JoinColumn(name = "media")
     @ManyToOne(optional = false)
     private Media media;
 
-    @Column
+    @Column(name = "duration")
     private Integer duration;
 
     @JoinColumn(name = "topic_id")
