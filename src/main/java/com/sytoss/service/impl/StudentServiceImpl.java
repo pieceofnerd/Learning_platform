@@ -5,7 +5,7 @@ import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.service.StudentService;
-import com.sytoss.web.dto.FilterDTO;
+import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Course> findCoursesByStudentByFilter(UserAccount student, FilterDTO filter) {
+    public List<Course> findCoursesByStudentByFilter(UserAccount student, FilterUserAccountDTO filter) {
         return null;
     }
 
