@@ -8,11 +8,13 @@ import com.sytoss.model.Lookup;
 import com.sytoss.model.PriceType;
 import com.sytoss.model.StudentStatus;
 import com.sytoss.model.course.Course;
+import com.sytoss.model.course.CourseRating;
 import com.sytoss.model.course.LessonTemplate;
 import com.sytoss.model.course.Topic;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.LookupRepository;
+import com.sytoss.repository.course.CourseRatingRepository;
 import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.LessonTemplateRepository;
 import com.sytoss.repository.course.TopicRepository;
@@ -44,15 +46,18 @@ public class CourseServiceImpl implements CourseService {
 
     private final UserAccountRepository userAccountRepository;
 
+    private final CourseRatingRepository courseRatingRepository;
+
     @Autowired
     public CourseServiceImpl(CourseRepository courseRepository, TopicRepository topicRepository,
                              LessonTemplateRepository lessonTemplateRepository, LookupRepository lookupRepository,
-                             UserAccountRepository userAccountRepository) {
+                             UserAccountRepository userAccountRepository, CourseRatingRepository courseRatingRepository) {
         this.courseRepository = courseRepository;
         this.topicRepository = topicRepository;
         this.lessonTemplateRepository = lessonTemplateRepository;
         this.lookupRepository = lookupRepository;
         this.userAccountRepository = userAccountRepository;
+        this.courseRatingRepository = courseRatingRepository;
     }
 
     @Override
@@ -131,15 +136,15 @@ public class CourseServiceImpl implements CourseService {
 
         Topic topic = topicRepository.findOne(lessonTemplate.getTopic().getId());
 
-        if (topic == null){
+        if (topic == null) {
             logger.error("Couldn't find topic with id: {}", lessonTemplate.getTopic().getId());
             throw new NoSuchTopicException();
         }
 
-            if (lessonTemplate == null) {
-                logger.error("Lesson template must not be null");
-                throw new NullPointerException();
-            }
+        if (lessonTemplate == null) {
+            logger.error("Lesson template must not be null");
+            throw new NullPointerException();
+        }
         lessonTemplateRepository.save(lessonTemplate);
         logger.info("Lesson template {} was added to {} topic", lessonTemplate.getName(), lessonTemplate.getTopic().getName());
     }
@@ -193,6 +198,13 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.save(course);
     }
 
+    @Override
+    public void updateCourseRating(Course course) throws NoSuchCourseException {
+        checkCourseExistence(course);
+        course.setRating(courseRatingCalc(course));
+        saveCourse(course);
+    }
+
     private void checkCourseExistence(Course course) throws NoSuchCourseException {
         if (courseRepository.findOne(course.getId()) == null) {
             logger.error("Course {} wasn't be found ", course.getId());
@@ -200,4 +212,12 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
+    private Double courseRatingCalc(Course course) {
+        List<CourseRating> courseRatings = courseRatingRepository.findCourseRatingByCourse(course);
+        double rating = 0;
+        for (CourseRating cr : courseRatings) {
+            rating += cr.getRating();
+        }
+        return rating / courseRatings.size();
+    }
 }

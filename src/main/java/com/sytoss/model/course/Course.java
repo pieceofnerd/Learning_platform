@@ -14,13 +14,14 @@ import java.util.List;
 public class Course {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "name", unique = true)
     private String name;
 
-    @Column
+    @Column(name = "description")
     private String description;
 
     @JoinColumn(name = "course_photo_id")
@@ -34,7 +35,7 @@ public class Course {
     @ManyToOne(optional = false)
     private Media certificateTemplate;
 
-    @Column
+    @Column(name = "rating")
     private Double rating;
 
     @Column(name = "active")
@@ -49,6 +50,9 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private List<Price> prices;
+
+    @OneToMany(mappedBy = "course")
+    private List<CourseRating> courseRatings;
 
     @CreationTimestamp
     @Column(name = "created_date")
@@ -162,5 +166,27 @@ public class Course {
         return activeTopics;
     }
 
+    public List<CourseRating> getCourseRatings() {
+        return courseRatings;
+    }
 
+    public void setCourseRatings(List<CourseRating> courseRatings) {
+        this.courseRatings = courseRatings;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
 }
