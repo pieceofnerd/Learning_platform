@@ -13,6 +13,8 @@ public interface StudyGroupService {
 
     boolean deleteStudyGroup(StudyGroup studyGroup);
 
+    void updateFreePlaceNumber(StudyGroup studyGroup) throws Exception;
+
     List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup);
 
     List<StudyGroup> findStudyGroupsByFilter(FilterStudyGroupDTO filter) throws Exception;

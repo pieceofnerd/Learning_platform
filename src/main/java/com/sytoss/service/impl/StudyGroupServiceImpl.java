@@ -1,6 +1,5 @@
 package com.sytoss.service.impl;
 
-import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
@@ -52,6 +51,13 @@ public class StudyGroupServiceImpl implements StudyGroupService {
         return true;
     }
 
+    @Override
+    public void updateFreePlaceNumber(StudyGroup studyGroup) throws Exception {
+        if (studyGroup == null)
+            throw new Exception("StudyGroup is null");
+        studyGroup.setFreePlaceNumber(freePlaceNumberCalc(studyGroup));
+        studyGroupRepository.save(studyGroup);
+    }
 
     @Override
     public List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup) {
@@ -80,5 +86,10 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             throw new Exception("Study group has no content");
         else
             return studyGroups;
+    }
+
+    private int freePlaceNumberCalc(StudyGroup studyGroup) {
+        int freePlaceNumber = studyGroup.getPlaceNumber() - studyGroup.getStudies().size();
+        return Math.max(freePlaceNumber, 0);
     }
 }
