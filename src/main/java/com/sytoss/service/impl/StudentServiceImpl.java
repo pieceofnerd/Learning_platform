@@ -29,22 +29,27 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup) {
+        return null;
+    }
+
+    @Override
     public Purchase payCourse(UserAccount student, Course course) {
         return null;
     }
 
     @Override
-    public boolean returnCourse(UserAccount student, Course course) {
-        return false;
+    public void returnCourse(UserAccount student, Course course) {
+        //TODO
     }
 
     @Override
-    public boolean joinStudyGroup(UserAccount student, Course course) {
-        return false;
+    public void joinStudyGroup(UserAccount student, Course course) {
+        //TODO
     }
 
     @Override
-    public boolean leaveStudyGroup(UserAccount student, StudyGroup studyGroup) {
-        return false;
+    public void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) {
+        //TODO
     }
 }

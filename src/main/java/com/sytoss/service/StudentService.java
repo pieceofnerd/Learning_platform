@@ -14,11 +14,13 @@ public interface StudentService {
 
     List<Course> findCoursesByStudentByFilter(UserAccount student, FilterDTO filter);
 
+    List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup);
+
     Purchase payCourse(UserAccount student, Course course);
 
-    boolean returnCourse(UserAccount student, Course course);
+    void returnCourse(UserAccount student, Course course);
 
-    boolean joinStudyGroup(UserAccount student, Course course);
+    void joinStudyGroup(UserAccount student, Course course);
 
-    boolean leaveStudyGroup(UserAccount student, StudyGroup studyGroup);
+    void leaveStudyGroup(UserAccount student, StudyGroup studyGroup);
 }

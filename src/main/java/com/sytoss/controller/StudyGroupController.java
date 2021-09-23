@@ -1,5 +1,6 @@
 package com.sytoss.controller;
 
+import com.sytoss.exception.NoSuchStudyGroupException;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.StudyGroupMapper;
 import com.sytoss.mapper.UserAccountMapper;
@@ -31,12 +32,12 @@ public class StudyGroupController {
         studyGroupService.createStudyGroup(studyGroup);
     }
 
-    public void updateStudyGroup(StudyGroupDTO studyGroupSaveDTO) {
+    public void updateStudyGroup(StudyGroupDTO studyGroupSaveDTO) throws NoSuchStudyGroupException {
         final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupSaveDTO);
         studyGroupService.updateStudyGroup(studyGroup);
     }
 
-    public void deleteStudyGroup(StudyGroupDTO studyGroupDTO) {
+    public void deleteStudyGroup(StudyGroupDTO studyGroupDTO) throws NoSuchStudyGroupException {
         final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
         studyGroupService.deleteStudyGroup(studyGroup);
     }
@@ -50,13 +51,6 @@ public class StudyGroupController {
             e.printStackTrace();
         }
         return studyGroups;
-    }
-
-    public List<UserAccountDTO> findStudentsByStudyGroup(StudyGroupDTO studyGroupDTO) {
-        final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
-
-        List<UserAccountDTO> userAccounts = userAccountMapper.toListDTO(studyGroupService.findStudentsByStudyGroup(studyGroup));
-        return userAccounts;
     }
 
     public List<StudyGroupDTO> findStudyGroupsByFilter(FilterStudyGroupDTO filter) {
