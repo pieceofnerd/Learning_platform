@@ -15,7 +15,7 @@ import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.repository.education.PurchaseRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.PurchaseService;
-import com.sytoss.web.dto.FilterDTO;
+import com.sytoss.web.dto.filter.FilterPurchaseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +95,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<Purchase> findPurchaseByFilter(UserAccount student, FilterDTO filter) { //TODO
+    public List<Purchase> findPurchaseByFilter(UserAccount student, FilterPurchaseDTO filter) { //TODO
         return null;
     }
 

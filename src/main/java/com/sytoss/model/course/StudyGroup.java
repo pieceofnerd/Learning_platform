@@ -1,11 +1,20 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.education.Study;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
 @Table(name = "study_group")
@@ -39,93 +48,11 @@ public class StudyGroup {
     @Column(name = "updated_date")
     private Date updatedDate;
 
-    @OneToMany(mappedBy = "studyGroup",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "studyGroup", fetch = FetchType.LAZY)
     private List<Study> studies;
 
-    @OneToMany(mappedBy = "studyGroup",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "studyGroup", fetch = FetchType.LAZY)
     private List<Lesson> lessons;
 
-    public StudyGroup() {
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Integer getPlaceNumber() {
-        return placeNumber;
-    }
-
-    public void setPlaceNumber(Integer placeNumber) {
-        this.placeNumber = placeNumber;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public List<Study> getStudies() {
-        return studies;
-    }
-
-    public void setStudies(List<Study> studies) {
-        this.studies = studies;
-    }
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
 }

@@ -16,7 +16,7 @@ public class TopicDTO {
 
     private String description;
 
-    private CourseDTO courseDTO;
+    private CourseDTO course;
 
     private Boolean active;
 }
