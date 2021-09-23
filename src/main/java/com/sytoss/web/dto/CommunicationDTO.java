@@ -13,12 +13,12 @@ import java.util.Date;
 @AllArgsConstructor
 public class CommunicationDTO {
     private Long id;
-    private Long sender;
-    private Long receiver;
+    private UserAccountDTO sender;
+    private UserAccountDTO receiver;
     private Date sendDate;
     private String content;
-    private Long lesson;
-    private Long homework;
+    private LessonDTO lesson;
+    private HomeworkDTO homework;
     private Integer score;
     private Boolean active;
     private Date updateDate;
