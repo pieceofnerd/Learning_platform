@@ -36,8 +36,8 @@ public class Homework {
     @OneToMany(mappedBy = "homework", fetch = FetchType.LAZY)
     private List<Message> dialog;
 
-    @OneToMany(mappedBy = "homework", fetch = FetchType.LAZY)
-    private List<Feedback> feedbacks;
+    @OneToOne(mappedBy = "homework", fetch = FetchType.LAZY)
+    private Feedback feedback;
 
     @Column(name = "active")
     @ColumnDefault(value = "1")
@@ -112,12 +112,12 @@ public class Homework {
         this.updatedDate = updatedDate;
     }
 
-    public List<Feedback> getFeedbacks() {
-        return feedbacks;
+    public Feedback getFeedback() {
+        return feedback;
     }
 
-    public void setFeedbacks(List<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
     }
 
     public HomeTask getHomeTask() {

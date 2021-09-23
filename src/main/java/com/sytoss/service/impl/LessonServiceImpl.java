@@ -65,7 +65,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     private void checkExistence(Lesson lesson) throws NoSuchLessonException {
-        if (lessonRepository.findOne(lesson.getId()) == null) {
+        if (!lessonRepository.exists(lesson.getId())) {
             logger.error("Couldn't find lesson with id: {}", lesson.getId());
             throw new NoSuchLessonException();
         }

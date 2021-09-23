@@ -5,7 +5,7 @@ import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.service.StudentService;
-import com.sytoss.web.dto.filter.FilterUserAccountDTO;
+import com.sytoss.web.dto.FilterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,27 +24,32 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Course> findCoursesByStudentByFilter(UserAccount student, FilterDTO filter) {
+        return null;
+    }
+
+    @Override
+    public List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup) {
+        return null;
+    }
+
+    @Override
     public Purchase payCourse(UserAccount student, Course course) {
         return null;
     }
 
     @Override
-    public boolean returnCourse(UserAccount student, Course course) {
-        return false;
+    public void returnCourse(UserAccount student, Course course) {
+        //TODO
     }
 
     @Override
-    public boolean joinStudyGroup(UserAccount student, Course course) {
-        return false;
+    public void joinStudyGroup(UserAccount student, Course course) {
+        //TODO
     }
 
     @Override
-    public boolean leaveStudyGroup(UserAccount student, StudyGroup studyGroup) {
-        return false;
-    }
-
-    @Override
-    public List<Course> findCoursesByStudentByFilter(UserAccount student, FilterUserAccountDTO filter) {
-        return null;
+    public void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) {
+        //TODO
     }
 }

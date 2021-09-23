@@ -49,7 +49,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     private void checkExistence(Homework homework) throws NoSuchHomeworkException {
-        if (homeworkRepository.findOne(homework.getId()) == null) {
+        if (!homeworkRepository.exists(homework.getId())) {
             logger.error("couldn't find homework with id: {}", homework.getId());
             throw new NoSuchHomeworkException();
         }

@@ -1,13 +1,16 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.NoSuchStudyGroupException;
+import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
-import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.service.StudyGroupService;
 import com.sytoss.web.dto.filter.FilterStudyGroupDTO;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,36 +22,41 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudyGroupServiceImpl implements StudyGroupService {
 
+    private static final Logger logger = LoggerFactory.getLogger(StudyGroupServiceImpl.class);
+
     private final StudyGroupRepository studyGroupRepository;
+
     private final CourseRepository courseRepository;
 
     @Override
-    public boolean createStudyGroup(StudyGroup studyGroup) {
-        if (studyGroup == null)
-            return false;
+    public void createStudyGroup(StudyGroup studyGroup) {
+        if (studyGroup == null) {
+            logger.error("Study group cannot be null");
+            return;
+        }
         studyGroupRepository.save(studyGroup);
-        return true;
     }
 
     @Override
-    public boolean updateStudyGroup(StudyGroup studyGroup) {
-        if (studyGroup == null)
-            return false;
-        if (!studyGroupRepository.exists(studyGroup.getId()))
-            return false;
+    public void updateStudyGroup(StudyGroup studyGroup) throws NoSuchStudyGroupException {
+        if (studyGroup == null) {
+            logger.error("Study group cannot be null");
+            return;
+        }
+        checkExistence(studyGroup);
         studyGroupRepository.save(studyGroup);
-        return true;
     }
 
+
     @Override
-    public boolean deleteStudyGroup(StudyGroup studyGroup) {
-        if (studyGroup == null)
-            return false;
-        if (!studyGroupRepository.exists(studyGroup.getId()))
-            return false;
+    public void deleteStudyGroup(StudyGroup studyGroup) throws NoSuchStudyGroupException {
+        if (studyGroup == null) {
+            logger.error("Study group cannot be null");
+            return;
+        }
+        checkExistence(studyGroup);
         studyGroup.setDeleted(true);
         studyGroupRepository.save(studyGroup);
-        return true;
     }
 
     @Override
@@ -60,35 +68,35 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     @Override
-    public List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup) {
-        List<UserAccount> students = new ArrayList<>();
-        for (Study study : studyGroup.getStudies()) {
-            students.add(study.getStudent());
+    public List<StudyGroup> findStudyGroupsByCourse(Course course) {
+        if (course == null) {
+            logger.error("Course must not be null");
+            return null;
         }
-        //TODO
-        return students;
+        return studyGroupRepository.findStudyGroupsByCourse(course);
     }
 
     @Override
-    public List<StudyGroup> findStudyGroupsByFilter(FilterStudyGroupDTO filter) throws Exception {
-        List<StudyGroup> studyGroups = new ArrayList<>();
+    public List<StudyGroup> findStudyGroupsByFilter(FilterStudyGroupDTO filter) {
         switch (filter.getFilter()) {
             case COURSE: {
-                studyGroups.addAll(studyGroupRepository.findStudyGroupsByCourse(courseRepository.findOne(filter.getCourse())));
-                break;
+                return studyGroupRepository.findStudyGroupsByCourse(courseRepository.findOne(filter.getCourse()));
             }
             case DELETED: {
-                studyGroups.addAll(studyGroupRepository.findStudyGroupsByDeleted(filter.isDeleted()));
-                break;
+                return studyGroupRepository.findStudyGroupsByDeleted(filter.isDeleted());
             }
         }
-        if (studyGroups == null)
-            throw new Exception("Study group has no content");
-        else
-            return studyGroups;
+        return null;
     }
 
-    private int freePlaceNumberCalc(StudyGroup studyGroup) {
+    private void checkExistence(StudyGroup studyGroup) throws NoSuchStudyGroupException {
+        if (!studyGroupRepository.exists(studyGroup.getId())) {
+            logger.error("Couldn't find study group with id: {}", studyGroup.getId());
+            throw new NoSuchStudyGroupException();
+        }
+    }
+  
+   private int freePlaceNumberCalc(StudyGroup studyGroup) {
         int freePlaceNumber = studyGroup.getPlaceNumber() - studyGroup.getStudies().size();
         return Math.max(freePlaceNumber, 0);
     }

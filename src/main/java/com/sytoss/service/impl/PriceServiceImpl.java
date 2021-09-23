@@ -37,7 +37,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public void updatePrice(Price price) throws NoSuchPriceException, IllegalArgumentException, NullPointerException {
-        if (priceRepository.findOne(price.getId()) == null) {
+        if (!priceRepository.exists(price.getId())) {
             logger.error("Couldn't find price with id: {}", price.getId());
             throw new NoSuchPriceException();
         }
