@@ -31,8 +31,8 @@ public class CourseDTO {
 
     private MediaDTO certificateTemplate;
 
-    private List<TopicDTO> topicDTO;
+    private List<TopicDTO> topics;
 
-    private List<PriceDTO> priceDTO;
+    private List<PriceDTO> prices;
 
 }

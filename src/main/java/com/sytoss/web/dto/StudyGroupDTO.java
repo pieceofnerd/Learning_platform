@@ -1,9 +1,6 @@
 package com.sytoss.web.dto;
 
 
-import com.sytoss.model.course.Course;
-import com.sytoss.model.course.Lesson;
-import com.sytoss.model.education.Study;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,7 @@ public class StudyGroupDTO {
 
     private Long id;
 
-    private Course course;
+    private CourseDTO course;
 
     private Integer placeNumber;
 
@@ -34,9 +31,9 @@ public class StudyGroupDTO {
 
     private Date updatedDate;
 
-    private List<Study> studies;
+    private List<StudyDTO> studies;
 
-    private List<Lesson> lessons;
+    private List<LessonDTO> lessons;
 
 
 }

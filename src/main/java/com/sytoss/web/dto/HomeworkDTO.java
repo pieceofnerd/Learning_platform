@@ -24,9 +24,11 @@ public class HomeworkDTO {
 
     private Date fulfillmentDate;
 
-    private List<Message> dialog;
+    //List<Message>
+    private List<CommunicationDTO> dialog;
 
-    private List<Feedback> feedbacks;
+    //List<Feedback>
+    private List<CommunicationDTO> feedbacks;
 
     private Date createdDate;
 
