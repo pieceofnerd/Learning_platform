@@ -60,6 +60,14 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     @Override
+    public void updateFreePlaceNumber(StudyGroup studyGroup) throws Exception {
+        if (studyGroup == null)
+            throw new Exception("StudyGroup is null");
+        studyGroup.setFreePlaceNumber(freePlaceNumberCalc(studyGroup));
+        studyGroupRepository.save(studyGroup);
+    }
+
+    @Override
     public List<StudyGroup> findStudyGroupsByCourse(Course course) {
         if (course == null) {
             logger.error("Course must not be null");
@@ -87,5 +95,9 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             throw new NoSuchStudyGroupException();
         }
     }
-
+  
+   private int freePlaceNumberCalc(StudyGroup studyGroup) {
+        int freePlaceNumber = studyGroup.getPlaceNumber() - studyGroup.getStudies().size();
+        return Math.max(freePlaceNumber, 0);
+    }
 }

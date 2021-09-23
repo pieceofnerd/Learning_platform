@@ -32,6 +32,9 @@ public class StudyGroup {
     @Column(name = "place_number")
     private Integer placeNumber;
 
+    @Column(name = "free_place_number")
+    private Integer freePlaceNumber;
+
     @Column(name = "start_date")
     private Date startDate;
 
