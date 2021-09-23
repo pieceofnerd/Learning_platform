@@ -1,5 +1,6 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.NoSuchPriceException;
 import com.sytoss.mapper.PriceMapper;
 import com.sytoss.model.course.Price;
 import com.sytoss.repository.course.PriceRepository;
@@ -22,36 +23,35 @@ public class PriceServiceImpl implements PriceService {
 
     private final PriceRepository priceRepository;
 
-    private final PriceMapper priceMapper;
-
     @Autowired
-    public PriceServiceImpl(PriceRepository priceRepository, PriceMapper priceMapper) {
+    public PriceServiceImpl(PriceRepository priceRepository) {
         this.priceRepository = priceRepository;
-        this.priceMapper = priceMapper;
     }
 
     @Override
-    public boolean createPrice(PriceSaveDTO priceSaveDTO) {
-        Price price = priceMapper.toEntity(priceSaveDTO);
-        return savePrice(price);
+    public void createPrice(Price price) throws IllegalArgumentException, NullPointerException {
+        savePrice(price);
+        logger.info("Price {} was created ", price.toString());
     }
 
 
     @Override
-    public boolean updatePrice(PriceDTO priceDTO) {
-        Price price = priceMapper.toEntity(priceDTO);
-        return savePrice(price);
-    }
-
-    private boolean savePrice(Price price) {
-        try {
-            validatePrice(price.getCost());
-            priceRepository.save(price);
-            return true;
-        } catch (IllegalArgumentException e) {
-            logger.error("Price {} less than minimum price", price.getPriceType());
-            return false;
+    public void updatePrice(Price price) throws NoSuchPriceException, IllegalArgumentException, NullPointerException {
+        if (priceRepository.findOne(price.getId()) == null) {
+            logger.error("Couldn't find price with id: {}", price.getId());
+            throw new NoSuchPriceException();
         }
+        validatePrice(price.getCost());
+        priceRepository.save(price);
+    }
+
+    private void savePrice(Price price) throws IllegalArgumentException, NullPointerException {
+        if (price == null) {
+            logger.error("Price must be not null");
+            throw new NullPointerException();
+        }
+        validatePrice(price.getCost());
+        priceRepository.save(price);
     }
 
     private void validatePrice(BigDecimal cost) throws IllegalArgumentException {
