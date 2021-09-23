@@ -7,10 +7,11 @@ import javax.persistence.*;
 public class LookupName {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
     public LookupName() {

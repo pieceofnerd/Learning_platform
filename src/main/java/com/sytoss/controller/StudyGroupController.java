@@ -1,12 +1,9 @@
 package com.sytoss.controller;
 
-import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.StudyGroupMapper;
 import com.sytoss.mapper.UserAccountMapper;
-import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.service.StudyGroupService;
-import com.sytoss.web.dto.CourseDTO;
 import com.sytoss.web.dto.StudyGroupDTO;
 import com.sytoss.web.dto.UserAccountDTO;
 import com.sytoss.web.dto.filter.FilterStudyGroupDTO;
@@ -23,7 +20,6 @@ public class StudyGroupController {
 
     private final StudyGroupService studyGroupService;
     private final StudyGroupMapper studyGroupMapper;
-    private final CourseMapper courseMapper;
     private final UserAccountMapper userAccountMapper;
 
     public void createStudyGroup(StudyGroupSaveDTO studyGroupSaveDTO) {
