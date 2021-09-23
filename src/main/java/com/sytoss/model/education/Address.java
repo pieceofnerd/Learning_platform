@@ -7,19 +7,20 @@ import javax.persistence.*;
 public class Address {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "country")
     private String country;
 
-    @Column
+    @Column(name = "region")
     private String region;
 
-    @Column
+    @Column(name = "locality")
     private String locality;
 
-    @Column
+    @Column(name = "postcode")
     private String postcode;
 
     @Column(name = "street_name")
@@ -90,14 +91,14 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", country='" + country + '\'' +
-                ", region='" + region + '\'' +
-                ", locality='" + locality + '\'' +
-                ", postcode='" + postcode + '\'' +
-                ", streetName='" + streetName + '\'' +
-                ", houseNumber=" + houseNumber +
-                '}';
+        return "\nAddress{" +
+                "\n  id=" + id +
+                "\n, country='" + country + '\'' +
+                "\n, region='" + region + '\'' +
+                "\n, locality='" + locality + '\'' +
+                "\n, postcode='" + postcode + '\'' +
+                "\n, streetName='" + streetName + '\'' +
+                "\n, houseNumber=" + houseNumber +
+                "\n}";
     }
 }

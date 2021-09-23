@@ -118,4 +118,15 @@ public class Study {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
+
+    @Override
+    public String toString() {
+        return "\nStudy{" +
+                "\n  id=" + id +
+                "\n, studyGroup=" + studyGroup.getId() +
+                "\n, progress=" + progress +
+                "\n, assessment=" + assessment +
+                "\n, certificate=" + certificate +
+                "\n}";
+    }
 }
