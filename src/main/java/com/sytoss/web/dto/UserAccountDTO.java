@@ -21,12 +21,12 @@ public class UserAccountDTO {
     private String secondName;
     private Date birthday;
     private String bio;
-    private Address address;
+    private AddressDTO address;
     private String email;
     private Media photo;
-    private List<Study> studies;
-    private List<Homework> homeworks;
-    private List<Lesson> lessons;
+    private List<StudyDTO> studies;
+    private List<HomeworkDTO> homeworks;
+    private List<LessonDTO> lessons;
     private boolean deleted;
     private Long role;
     private Date lastActivity;

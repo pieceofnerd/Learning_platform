@@ -18,15 +18,15 @@ public class StudyDTO {
 
     private Long id;
 
-    private UserAccount student;
+    private UserAccountDTO student;
 
-    private StudyGroup studyGroup;
+    private StudyGroupDTO studyGroup;
 
     private Double progress;
 
     private Double assessment;
 
-    private Media certificate;
+    private MediaDTO certificate;
 
     private boolean deleted;
 
