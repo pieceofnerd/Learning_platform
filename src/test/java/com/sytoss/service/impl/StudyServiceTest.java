@@ -4,6 +4,7 @@ import com.sytoss.config.Config;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.StudyGroupService;
@@ -57,5 +58,11 @@ class StudyServiceTest {
 
     private UserAccount getStudent() throws Exception {
         return userAccountRepository.findOne(STUDENT_ID);
+    }
+@Test
+     void updateProgress() throws Exception {
+       Student userAccount = (Student) userAccountRepository.findOne(1L);
+       StudyGroup studyGroup = studyGroupRepository.findOne(1L);
+        studyService.updateAssessment(userAccount,studyGroup);
     }
 }

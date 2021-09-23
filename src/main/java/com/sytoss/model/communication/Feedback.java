@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Feedback extends Communication {
 
     @JoinColumn(name = "homework_id")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Homework homework;
 
     @Column(name = "score")

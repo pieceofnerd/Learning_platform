@@ -194,7 +194,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private void checkCourseExistence(Course course) throws NoSuchCourseException {
-        if (courseRepository.findOne(course.getId()) == null) {
+        if (!courseRepository.exists(course.getId())) {
             logger.error("Course {} wasn't be found ", course.getId());
             throw new NoSuchCourseException();
         }

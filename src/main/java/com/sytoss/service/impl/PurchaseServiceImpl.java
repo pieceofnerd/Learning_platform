@@ -86,7 +86,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public void updatePurchase(Purchase purchase) throws NoSuchPurchaseException { //TODO
-        if (purchaseRepository.findOne(purchase.getId()) == null) {
+        if (!purchaseRepository.exists(purchase.getId())) {
             logger.error("Couldn't find purchase with id {}", purchase.getId());
             throw new NoSuchPurchaseException();
         }

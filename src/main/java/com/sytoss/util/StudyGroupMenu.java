@@ -58,22 +58,22 @@ public class StudyGroupMenu {
                 studyGroupDTO = studyGroupMapper.toDTO(studyGroupRepository.findOne(studyGroupId));
                 studyGroupController.deleteStudyGroup(studyGroupDTO);
                 break;
-            case 4:
-                studyGroupId = scanInt("Write study group id to find students - ");
-                studyGroupDTO = studyGroupMapper.toDTO(studyGroupRepository.findOne(studyGroupId));
-
-                for (UserAccountDTO student : studyGroupController.findStudentsByStudyGroup(studyGroupDTO)) {
-                    printClassName(student.getClass().getSimpleName());
-                    printField("id",student.getId().toString());
-                    printField("First name",student.getFirstName());
-                    printField("Second name",student.getSecondName());
-                    printField("birthday",student.getBirthday());
-                    printField("email",student.getEmail());
-                    printField("last activity",student.getLastActivity());
-                    printField("studies",student.getStudies());
-                    printField("homeworks",student.getHomeworks());
-                }
-                break;
+//            case 4:
+//                studyGroupId = scanInt("Write study group id to find students - ");
+//                studyGroupDTO = studyGroupMapper.toDTO(studyGroupRepository.findOne(studyGroupId));
+//
+//                for (UserAccountDTO student : studyGroupController.findStudentsByStudyGroup(studyGroupDTO)) {
+//                    printClassName(student.getClass().getSimpleName());
+//                    printField("id",student.getId().toString());
+//                    printField("First name",student.getFirstName());
+//                    printField("Second name",student.getSecondName());
+//                    printField("birthday",student.getBirthday());
+//                    printField("email",student.getEmail());
+//                    printField("last activity",student.getLastActivity());
+//                    printField("studies",student.getStudies());
+//                    printField("homeworks",student.getHomeworks());
+//                }
+//                break;
             case 5:
                 printMenu(
                         "1. Filter by course",

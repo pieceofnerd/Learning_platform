@@ -43,7 +43,7 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public void updatePromotion(Promotion promotion) throws NoSuchPromotionException {
-        if (promotionRepository.findOne(promotion.getId()) == null) {
+        if (!promotionRepository.exists(promotion.getId())) {
             logger.error("Couldn't find promotion with id: {}", promotion.getId());
             throw new NoSuchPromotionException();
         }

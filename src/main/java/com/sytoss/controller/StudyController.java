@@ -1,5 +1,6 @@
 package com.sytoss.controller;
 
+import com.sytoss.exception.NoSuchStudyException;
 import com.sytoss.mapper.StudyGroupMapper;
 import com.sytoss.mapper.StudyMapper;
 import com.sytoss.mapper.UserAccountMapper;
@@ -25,15 +26,19 @@ public class StudyController {
     private final UserAccountMapper userAccountMapper;
     private final StudyGroupMapper studyGroupMapper;
 
-    public boolean saveStudy(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) {
+    public void saveStudy(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) {
         final UserAccount student = userAccountMapper.toEntity(studentDTO);
         final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
-        return studyService.saveStudy(student, studyGroup);
+        studyService.saveStudy(student, studyGroup);
     }
 
-    public boolean deleteStudy(StudyDTO studyDTO) {
+    public void deleteStudy(StudyDTO studyDTO) {
         final Study study = studyMapper.toEntity(studyDTO);
-        return studyService.deleteStudy(study);
+        try {
+            studyService.deleteStudy(study);
+        } catch (NoSuchStudyException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateAssessment(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) {
