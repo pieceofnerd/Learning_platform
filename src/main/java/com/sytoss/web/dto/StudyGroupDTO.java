@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,8 @@ public class StudyGroupDTO {
     private CourseDTO course;
 
     private Integer placeNumber;
+
+    private Integer freePlaceNumber;
 
     private Boolean deleted;
 

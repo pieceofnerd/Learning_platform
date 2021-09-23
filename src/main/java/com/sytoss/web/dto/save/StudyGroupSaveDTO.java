@@ -18,6 +18,8 @@ public class StudyGroupSaveDTO {
 
     private Integer placeNumber;
 
+    private Integer freePlaceNumber;
+
     private Date startDate;
 
     private Date endDate;

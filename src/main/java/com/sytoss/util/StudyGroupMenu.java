@@ -43,9 +43,10 @@ public class StudyGroupMenu {
             case 1:
                 long courseId = scanInt("Write course id - ");
                 int placeNumber = scanInt("Write place number - ");
+                int freePlaceNumber = scanInt("Write free place number - ");
                 Date startDate = Date.valueOf(scanLine("Write start date - "));
                 Date endDate = Date.valueOf(scanLine("Write end date - "));
-                StudyGroupSaveDTO studyGroupSaveDTO = new StudyGroupSaveDTO(courseId, placeNumber, startDate, endDate);
+                StudyGroupSaveDTO studyGroupSaveDTO = new StudyGroupSaveDTO(courseId, placeNumber,freePlaceNumber, startDate, endDate);
                 studyGroupController.createStudyGroup(studyGroupSaveDTO);
                 break;
             case 2:
