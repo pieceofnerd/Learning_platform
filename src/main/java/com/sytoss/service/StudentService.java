@@ -4,7 +4,7 @@ import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.UserAccount;
-import com.sytoss.web.dto.FilterDTO;
+import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface StudentService {
 
     void rateCourse(UserAccount student, Course course, Integer rateValue);
 
-    List<Course> findCoursesByStudentByFilter(UserAccount student, FilterDTO filter);
+    List<Course> findCoursesByStudentByFilter(UserAccount student, FilterUserAccountDTO filter);
 
     Purchase payCourse(UserAccount student, Course course);
 
