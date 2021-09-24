@@ -4,12 +4,10 @@ import com.sytoss.config.Config;
 import com.sytoss.controller.StudyController;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.StudyMapper;
-import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.service.StudyService;
 import com.sytoss.service.UserAccountService;
-import com.sytoss.web.dto.FilterDTO;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Scanner;
@@ -58,33 +56,7 @@ public class Run {
                 "Input case:");
     }
 
-    private static void choiceBetweenServices(int c, int methodNumber) throws Exception {
-        Scanner sc = new Scanner(System.in);
-        switch (c) {
-            case 1: {
-                final UserAccountService userAccountService = getUserAccountService();
-                final StudyService studyService = getStudyService();
-                if (methodNumber == 1) {
-                    System.out.print("Enter user id - ");
 
-
-                }
-                if (methodNumber == 2) {
-                    System.out.print("Enter user id - ");
-                    FilterDTO filter = new FilterDTO();
-                    filter.setStudent(sc.nextLong());
-
-                }
-                break;
-            }
-            case 2: {
-                break;
-            }
-            default: {
-                System.out.println("ERROR");
-            }
-        }
-    }
 
     private static StudyService getStudyService() {
         return context.getBean(StudyService.class);
