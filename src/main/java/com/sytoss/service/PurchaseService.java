@@ -11,11 +11,11 @@ import java.util.List;
 
 public interface PurchaseService {
 
-    Purchase payCourse(Student student, StudyGroup studyGroup);
+    Purchase payCourse(Student student, StudyGroup studyGroup) throws Exception;
 
     void updatePurchase(Purchase purchase) throws NoSuchPurchaseException;
 
     List<Purchase> findPurchaseByFilter(UserAccount student, FilterPurchaseDTO filter);
 
-    boolean refundMoney(Purchase purchase);
+    boolean refundMoney(Purchase purchase) throws Exception;
 }
