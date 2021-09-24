@@ -1,5 +1,6 @@
 package com.sytoss.service;
 
+import com.sytoss.exception.NoSuchCommunicationException;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.course.HomeTask;
@@ -7,13 +8,11 @@ import com.sytoss.model.course.HomeTask;
 import java.util.List;
 
 public interface CommunicationService {
-    void createComment(Communication communication);
+    void createCommunication(Communication communication);
 
-    void createFeedback(Communication feedback);
+    void updateCommunication(Communication feedback) throws NoSuchCommunicationException;
 
-    void updateFeedback(Communication feedback);
-
-    void delete(Communication communication);
+    void deleteCommunication(Communication communication) throws NoSuchCommunicationException;
 
     List<Feedback> findFeedbacksByHomeTask(HomeTask homeTask);
 }

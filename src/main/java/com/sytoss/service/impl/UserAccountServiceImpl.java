@@ -105,7 +105,7 @@ public class UserAccountServiceImpl implements UserAccountService {
             logger.error("Comment must not be null");
             return;
         }
-        communicationService.createComment(comment);
+        communicationService.createCommunication(comment);
     }
 
     @Override

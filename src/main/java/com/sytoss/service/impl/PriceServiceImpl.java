@@ -29,14 +29,14 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public void createPrice(Price price) throws IllegalArgumentException, NullPointerException {
+    public void createPrice(Price price) throws IllegalArgumentException {
         savePrice(price);
         logger.info("Price {} was created ", price.toString());
     }
 
 
     @Override
-    public void updatePrice(Price price) throws NoSuchPriceException, IllegalArgumentException, NullPointerException {
+    public void updatePrice(Price price) throws NoSuchPriceException, IllegalArgumentException {
         if (!priceRepository.exists(price.getId())) {
             logger.error("Couldn't find price with id: {}", price.getId());
             throw new NoSuchPriceException();
@@ -45,10 +45,10 @@ public class PriceServiceImpl implements PriceService {
         priceRepository.save(price);
     }
 
-    private void savePrice(Price price) throws IllegalArgumentException, NullPointerException {
+    private void savePrice(Price price) throws IllegalArgumentException {
         if (price == null) {
             logger.error("Price must be not null");
-            throw new NullPointerException();
+            return;
         }
         validatePrice(price.getCost());
         priceRepository.save(price);

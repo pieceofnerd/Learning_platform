@@ -30,6 +30,9 @@ public class Communication {
     @Column(name = "update_date")
     private Date updateDate = new Date();
 
+    @Column(name = "active")
+    private Boolean active;
+
     public Communication() {
     }
 
@@ -72,6 +75,15 @@ public class Communication {
 
     public Date getUpdateDate() {
         return updateDate;
+    }
+
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public void setUpdateDate(Date updateDate) {

@@ -73,14 +73,14 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             logger.error("Course must not be null");
             return null;
         }
-        return studyGroupRepository.findStudyGroupsByCourse(course);
+        return studyGroupRepository.findStudyGroupsByCourseAndDeletedIsFalse(course);
     }
 
     @Override
     public List<StudyGroup> findStudyGroupsByFilter(FilterStudyGroupDTO filter) {
         switch (filter.getFilter()) {
             case COURSE: {
-                return studyGroupRepository.findStudyGroupsByCourse(courseRepository.findOne(filter.getCourse()));
+                return studyGroupRepository.findStudyGroupsByCourseAndDeletedIsFalse(courseRepository.findOne(filter.getCourse()));
             }
             case DELETED: {
                 return studyGroupRepository.findStudyGroupsByDeleted(filter.isDeleted());
@@ -95,8 +95,8 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             throw new NoSuchStudyGroupException();
         }
     }
-  
-   private int freePlaceNumberCalc(StudyGroup studyGroup) {
+
+    private int freePlaceNumberCalc(StudyGroup studyGroup) {
         int freePlaceNumber = studyGroup.getPlaceNumber() - studyGroup.getStudies().size();
         return Math.max(freePlaceNumber, 0);
     }
