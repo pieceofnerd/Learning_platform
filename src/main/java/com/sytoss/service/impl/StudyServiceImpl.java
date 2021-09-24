@@ -13,6 +13,7 @@ import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.repository.education.UserAccountRepository;
+import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
 import com.sytoss.web.dto.filter.FilterStudyDTO;
 import org.slf4j.Logger;
@@ -26,7 +27,6 @@ import java.util.List;
 
 @Service
 @Transactional
-
 public class StudyServiceImpl implements StudyService {
 
     private final static Logger logger = LoggerFactory.getLogger(StudyServiceImpl.class);
@@ -37,24 +37,28 @@ public class StudyServiceImpl implements StudyService {
 
     private final StudyGroupRepository studyGroupRepository;
 
+    private final StudyGroupService studyGroupService;
+
     private final HomeworkRepository homeworkRepository;
 
     private final LookupRepository lookupRepository;
 
+
     @Autowired
     public StudyServiceImpl(StudyRepository studyRepository, UserAccountRepository userAccountRepository,
-                            StudyGroupRepository studyGroupRepository, HomeworkRepository homeworkRepository,
+                            StudyGroupRepository studyGroupRepository, StudyGroupService studyGroupService, HomeworkRepository homeworkRepository,
                             LookupRepository lookupRepository) {
         this.studyRepository = studyRepository;
         this.userAccountRepository = userAccountRepository;
         this.studyGroupRepository = studyGroupRepository;
+        this.studyGroupService = studyGroupService;
         this.homeworkRepository = homeworkRepository;
         this.lookupRepository = lookupRepository;
     }
 
 
     @Override
-    public void saveStudy(UserAccount student, StudyGroup studyGroup) {
+    public void saveStudy(UserAccount student, StudyGroup studyGroup) throws Exception {
         if (student == null || studyGroup == null) {
             logger.error("Student and study group must not be null");
             return;
@@ -64,6 +68,7 @@ public class StudyServiceImpl implements StudyService {
         study.setStudent(student);
         study.setStudyGroup(studyGroup);
         studyRepository.save(study);
+        studyGroupService.updateFreePlaceNumber(studyGroup);
     }
 
     @Override

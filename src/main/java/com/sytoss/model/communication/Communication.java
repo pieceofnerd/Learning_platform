@@ -21,15 +21,14 @@ public class Communication {
     @ManyToOne(optional = false)
     private UserAccount sender;
 
-    @CreationTimestamp
-    @Column(name = "send_date", nullable = false)
-    private Date sendDate;
+    @Column(name = "send_date")
+    private Date sendDate = new Date();
 
     @Column(name = "content", nullable = false)
     private String content;
 
     @Column(name = "update_date")
-    private Date updateDate;
+    private Date updateDate = new Date();
 
     public Communication() {
     }

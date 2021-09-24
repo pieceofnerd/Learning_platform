@@ -56,7 +56,7 @@ public class UserAccount {
     private Date createdDate = new Date();
 
     @Column(name = "updated_date")
-    private Date updatedDate;
+    private Date updatedDate = new Date();
 //
 //    @OneToMany(mappedBy = "mentor")
 //    private List<Lesson> lessons;

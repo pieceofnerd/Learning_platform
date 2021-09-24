@@ -37,12 +37,11 @@ public class Study {
     @Column(name = "deleted")
     private boolean deleted;
 
-    @CreationTimestamp
-    @Column(name = "created_date", nullable = false)
-    private Date createdDate;
+    @Column(name = "created_date")
+    private Date createdDate = new Date();
 
     @Column(name = "updated_date")
-    private Date updatedDate;
+    private Date updatedDate = new Date();
 
     public Study() {
     }
