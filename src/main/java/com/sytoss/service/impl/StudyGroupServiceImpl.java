@@ -3,9 +3,10 @@ package com.sytoss.service.impl;
 import com.sytoss.exception.NoSuchStudyGroupException;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
-import com.sytoss.model.education.UserAccount;
+import com.sytoss.model.education.Study;
 import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
+import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.service.StudyGroupService;
 import com.sytoss.web.dto.filter.FilterStudyGroupDTO;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +28,8 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     private final StudyGroupRepository studyGroupRepository;
 
     private final CourseRepository courseRepository;
+
+    private final StudyRepository studyRepository;
 
     @Override
     public void createStudyGroup(StudyGroup studyGroup) {
@@ -55,7 +58,9 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             return;
         }
         checkExistence(studyGroup);
+
         studyGroup.setDeleted(true);
+
         studyGroupRepository.save(studyGroup);
     }
 
@@ -63,7 +68,10 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     public void updateFreePlaceNumber(StudyGroup studyGroup) throws Exception {
         if (studyGroup == null)
             throw new Exception("StudyGroup is null");
+
         studyGroup.setFreePlaceNumber(freePlaceNumberCalc(studyGroup));
+        studyGroup.setUpdatedDate(new Date());
+
         studyGroupRepository.save(studyGroup);
     }
 
@@ -95,9 +103,10 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             throw new NoSuchStudyGroupException();
         }
     }
-  
-   private int freePlaceNumberCalc(StudyGroup studyGroup) {
-        int freePlaceNumber = studyGroup.getPlaceNumber() - studyGroup.getStudies().size();
+
+    private int freePlaceNumberCalc(StudyGroup studyGroup) {
+        List<Study> studies = studyRepository.findStudiesByStudyGroup(studyGroup);
+        int freePlaceNumber = studyGroup.getPlaceNumber() - studies.size();
         return Math.max(freePlaceNumber, 0);
     }
 }
