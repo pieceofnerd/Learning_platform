@@ -7,6 +7,7 @@ import com.sytoss.mapper.UserAccountMapper;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
 import com.sytoss.web.dto.StudyDTO;
 import com.sytoss.web.dto.StudyGroupDTO;
@@ -26,7 +27,7 @@ public class StudyController {
     private final UserAccountMapper userAccountMapper;
     private final StudyGroupMapper studyGroupMapper;
 
-    public void saveStudy(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) {
+    public void saveStudy(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) throws Exception {
         final UserAccount student = userAccountMapper.toEntity(studentDTO);
         final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
         studyService.saveStudy(student, studyGroup);

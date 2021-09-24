@@ -20,7 +20,7 @@ public interface StudentService {
 
     void returnCourse(UserAccount student, Course course);
 
-    void joinStudyGroup(UserAccount student, Course course);
+    void joinStudyGroup(UserAccount student, StudyGroup studyGroup) throws Exception;
 
-    void leaveStudyGroup(UserAccount student, StudyGroup studyGroup);
+    void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) throws Exception;
 }

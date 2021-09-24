@@ -21,7 +21,7 @@ class PurchaseServiceTest {
     private final StudyGroupRepository studyGroupRepository= context.getBean(StudyGroupRepository.class);
 
     @Test
-    void payCourse() {
+    void payCourse() throws Exception {
             purchaseService.payCourse((Student) userAccountRepository.findOne(1L),studyGroupRepository.findOne(1L));
     }
 }

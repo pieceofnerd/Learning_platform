@@ -67,7 +67,10 @@ public class StudyServiceImpl implements StudyService {
         Study study = new Study();
         study.setStudent(student);
         study.setStudyGroup(studyGroup);
+
+
         studyRepository.save(study);
+
         studyGroupService.updateFreePlaceNumber(studyGroup);
     }
 
