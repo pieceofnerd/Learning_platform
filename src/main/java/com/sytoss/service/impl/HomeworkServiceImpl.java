@@ -2,6 +2,7 @@ package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchHomeworkException;
 import com.sytoss.model.communication.Communication;
+import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.education.Homework;
 import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.education.HomeworkRepository;
@@ -32,10 +33,10 @@ public class HomeworkServiceImpl implements HomeworkService {
     private final UserAccountRepository userAccountRepository;
 
     @Override
-    public void createHomework(Homework homework) throws NullPointerException {
+    public void createHomework(Homework homework) {
         if (homework == null) {
             logger.error("Homework must not be null");
-            throw new NullPointerException();
+            return;
         }
         Homework savedHomework = homeworkRepository.save(homework);
         logger.info("Homework {} was created", savedHomework.toString());
@@ -59,7 +60,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     public void deleteHomework(Homework homework) throws NoSuchHomeworkException {
         if (homework == null) {
             logger.error("Homework must not be null");
-            throw new NullPointerException();
+            return;
         }
 
         checkExistence(homework);
@@ -69,7 +70,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public List<Homework> findHomeworkFindByFilter(FilterHomeworkDTO filter) throws Exception {
+    public List<Homework> findHomeworkFindByFilter(FilterHomeworkDTO filter)  {
 
         List<Homework> homeworks = new ArrayList<>();
         switch (filter.getFilter()) {
@@ -82,12 +83,17 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public void leaveFeedback(Communication feedback) throws NullPointerException {
+    public void leaveFeedback(Communication feedback) throws NoSuchHomeworkException  {
         if (feedback == null) {
             logger.error("Feedback must not be null");
-            throw new NullPointerException();
+            return;
         }
-        communicationRepository.save(feedback);
-        logger.info("Feedback {} was created", feedback.toString());
+        try {
+            checkExistence(((Feedback) feedback).getHomework());
+            communicationRepository.save(feedback);
+            logger.info("Feedback {} was created", feedback);
+        } catch (ClassCastException e) {
+            logger.error(e.getMessage());
+        }
     }
 }

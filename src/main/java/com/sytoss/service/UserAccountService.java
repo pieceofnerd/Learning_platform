@@ -1,5 +1,7 @@
 package com.sytoss.service;
 
+import com.sytoss.exception.EmailAlreadyExistsException;
+import com.sytoss.exception.NoSuchUserAccountException;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
@@ -8,19 +10,17 @@ import java.util.List;
 
 public interface UserAccountService {
 
-//    UserAccount findUserAccountById(Long id) throws Exception;
-
     List<UserAccount> findUsersByFilter(FilterUserAccountDTO filter);
 
-    boolean saveUserAccount(UserAccount userAccount);
+    void registerUserAccount(UserAccount userAccount) throws EmailAlreadyExistsException;
 
-    boolean updateUserAccount(UserAccount userAccount);
+    void updateUserAccount(UserAccount userAccount) throws NoSuchUserAccountException, EmailAlreadyExistsException;
 
-    boolean deleteUserAccount(UserAccount userAccount);
+    void deleteUserAccount(UserAccount userAccount) throws NoSuchUserAccountException;
 
-    boolean resetPassword(UserAccount userAccount, char[] newPassword);
+    void resetPassword(UserAccount userAccount, char[] newPassword) throws NoSuchUserAccountException;
 
-    boolean forgotPassword(String email);
+    void forgotPassword(String email);
 
     void leaveComment(Communication comment);
 }

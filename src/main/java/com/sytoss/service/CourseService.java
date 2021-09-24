@@ -1,9 +1,6 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.DuplicateCourseNameException;
-import com.sytoss.exception.NoSuchCourseException;
-import com.sytoss.exception.NoSuchTopicException;
-import com.sytoss.exception.NoSuchUserAccountException;
+import com.sytoss.exception.*;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.LessonTemplate;
 import com.sytoss.model.course.Topic;
@@ -21,7 +18,7 @@ public interface CourseService {
 
     void removeTopic(Topic topic) throws NoSuchTopicException;
 
-    void removeLessonTemplate(LessonTemplate lessonTemplate);
+    void removeLessonTemplate(LessonTemplate lessonTemplate) throws NoSuchLessonTemplateException;
 
     void updateCourseRating(Course course) throws NoSuchCourseException;
 

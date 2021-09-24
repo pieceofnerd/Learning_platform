@@ -95,20 +95,20 @@ public class LessonServiceImpl implements LessonService {
         switch (filter.getFilter()) {
             case TIME_PERIOD: {
                 StudyGroup studyGroup = studyGroupRepository.findOne(filter.getStudyGroupId());
-                return lessonRepository.findLessonsByTimePeriodAndStudyGroup(studyGroup, filter.getStartTimePeriod(), filter.getEndDatePeriod());
+                return lessonRepository.findLessonsByTimePeriodAndStudyGroupAndActiveIsTrue(studyGroup, filter.getStartTimePeriod(), filter.getEndDatePeriod());
             }
             case FUTURE_LESSONS_FOR_STUDY_GROUP: {
                 StudyGroup studyGroup = studyGroupRepository.findOne(filter.getStudyGroupId());
-                return lessonRepository.findFutureLessonsByStudyGroup(studyGroup);
+                return lessonRepository.findFutureLessonsByStudyGroupAndActiveIsTrue(studyGroup);
             }
             case LESSON_TEMPLATE: {
                 LessonTemplate lessonTemplate = lessonTemplateRepository.findOne(filter.getLessonTemplateId());
-                return lessonRepository.findLessonByLessonTemplate(lessonTemplate);
+                return lessonRepository.findLessonByLessonTemplateAndActiveIsTrue(lessonTemplate);
             }
             case MENTOR: {
                 try {
                     Mentor mentor = (Mentor) userAccountRepository.findOne(filter.getMentorId());
-                    return lessonRepository.findLessonByMentor(mentor);
+                    return lessonRepository.findLessonByMentorAndActiveIsTrue(mentor);
                 } catch (ClassCastException exception) {
                     logger.error("Incorrect mentor Id was provided, id - {}", filter.getMentorId());
                     return null;

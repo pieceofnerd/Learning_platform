@@ -17,6 +17,6 @@ public interface HomeworkService {
 
     List<Homework> findHomeworkFindByFilter(FilterHomeworkDTO filter) throws Exception;
 
-    void leaveFeedback(Communication feedback);
+    void leaveFeedback(Communication feedback) throws NoSuchHomeworkException;
 
 }

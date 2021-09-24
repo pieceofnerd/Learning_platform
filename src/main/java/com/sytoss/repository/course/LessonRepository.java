@@ -22,16 +22,16 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Query("select l from Lesson l where l.active = true and l.studyGroup = ?1")
     List<Lesson> findLessonsByActiveIsTrueAndStudyGroup(StudyGroup studyGroup);
 
-    @Query("select l from Lesson l where l.studyGroup=?1 and l.lessonDate>=?2 and l.lessonDate<=?3")
-    List<Lesson> findLessonsByTimePeriodAndStudyGroup(StudyGroup studyGroup, Date startTime, Date endTime);
+    @Query("select l from Lesson l where l.studyGroup=?1 and l.lessonDate>=?2 and l.lessonDate<=?3 and l.active=true")
+    List<Lesson> findLessonsByTimePeriodAndStudyGroupAndActiveIsTrue(StudyGroup studyGroup, Date startTime, Date endTime);
 
-    @Query("select l from Lesson l where l.studyGroup = ?1 and l.lessonDate>CURRENT_TIMESTAMP")
-    List<Lesson> findFutureLessonsByStudyGroup(StudyGroup studyGroup);
+    @Query("select l from Lesson l where l.studyGroup = ?1 and l.lessonDate>CURRENT_TIMESTAMP and l.active=true")
+    List<Lesson> findFutureLessonsByStudyGroupAndActiveIsTrue(StudyGroup studyGroup);
 
-    @Query("select l from Lesson l where l.lessonTemplate = ?1")
-    List<Lesson> findLessonByLessonTemplate(LessonTemplate lessonTemplate);
+    @Query("select l from Lesson l where l.lessonTemplate = ?1 and l.active=true ")
+    List<Lesson> findLessonByLessonTemplateAndActiveIsTrue(LessonTemplate lessonTemplate);
 
-    @Query("select l from Lesson l where l.mentor = ?1")
-    List<Lesson> findLessonByMentor(UserAccount mentor);
+    @Query("select l from Lesson l where l.mentor = ?1 and l.active=true")
+    List<Lesson> findLessonByMentorAndActiveIsTrue(UserAccount mentor);
 
 }
