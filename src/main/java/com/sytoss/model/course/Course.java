@@ -54,12 +54,11 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private List<CourseRating> courseRatings;
 
-    @CreationTimestamp
     @Column(name = "created_date")
-    private Date createdDate;
+    private Date createdDate = new Date();
 
     @Column(name = "updated_date")
-    private Date updatedDate;
+    private Date updatedDate = new Date();
 
     public Course() {
     }

@@ -36,6 +36,9 @@ public class Purchase {
     @Column(name = "purchase_date")
     private Date purchaseDate = new Date();
 
+    @Column(name = "updated_date")
+    private Date updatedDate = new Date();
+
     public Purchase() {
     }
 
@@ -91,5 +94,13 @@ public class Purchase {
 
     public void setPurchaseDate(Date purchaseDate) {
         this.purchaseDate = purchaseDate;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
 }

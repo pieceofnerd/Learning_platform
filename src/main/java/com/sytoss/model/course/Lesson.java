@@ -35,12 +35,11 @@ public class Lesson {
     @Column(name = "lesson_date")
     private Date lessonDate;
 
-    @CreationTimestamp
     @Column(name = "created_date")
-    private Date createdDate;
+    private Date createdDate = new Date();
 
     @Column(name = "updated_date")
-    private Date updatedDate;
+    private Date updatedDate = new Date();
 
     @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY)
     private List<Comment> comments;

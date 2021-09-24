@@ -9,7 +9,7 @@ import com.sytoss.web.dto.filter.FilterStudyDTO;
 import java.util.List;
 
 public interface StudyService {
-    void saveStudy(UserAccount student, StudyGroup studyGroup);
+    void saveStudy(UserAccount student, StudyGroup studyGroup) throws Exception;
 
     void deleteStudy(Study study) throws NoSuchStudyException;
 

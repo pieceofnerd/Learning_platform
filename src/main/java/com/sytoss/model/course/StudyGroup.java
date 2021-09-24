@@ -44,12 +44,11 @@ public class StudyGroup {
     @Column(name = "deleted")
     private boolean deleted;
 
-    @CreationTimestamp
     @Column(name = "created_date")
-    private Date createdDate;
+    private Date createdDate = new Date();
 
     @Column(name = "updated_date")
-    private Date updatedDate;
+    private Date updatedDate = new Date();
 
     @OneToMany(mappedBy = "studyGroup", fetch = FetchType.LAZY)
     private List<Study> studies;
