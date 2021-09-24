@@ -14,14 +14,15 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("select c from Course c where c.active = true")
     List<Course> findCoursesByActiveIsTrue();
 
-    List<Course> findDistinctFirst10ByOrderByCreatedDateDesc();
+    List<Course> findDistinctFirst10ByActiveIsTrueOrderByCreatedDateDesc();
 
-    @Query("select c from Course c where c.name = ?1")
-    Course findCourseByName(String name);
+
+    @Query("select c from Course c where c.name = ?1 and c.active = true")
+    Course findCourseByNameAndActiveIsTrue(String name);
 
     @Query("select c " +
             "from Course c inner join Price  p on c = p.course " +
-            "where p.priceType=?1 and p.cost>=?2 and p.cost<=?3")
-    List<Course> findCourseByPriceRange(Lookup priceType, BigDecimal lowPrice, BigDecimal highPrice);
+            "where p.priceType=?1 and p.cost>=?2 and p.cost<=?3 and c.active=true")
+    List<Course> findActiveCourseByPriceRange(Lookup priceType, BigDecimal lowPrice, BigDecimal highPrice);
 
 }

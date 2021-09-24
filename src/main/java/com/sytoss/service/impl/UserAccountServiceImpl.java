@@ -115,7 +115,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                 return userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndSecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName(), filter.getSecondName());
             }
             case FIRST_NAME: {
-               return userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName());
+                return userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName());
             }
             case SECOND_NAME: {
                 return userAccountRepository.findAllBySecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getSecondName());
