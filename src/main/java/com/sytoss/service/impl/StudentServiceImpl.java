@@ -63,6 +63,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Purchase> findPurchaseByStudent(UserAccount student) {
+        return purchaseService.findPurchasesByStudent((Student) student);
+    }
+
+    @Override
     public Purchase payCourse(Student student, StudyGroup studyGroup) throws Exception {
         Purchase purchase = purchaseService.payCourse(student, studyGroup);
         joinStudyGroup(student, studyGroup);
@@ -80,7 +85,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void joinStudyGroup(UserAccount student, StudyGroup studyGroup) throws Exception {
         Purchase purchase = purchaseRepository.findByStudentAndStudyGroup(student, studyGroup);
-
+        if (purchase == null)
+            throw new Exception("Student did not pay for the course");
         if (!purchase.getPurchaseStatus().getId().equals(PurchaseStatus.PAYED.getValue()))
             throw new Exception("Student did not pay for the course");
 
@@ -93,7 +99,7 @@ public class StudentServiceImpl implements StudentService {
     public void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) throws Exception {
 
         //when a student leaves the group, all studies of the student in this group are deleted.
-        Study study = studyRepository.findStudyByStudentAndStudyGroup(student, studyGroup);
+        Study study = studyRepository.findStudyByDeletedIsFalseAndStudentAndStudyGroup(student, studyGroup);
         if (study != null) {
             studyService.deleteStudy(study);
             studyGroupService.updateFreePlaceNumber(studyGroup);
