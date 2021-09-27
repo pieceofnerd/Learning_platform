@@ -15,7 +15,9 @@ public interface PurchaseService {
 
     void updatePurchase(Purchase purchase) throws NoSuchPurchaseException;
 
-    List<Purchase> findPurchaseByFilter(UserAccount student, FilterPurchaseDTO filter);
+    List<Purchase> findPurchasesByStudent(Student student);
+
+    List<Purchase> findPurchaseByFilter(FilterPurchaseDTO filter);
 
     boolean refundMoney(Purchase purchase) throws Exception;
 }

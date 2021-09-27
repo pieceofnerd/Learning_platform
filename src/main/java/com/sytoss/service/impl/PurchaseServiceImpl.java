@@ -107,7 +107,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<Purchase> findPurchaseByFilter(UserAccount student, FilterPurchaseDTO filter) { //TODO
+    public List<Purchase> findPurchasesByStudent(Student student) {
+        return purchaseRepository.findPurchasesByStudent(student);
+    }
+
+    @Override
+    public List<Purchase> findPurchaseByFilter(FilterPurchaseDTO filter) { //TODO
         return null;
     }
 

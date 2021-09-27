@@ -153,10 +153,10 @@ public class StudyServiceImpl implements StudyService {
         List<Study> studies = new ArrayList<>();
         switch (filter.getFilter()) {
             case STUDENT:
-                studies.addAll(studyRepository.findStudiesByStudent(userAccountRepository.findOne(filter.getStudent())));
+                studies.addAll(studyRepository.findStudiesByDeletedIsFalseAndStudent(userAccountRepository.findOne(filter.getStudent())));
                 break;
             case STUDY_GROUP:
-                studies.addAll(studyRepository.findStudiesByStudyGroup(studyGroupRepository.findOne(filter.getStudyGroup())));
+                studies.addAll(studyRepository.findStudiesByDeletedIsFalseAndStudyGroup(studyGroupRepository.findOne(filter.getStudyGroup())));
                 break;
             default:
                 throw new Exception("FILTER ERROR");
@@ -165,7 +165,7 @@ public class StudyServiceImpl implements StudyService {
     }
 
     private Study checkStudyExistence(UserAccount student, StudyGroup studyGroup) throws NoSuchStudyException {
-        Study study = studyRepository.findStudyByStudentAndStudyGroup(student, studyGroup);
+        Study study = studyRepository.findStudyByDeletedIsFalseAndStudentAndStudyGroup(student, studyGroup);
 
         if (study == null) {
             logger.error("Couldn't find study of {} student from {} study group", student.getId(), studyGroup.getId());

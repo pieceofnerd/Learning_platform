@@ -4,6 +4,7 @@ import com.sytoss.exception.NoSuchCourseException;
 import com.sytoss.mapper.*;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
+import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
 import com.sytoss.service.StudentService;
@@ -48,15 +49,26 @@ public class StudentController {
         studentService.rateCourse(course, rateValue);
     }
 
-    public void returnCourse(UserAccount student, StudyGroup studyGroup) {
-
+    public void returnCourse(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) throws Exception {
+        Student student = studentMapper.toEntity(studentDTO);
+        StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
+        studentService.returnCourse(student, studyGroup);
     }
 
-    public void joinStudyGroup(UserAccount student, StudyGroup studyGroup) {
-
+    public List<PurchaseDTO> findPurchaseByStudent(UserAccountDTO userAccountDTO) {
+        Student student = studentMapper.toEntity(userAccountDTO);
+        return purchaseMapper.toListDTO(studentService.findPurchaseByStudent(student));
     }
 
-    public void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) {
+    public void joinStudyGroup(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) throws Exception {
+        Student student = studentMapper.toEntity(studentDTO);
+        StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
+        studentService.joinStudyGroup(student, studyGroup);
+    }
 
+    public void leaveStudyGroup(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) throws Exception {
+        Student student = studentMapper.toEntity(studentDTO);
+        StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
+        studentService.leaveStudyGroup(student, studyGroup);
     }
 }

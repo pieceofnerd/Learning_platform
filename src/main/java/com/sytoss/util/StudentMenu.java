@@ -1,21 +1,16 @@
 package com.sytoss.util;
 
 import com.sytoss.controller.StudentController;
-import com.sytoss.controller.UserAccountController;
 import com.sytoss.mapper.*;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
-import com.sytoss.model.education.Purchase;
-import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.repository.education.UserAccountRepository;
-import com.sytoss.service.StudentService;
 import com.sytoss.web.dto.PurchaseDTO;
 import com.sytoss.web.dto.StudyGroupDTO;
 import com.sytoss.web.dto.UserAccountDTO;
-import com.sytoss.web.dto.filter.FilterPurchaseDTO;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,15 +22,12 @@ import static com.sytoss.util.MenuUtils.*;
 @RequiredArgsConstructor
 public class StudentMenu {
 
-    //    private final StudentService studentService;
     private final StudentController studentController;
     private final UserAccountRepository userAccountRepository;
     private final StudyGroupRepository studyGroupRepository;
     private final CourseRepository courseRepository;
-    private final PurchaseMapper purchaseMapper;
     private final StudyGroupMapper studyGroupMapper;
     private final UserAccountMapper userAccountMapper;
-    private final StudentMapper studentMapper;
     private final CourseMapper courseMapper;
 
     @Transactional
@@ -43,21 +35,29 @@ public class StudentMenu {
         printMenu(
                 "-1. Quit",
                 "1. Pay course",
-                "2. Rate course"
+                "2. Rate course",
+                "3. Join StudyGroup",
+                "4. Leave StudyGroup",
+                "5. Return course",
+                "6. Find all purchase by student"
         );
 
         long studentId;
         long studyGroupId;
+        Student student;
+        StudyGroup studyGroup;
+        UserAccountDTO userAccountDTO;
+        StudyGroupDTO studyGroupDTO;
         switch (scanInt()) {
             case -1:
                 return;
             case 1:
                 studentId = scanInt("Write student id - ");
                 studyGroupId = scanInt("Write study group id - ");
-                Student student = (Student) userAccountRepository.findOne(studentId);
-                StudyGroup studyGroup = studyGroupRepository.findById(studyGroupId);
-                UserAccountDTO userAccountDTO = userAccountMapper.toDTO(student);
-                StudyGroupDTO studyGroupDTO = studyGroupMapper.toDTO(studyGroup);
+                student = (Student) userAccountRepository.findOne(studentId);
+                studyGroup = studyGroupRepository.findById(studyGroupId);
+                userAccountDTO = userAccountMapper.toDTO(student);
+                studyGroupDTO = studyGroupMapper.toDTO(studyGroup);
 
 //                Student userAccount = studentMapper.toEntity(userAccountDTO);
 
@@ -77,7 +77,52 @@ public class StudentMenu {
 
                 Course course = courseRepository.findOne(courseId);
 
-                studentController.rateCourse(courseMapper.toDTO(course),rate);
+                studentController.rateCourse(courseMapper.toDTO(course), rate);
+                break;
+            case 3:
+                studentId = scanInt("Write student id - ");
+                studyGroupId = scanInt("Write study group id - ");
+                student = (Student) userAccountRepository.findOne(studentId);
+                studyGroup = studyGroupRepository.findById(studyGroupId);
+                userAccountDTO = userAccountMapper.toDTO(student);
+                studyGroupDTO = studyGroupMapper.toDTO(studyGroup);
+
+                studentController.joinStudyGroup(userAccountDTO, studyGroupDTO);
+                break;
+            case 4:
+                studentId = scanInt("Write student id - ");
+                studyGroupId = scanInt("Write study group id - ");
+                student = (Student) userAccountRepository.findOne(studentId);
+                studyGroup = studyGroupRepository.findById(studyGroupId);
+                userAccountDTO = userAccountMapper.toDTO(student);
+                studyGroupDTO = studyGroupMapper.toDTO(studyGroup);
+
+                studentController.leaveStudyGroup(userAccountDTO, studyGroupDTO);
+                break;
+            case 5:
+                studentId = scanInt("Write student id - ");
+                studyGroupId = scanInt("Write study group id - ");
+                student = (Student) userAccountRepository.findOne(studentId);
+                studyGroup = studyGroupRepository.findById(studyGroupId);
+                userAccountDTO = userAccountMapper.toDTO(student);
+                studyGroupDTO = studyGroupMapper.toDTO(studyGroup);
+
+                studentController.returnCourse(userAccountDTO, studyGroupDTO);
+                break;
+            case 6:
+                studentId = scanInt("Write student id - ");
+                student = (Student) userAccountRepository.findOne(studentId);
+                userAccountDTO = userAccountMapper.toDTO(student);
+                for (PurchaseDTO p : studentController.findPurchaseByStudent(userAccountDTO)) {
+                    printClassName(p.getClass().getSimpleName());
+                    printField("id", p.getId());
+                    printField("student", p.getStudent().getId());
+                    printField("study group", p.getStudyGroup().getId());
+                    printField("cost", p.getCost());
+                    printField("purchase date", p.getPurchaseDate());
+                    printField("purchase status", p.getPurchaseStatus().getValue());
+                    printField("updated date", p.getUpdatedDate());
+                }
                 break;
         }
     }

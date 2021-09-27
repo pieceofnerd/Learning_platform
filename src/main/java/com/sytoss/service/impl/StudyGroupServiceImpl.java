@@ -105,7 +105,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     private int freePlaceNumberCalc(StudyGroup studyGroup) {
-        List<Study> studies = studyRepository.findStudiesByStudyGroup(studyGroup);
+        List<Study> studies = studyRepository.findStudiesByDeletedIsFalseAndStudyGroup(studyGroup);
         int freePlaceNumber = studyGroup.getPlaceNumber() - studies.size();
         return Math.max(freePlaceNumber, 0);
     }

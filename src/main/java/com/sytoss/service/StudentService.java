@@ -21,6 +21,8 @@ public interface StudentService {
     //TODO
     List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup);
 
+    List<Purchase> findPurchaseByStudent(UserAccount student);
+
     Purchase payCourse(Student student, StudyGroup studyGroup) throws Exception;
 
     void returnCourse(UserAccount student, StudyGroup studyGroup) throws Exception;
