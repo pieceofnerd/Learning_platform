@@ -1,5 +1,8 @@
 package com.sytoss.web.dto.save;
 
+import com.sytoss.web.dto.LessonTemplateDTO;
+import com.sytoss.web.dto.StudyGroupDTO;
+import com.sytoss.web.dto.UserAccountDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +15,14 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LessonSaveDTO {
-    private Long mentor;
+
+    private UserAccountDTO mentor;
+
     private HomeTaskSaveDTO homeTask;
-    private Long lessonTemplate;
-    private Long studyGroup;
+
+    private LessonTemplateDTO lessonTemplate;
+
+    private StudyGroupDTO studyGroup;
+
     private Date lessonDate;
 }

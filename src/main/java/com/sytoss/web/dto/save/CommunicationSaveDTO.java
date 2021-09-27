@@ -1,5 +1,7 @@
 package com.sytoss.web.dto.save;
 
+import com.sytoss.web.dto.HomeworkDTO;
+import com.sytoss.web.dto.LessonDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +14,18 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommunicationSaveDTO {
+
     private Long sender;
+
     private Long receiver;
+
     private String content;
-    private Long lesson;
-    private Long homework;
+
+    private LessonDTO lesson;
+
+    private HomeworkDTO homework;
+
     private Integer score;
+
     private Boolean active;
 }

@@ -1,5 +1,6 @@
 package com.sytoss.web.dto.save;
 
+import com.sytoss.web.dto.CategoryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class CourseSaveDTO {
 
     private String description;
 
-    private Long categoryId;
+    private CategoryDTO category;
 
     private MediaSaveDTO certificateTemplate;
 

@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class StudyGroupSaveDTO {
 
-    private Long course;
+    private CourseDTO course;
 
     private Integer placeNumber;
 

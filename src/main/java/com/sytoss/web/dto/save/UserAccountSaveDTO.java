@@ -12,12 +12,20 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserAccountSaveDTO {
+
     private String firstName;
+
     private String secondName;
+
     private Date birthday;
+
     private String bio;
+
     private AddressSaveDTO address;
+
     private String email;
+
     private char[] password;
+
     private MediaSaveDTO photo;
 }

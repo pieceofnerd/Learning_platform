@@ -1,5 +1,6 @@
 package com.sytoss.web.dto.save;
 
+import com.sytoss.web.dto.MediaDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HomeTaskSaveDTO {
+
     private String task;
-    private Long filePath;
+
+    private MediaDTO filePath;
+
     private Date deadlineDate;
 }
