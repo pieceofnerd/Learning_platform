@@ -1,7 +1,10 @@
 package com.sytoss.util;
 
 import com.sytoss.controller.StudyGroupController;
+import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.StudyGroupMapper;
+import com.sytoss.model.course.Course;
+import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.web.dto.StudyGroupDTO;
 import com.sytoss.web.dto.UserAccountDTO;
@@ -21,7 +24,9 @@ import static com.sytoss.util.MenuUtils.*;
 public class StudyGroupMenu {
     private final StudyGroupController studyGroupController;
     private final StudyGroupRepository studyGroupRepository;
+    private final CourseRepository courseRepository;
     private final StudyGroupMapper studyGroupMapper;
+    private final CourseMapper courseMapper;
 
     @Transactional
     public void start() throws Exception {
@@ -46,7 +51,8 @@ public class StudyGroupMenu {
                 int freePlaceNumber = scanInt("Write free place number - ");
                 Date startDate = Date.valueOf(scanLine("Write start date - "));
                 Date endDate = Date.valueOf(scanLine("Write end date - "));
-                StudyGroupSaveDTO studyGroupSaveDTO = new StudyGroupSaveDTO(courseId, placeNumber,freePlaceNumber, startDate, endDate);
+                Course course = courseRepository.findOne(courseId);
+                StudyGroupSaveDTO studyGroupSaveDTO = new StudyGroupSaveDTO(courseMapper.toDTO(course), placeNumber,freePlaceNumber, startDate, endDate);
                 studyGroupController.createStudyGroup(studyGroupSaveDTO);
                 break;
             case 2:
