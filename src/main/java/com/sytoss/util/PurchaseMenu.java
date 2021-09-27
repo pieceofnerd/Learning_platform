@@ -26,28 +26,28 @@ public class PurchaseMenu {
     private final StudyGroupRepository studyGroupRepository;
     private final UserAccountRepository userAccountRepository;
 
-    @Transactional
-    public void start() throws Exception {
-        printMenu(
-                "-1. Quit",
-                "1. Pay course"
-        );
-
-        long studentId;
-        long studyGroupId;
-        switch (scanInt()) {
-            case -1:
-                return;
-            case 1:
-                studentId = scanInt("Write student id - ");
-                studyGroupId = scanInt("Write study group id - ");
-                purchaseController.pay(
-                        (Student) userAccountRepository.findOne(studentId)
-                        , studyGroupRepository.findById(studyGroupId)
-                );
-                break;
-        }
-    }
+//    @Transactional
+//    public void start() throws Exception {
+//        printMenu(
+//                "-1. Quit",
+//                "1. Pay course"
+//        );
+//
+//        long studentId;
+//        long studyGroupId;
+//        switch (scanInt()) {
+//            case -1:
+//                return;
+//            case 1:
+//                studentId = scanInt("Write student id - ");
+//                studyGroupId = scanInt("Write study group id - ");
+//                purchaseController.pay(
+//                        (Student) userAccountRepository.findOne(studentId)
+//                        , studyGroupRepository.findById(studyGroupId)
+//                );
+//                break;
+//        }
+//    }
 
     private FilterPurchaseDTO selectFilter(int i) throws Exception {
         FilterPurchaseDTO filter = new FilterPurchaseDTO();

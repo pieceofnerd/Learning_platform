@@ -1,9 +1,6 @@
 package com.sytoss.controller;
 
-import com.sytoss.exception.DuplicateCourseNameException;
-import com.sytoss.exception.NoSuchCourseException;
-import com.sytoss.exception.NoSuchTopicException;
-import com.sytoss.exception.NoSuchUserAccountException;
+import com.sytoss.exception.*;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.LessonTemplateMapper;
 import com.sytoss.mapper.TopicMapper;
@@ -63,9 +60,9 @@ public class CourseController {
         courseService.removeTopic(topic);
     }
 
-    public void removeLessonTemplate(LessonTemplateDTO lessonTemplateDTO) {
+    public void removeLessonTemplate(LessonTemplateDTO lessonTemplateDTO) throws NoSuchLessonTemplateException {
         final LessonTemplate lessonTemplate = lessonTemplateMapper.toEntity(lessonTemplateDTO);
-        courseService.removeLessonTemplate(lessonTemplate);
+        courseService.removeLessonTemplate (lessonTemplate);
     }
 
     public List<CourseDTO> getAll() {

@@ -37,7 +37,7 @@ public class StudyServiceImpl implements StudyService {
 
     private final StudyGroupRepository studyGroupRepository;
 
-    private final StudyGroupService studyGroupService;
+//    private final StudyGroupService studyGroupService;
 
     private final HomeworkRepository homeworkRepository;
 
@@ -46,12 +46,11 @@ public class StudyServiceImpl implements StudyService {
 
     @Autowired
     public StudyServiceImpl(StudyRepository studyRepository, UserAccountRepository userAccountRepository,
-                            StudyGroupRepository studyGroupRepository, StudyGroupService studyGroupService, HomeworkRepository homeworkRepository,
+                            StudyGroupRepository studyGroupRepository, HomeworkRepository homeworkRepository,
                             LookupRepository lookupRepository) {
         this.studyRepository = studyRepository;
         this.userAccountRepository = userAccountRepository;
         this.studyGroupRepository = studyGroupRepository;
-        this.studyGroupService = studyGroupService;
         this.homeworkRepository = homeworkRepository;
         this.lookupRepository = lookupRepository;
     }
@@ -71,11 +70,11 @@ public class StudyServiceImpl implements StudyService {
 
         studyRepository.save(study);
 
-        studyGroupService.updateFreePlaceNumber(studyGroup);
+//        studyGroupService.updateFreePlaceNumber(studyGroup);
     }
 
     @Override
-    public void deleteStudy(Study study) throws NoSuchStudyException {
+    public void deleteStudy(Study study) throws Exception {
         if (study == null) {
             logger.error("Study must not be null");
             return;
@@ -87,7 +86,10 @@ public class StudyServiceImpl implements StudyService {
         }
 
         study.setDeleted(true);
+
         studyRepository.save(study);
+
+//        studyGroupService.updateFreePlaceNumber(study.getStudyGroup());
     }
 
     @Override
@@ -102,12 +104,15 @@ public class StudyServiceImpl implements StudyService {
         List<Homework> homeworks = new ArrayList<>();
         List<Lesson> lessons = study.getStudyGroup().getLessons();
         for (Lesson lesson : lessons) {
-            Homework homework = homeworkRepository.findProvenHomeworkByAuthorAndHomeTask(student, lesson.getHomeTask(),fulfilmentHomework);
-            if(homework!=null)
-            homeworks.add(homework);
+            Homework homework = homeworkRepository.findProvenHomeworkByAuthorAndHomeTask(student, lesson.getHomeTask(), fulfilmentHomework);
+            if (homework != null)
+                homeworks.add(homework);
         }
 
-        study.setProgress(progressPercentCalc(lessons.size(),homeworks.size()));
+        if (homeworks.size() != 0) {
+            study.setProgress(progressPercentCalc(lessons.size(), homeworks.size()));
+            studyRepository.save(study);
+        }
     }
 
     @Override
@@ -125,12 +130,15 @@ public class StudyServiceImpl implements StudyService {
         List<Homework> homeworks = new ArrayList<>();
         for (Lesson lesson : lessons) {
             Homework homework = homeworkRepository.findHomeworkByAuthorAndHomeTask(student, lesson.getHomeTask(), fulfilmentHomework);
-            if(homework!=null) {
+            if (homework != null) {
                 generalScore += homework.getFeedback().getScore();
                 homeworks.add(homework);
             }
         }
-        study.setAssessment(generalScore / homeworks.size());
+        if (homeworks.size() != 0) {
+            study.setAssessment(generalScore / homeworks.size());
+            studyRepository.save(study);
+        }
     }
 
     @Override

@@ -169,21 +169,4 @@ public class UserAccount {
         this.deleted = deleted;
     }
 
-    @Override
-    public String toString() {
-        return "UserAccount{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                ", birthday=" + birthday +
-                ", email='" + email + '\'' +
-                ", password=" + Arrays.toString(password) +
-                ", address=" + address +
-                ", photo=" + photo +
-                ", lastActivity=" + lastActivity +
-                ", deleted= " + deleted +
-                ", createdDate=" + createdDate +
-                ", updatedDate=" + updatedDate +
-                '}';
-    }
 }

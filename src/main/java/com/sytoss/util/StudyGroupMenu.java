@@ -81,9 +81,6 @@ public class StudyGroupMenu {
                         "2. Filter by deleted"
                 );
                 FilterStudyGroupDTO filter = selectFilter(scanInt("Select filter - "));
-                System.out.println(filter.getFilter());
-                System.out.println(filter.getCourse());
-                System.out.println(filter.isDeleted());
                 for (StudyGroupDTO sg : studyGroupController.findStudyGroupsByFilter(filter)) {
                     printClassName(sg.getClass().getSimpleName());
                     printField("id",sg.getId());

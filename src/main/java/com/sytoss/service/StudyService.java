@@ -11,7 +11,7 @@ import java.util.List;
 public interface StudyService {
     void saveStudy(UserAccount student, StudyGroup studyGroup) throws Exception;
 
-    void deleteStudy(Study study) throws NoSuchStudyException;
+    void deleteStudy(Study study) throws Exception;
 
     void updateProgress(UserAccount student, StudyGroup studyGroup) throws Exception;
 

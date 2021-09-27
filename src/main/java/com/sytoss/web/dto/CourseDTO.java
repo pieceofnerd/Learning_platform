@@ -17,13 +17,13 @@ public class CourseDTO {
 
     private String name;
 
-    private  String recommendedLiterature;
+    private String recommendedLiterature;
 
     private Boolean active;
 
     private MediaDTO coursePhoto;
 
-    private CategoryDTO categoryDTO;
+    private CategoryDTO category;
 
     private Double rating;
 

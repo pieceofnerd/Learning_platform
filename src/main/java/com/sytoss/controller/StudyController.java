@@ -37,7 +37,7 @@ public class StudyController {
         final Study study = studyMapper.toEntity(studyDTO);
         try {
             studyService.deleteStudy(study);
-        } catch (NoSuchStudyException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

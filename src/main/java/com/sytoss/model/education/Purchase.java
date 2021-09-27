@@ -1,7 +1,5 @@
 package com.sytoss.model.education;
 
-import com.sytoss.model.PurchaseStatus;
-import com.sytoss.model.course.Course;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.course.StudyGroup;
 

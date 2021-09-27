@@ -21,6 +21,7 @@ public class UserAccountDTO {
     private AddressDTO address;
     private String email;
     private MediaDTO photo;
+    private LookupDTO studentStatus;
     private List<StudyDTO> studies;
     private List<HomeworkDTO> homeworks;
     private List<LessonDTO> lessons;
