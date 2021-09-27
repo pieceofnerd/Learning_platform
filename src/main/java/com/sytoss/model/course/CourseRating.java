@@ -26,7 +26,7 @@ public class CourseRating {
     private Course course;
 
     @Column(name = "rating")
-    private Double rating;
+    private Integer rating;
 
 
 }

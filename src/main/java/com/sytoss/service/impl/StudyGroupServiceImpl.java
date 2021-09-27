@@ -72,7 +72,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
         studyGroup.setFreePlaceNumber(freePlaceNumberCalc(studyGroup));
         studyGroup.setUpdatedDate(new Date());
 
-        studyGroupRepository.save(studyGroup);
+       studyGroupRepository.save(studyGroup);
     }
 
     @Override

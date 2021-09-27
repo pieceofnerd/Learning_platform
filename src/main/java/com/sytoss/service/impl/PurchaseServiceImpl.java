@@ -22,6 +22,7 @@ import com.sytoss.web.dto.filter.FilterPurchaseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,11 +43,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     private final StudyGroupRepository studyGroupRepository;
 
-    private final StudentService studentService;
-
-    private final StudyGroupService studyGroupService;
-
-    private final StudyService studyService;
+//    private final StudentService studentService;
 
     private final LookupRepository lookupRepository;
 
@@ -54,14 +51,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Autowired
     public PurchaseServiceImpl(PurchaseRepository purchaseRepository, UserAccountRepository userAccountRepository,
-                               StudyGroupRepository studyGroupRepository, StudentService studentService, StudyGroupService studyGroupService, StudyService studyService, LookupRepository lookupRepository,
+                               StudyGroupRepository studyGroupRepository, LookupRepository lookupRepository,
                                PriceRepository priceRepository) {
         this.purchaseRepository = purchaseRepository;
         this.userAccountRepository = userAccountRepository;
         this.studyGroupRepository = studyGroupRepository;
-        this.studentService = studentService;
-        this.studyGroupService = studyGroupService;
-        this.studyService = studyService;
         this.lookupRepository = lookupRepository;
         this.priceRepository = priceRepository;
     }
@@ -79,7 +73,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         Purchase createdPurchase = purchaseRepository.save(purchase);
 
         //adds a student to the group and created study of the student who paid for the course.
-        studentService.joinStudyGroup(student,studyGroup);
+//        studentService.joinStudyGroup(student,studyGroup);
 
         logger.info("Course {} was payed by Student with id: {}", purchase.getStudyGroup().getCourse().getName(), purchase.getStudent().getId());
         return createdPurchase;
@@ -97,6 +91,8 @@ public class PurchaseServiceImpl implements PurchaseService {
                     .findByCourseAndPriceType(studyGroup.getCourse(), lookupRepository.findOne(PriceType.REGULAR.getValue()));
         }
         purchase.setCost(price.getCost());
+        //default status eq PAYED
+        purchase.setPurchaseStatus(lookupRepository.findOne(8L));
         return purchase;
     }
 
@@ -121,7 +117,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         purchase.setUpdatedDate(new Date());
 
         //upon refund, the student leaves the group
-        studentService.leaveStudyGroup(purchase.getStudent(), purchase.getStudyGroup());
+//        studentService.leaveStudyGroup(purchase.getStudent(), purchase.getStudyGroup());
         return true;
     }
 }
