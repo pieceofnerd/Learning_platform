@@ -12,6 +12,7 @@ import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.course.CourseRatingRepository;
 import com.sytoss.repository.education.PurchaseRepository;
 import com.sytoss.repository.education.StudyRepository;
+import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.*;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,18 @@ import java.util.List;
 @Transactional
 public class StudentServiceImpl implements StudentService {
 
-    private final StudyRepository studyRepository;
     private final StudyService studyService;
     private final StudyGroupService studyGroupService;
     private final PurchaseService purchaseService;
+    private final CourseService courseService;
+    private final UserAccountRepository userAccountRepository;
+    private final StudyRepository studyRepository;
     private final PurchaseRepository purchaseRepository;
     private final CourseRatingRepository courseRatingRepository;
-    private final CourseService courseService;
 
     @Autowired
-    public StudentServiceImpl(StudyRepository studyRepository, StudyService studyService, StudyGroupService studyGroupService, PurchaseService purchaseService, PurchaseRepository purchaseRepository, CourseRatingRepository courseRatingRepository, CourseService courseService) {
+    public StudentServiceImpl(UserAccountRepository userAccountRepository, StudyRepository studyRepository, StudyService studyService, StudyGroupService studyGroupService, PurchaseService purchaseService, PurchaseRepository purchaseRepository, CourseRatingRepository courseRatingRepository, CourseService courseService) {
+        this.userAccountRepository = userAccountRepository;
         this.studyRepository = studyRepository;
         this.studyService = studyService;
         this.studyGroupService = studyGroupService;
@@ -44,15 +47,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void rateCourse(Course course, Integer rateValue) throws NoSuchCourseException {
-        CourseRating courseRating = new CourseRating();
-        courseRating.setRating(rateValue);
-        courseRating.setCourse(course);
-        courseRatingRepository.save(courseRating);
-        courseService.updateCourseRating(course);
-    }
-
-    @Override
     public List<Course> findCoursesByStudentByFilter(UserAccount student, FilterUserAccountDTO filter) {
         return null;
     }
@@ -60,6 +54,24 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup) {
         return null;
+    }
+
+    @Override
+    public List<Study> findStudiesByStudent(UserAccount student) throws Exception {
+        if (student == null)
+            throw new Exception("Student is null");
+        if (!userAccountRepository.exists(student.getId()))
+            throw new Exception("Student not exist");
+        return studyRepository.findStudiesByDeletedIsFalseAndStudent(student);
+    }
+
+    @Override
+    public void rateCourse(Course course, Integer rateValue) throws NoSuchCourseException {
+        CourseRating courseRating = new CourseRating();
+        courseRating.setRating(rateValue);
+        courseRating.setCourse(course);
+        courseRatingRepository.save(courseRating);
+        courseService.updateCourseRating(course);
     }
 
     @Override
