@@ -9,17 +9,18 @@ import java.util.List;
 public class Topic {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "description")
     private String description;
 
-    @JoinColumn(name = "course_id")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "course_id")
     private Course course;
 
     @Column(name = "active")

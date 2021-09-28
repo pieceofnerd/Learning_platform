@@ -1,15 +1,19 @@
 package com.sytoss.model.education;
 
 
-import com.sytoss.model.course.Lesson;
-import com.sytoss.model.Lookup;
 import com.sytoss.model.Media;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -30,23 +34,21 @@ public class UserAccount {
     @Column(name = "birthday_date")
     private Date birthday;
 
-    //    @Column(name = "bio")
-//    private String bio;
     @Column(name = "email")
     private String email;
 
     @Column(name = "password")
     private char[] password;
 
+    @ManyToOne
     @JoinColumn(name = "address_id")
-    @ManyToOne(optional = false)
     private Address address;
 
     @Column(name = "last_activity")
     private Date lastActivity;
 
+    @ManyToOne
     @JoinColumn(name = "image_path")
-    @ManyToOne(optional = false)
     private Media photo;
 
     @Column(name = "deleted")
@@ -57,116 +59,5 @@ public class UserAccount {
 
     @Column(name = "updated_date")
     private Date updatedDate = new Date();
-//
-//    @OneToMany(mappedBy = "mentor")
-//    private List<Lesson> lessons;
-//
-//    @OneToMany(mappedBy = "student")
-//    private List<Study> studies;
-//
-//    @OneToMany(mappedBy = "author")
-//    private List<Homework> homeworks;
-
-    public UserAccount() {
-    }
-
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public char[] getPassword() {
-        return password;
-    }
-
-    public void setPassword(char[] password) {
-        this.password = password;
-    }
-
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Date getLastActivity() {
-        return lastActivity;
-    }
-
-    public void setLastActivity(Date lastActivity) {
-        this.lastActivity = lastActivity;
-    }
-
-    public Media getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Media photo) {
-        this.photo = photo;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
 }

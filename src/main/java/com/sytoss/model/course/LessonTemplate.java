@@ -1,9 +1,18 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.Media;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
 @Table(name = "lesson_template")
@@ -20,15 +29,15 @@ public class LessonTemplate {
     @Column(name = "description")
     private String description;
 
-    @JoinColumn(name = "media")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "media")
     private Media media;
 
     @Column(name = "duration")
     private Integer duration;
 
-    @JoinColumn(name = "topic_id")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "topic_id")
     private Topic topic;
 
     @Column(name = "active")
@@ -37,70 +46,4 @@ public class LessonTemplate {
     @OneToMany(mappedBy = "lessonTemplate")
     private List<Lesson> lessons;
 
-    public LessonTemplate() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
-    public Topic getTopic() {
-        return topic;
-    }
-
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    }
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
 }
