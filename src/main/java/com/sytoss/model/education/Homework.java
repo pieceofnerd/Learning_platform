@@ -4,12 +4,21 @@ import com.sytoss.model.communication.Feedback;
 import com.sytoss.model.course.HomeTask;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.communication.Message;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name = "homework")
@@ -43,113 +52,14 @@ public class Homework {
     @ColumnDefault(value = "1")
     private boolean isActive;
 
-    @Column(name = "created_date")
-    @CreationTimestamp
-    private Date createdDate;
-
-    @Column(name = "updated_date")
-    private Date updatedDate;
-
     @JoinColumn(name = "home_task_id")
     @ManyToOne(optional = false)
     private HomeTask homeTask;
 
+    @Column(name = "created_date")
+    private Date createdDate = new Date();
 
-    @Override
-    public String toString() {
-        return "\nHomework{" +
-                "\n  id=" + id +
-                "\n, author=" + author.getId() +
-                "\n, homeTask=" + homeTask.getId() +
-                "\n";
-    }
-
-    public List<Message> getDialog() {
-        return dialog;
-    }
-
-    public void setDialog(List<Message> dialog) {
-        this.dialog = dialog;
-    }
-
-    public UserAccount getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(UserAccount author) {
-        this.author = author;
-    }
-
-    public Lookup getHomeworkState() {
-        return homeworkState;
-    }
-
-    public void setHomeworkState(Lookup homeworkState) {
-        this.homeworkState = homeworkState;
-    }
-
-    public Date getFulfillmentDate() {
-        return fulfillmentDate;
-    }
-
-    public void setFulfillmentDate(Date fulfillmentDate) {
-        this.fulfillmentDate = fulfillmentDate;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public Feedback getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(Feedback feedback) {
-        this.feedback = feedback;
-    }
-
-    public HomeTask getHomeTask() {
-        return homeTask;
-    }
-
-    public void setHomeTask(HomeTask homeTask) {
-        this.homeTask = homeTask;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAnswerPath() {
-        return answerPath;
-    }
-
-    public void setAnswerPath(String answerPath) {
-        this.answerPath = answerPath;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
+    @Column(name = "updated_date")
+    private Date updatedDate = new Date();
 
 }

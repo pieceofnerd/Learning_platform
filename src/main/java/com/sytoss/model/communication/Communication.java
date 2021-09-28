@@ -1,10 +1,19 @@
 package com.sytoss.model.communication;
 
 import com.sytoss.model.education.UserAccount;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -17,8 +26,8 @@ public class Communication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "sender_id")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "sender_id")
     private UserAccount sender;
 
     @Column(name = "send_date")
@@ -33,60 +42,11 @@ public class Communication {
     @Column(name = "active")
     private Boolean active;
 
-    public Communication() {
-    }
 
     @Transient
     public String getDiscriminatorValue() {
         return this.getClass().getAnnotation(DiscriminatorValue.class).value();
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public UserAccount getSender() {
-        return sender;
-    }
-
-    public void setSender(UserAccount sender) {
-        this.sender = sender;
-    }
-
-    public Date getSendDate() {
-        return sendDate;
-    }
-
-    public void setSendDate(Date sendDate) {
-        this.sendDate = sendDate;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
 }

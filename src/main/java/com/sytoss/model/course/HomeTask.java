@@ -2,24 +2,34 @@ package com.sytoss.model.course;
 
 import com.sytoss.model.Media;
 import com.sytoss.model.education.Homework;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
 @Table(name = "home_task")
 public class HomeTask {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "task")
     private String task;
 
-    @JoinColumn(name = "file_path")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "file_path")
     private Media filePath;
 
     @Column(name = "deadline_date")
@@ -31,51 +41,4 @@ public class HomeTask {
     @OneToMany(mappedBy = "homeTask",fetch = FetchType.LAZY)
     private List<Homework> homeworks;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTask() {
-        return task;
-    }
-
-    public void setTask(String task) {
-        this.task = task;
-    }
-
-    public Media getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(Media filePath) {
-        this.filePath = filePath;
-    }
-
-    public Date getDeadlineDate() {
-        return deadlineDate;
-    }
-
-    public void setDeadlineDate(Date deadlineDate) {
-        this.deadlineDate = deadlineDate;
-    }
-
-    public Lesson getLesson() {
-        return lesson;
-    }
-
-    public void setLesson(Lesson lesson) {
-        this.lesson = lesson;
-    }
-
-    public List<Homework> getHomeworks() {
-        return homeworks;
-    }
-
-    public void setHomeworks(List<Homework> homeworks) {
-        this.homeworks = homeworks;
-    }
 }

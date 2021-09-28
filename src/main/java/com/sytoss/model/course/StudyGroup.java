@@ -25,8 +25,8 @@ public class StudyGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "course_id")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "course_id")
     private Course course;
 
     @Column(name = "place_number")

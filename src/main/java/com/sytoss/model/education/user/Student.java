@@ -4,19 +4,28 @@ import com.sytoss.model.Lookup;
 import com.sytoss.model.education.Homework;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @DiscriminatorValue("3")
 public class Student extends UserAccount {
 
-    @Column
+    @Column(name = "bio")
     private String bio;
 
-    @JoinColumn(name = "student_status")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "student_status")
     private Lookup studentStatus;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
@@ -24,37 +33,5 @@ public class Student extends UserAccount {
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Homework> homeworks;
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public List<Study> getStudies() {
-        return studies;
-    }
-
-    public void setStudies(List<Study> studies) {
-        this.studies = studies;
-    }
-
-    public List<Homework> getHomeworks() {
-        return homeworks;
-    }
-
-    public void setHomeworks(List<Homework> homeworks) {
-        this.homeworks = homeworks;
-    }
-
-    public Lookup getStudentStatus() {
-        return studentStatus;
-    }
-
-    public void setStudentStatus(Lookup studentStatus) {
-        this.studentStatus = studentStatus;
-    }
 
 }

@@ -2,9 +2,18 @@ package com.sytoss.model.education.user;
 
 import com.sytoss.model.course.Lesson;
 import com.sytoss.model.education.UserAccount;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @DiscriminatorValue("2")
@@ -15,22 +24,5 @@ public class Mentor extends UserAccount {
 
     @OneToMany(mappedBy = "mentor", fetch = FetchType.LAZY)
     private List<Lesson> lessons;
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
-
 
 }

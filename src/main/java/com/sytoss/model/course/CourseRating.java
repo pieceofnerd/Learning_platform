@@ -7,10 +7,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
 
 @Entity
 @Table(name = "course_rating")
@@ -21,12 +21,11 @@ public class CourseRating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "course_id")
     @ManyToOne(optional = false)
+    @JoinColumn(name = "course_id")
     private Course course;
 
     @Column(name = "rating")
     private Integer rating;
-
 
 }

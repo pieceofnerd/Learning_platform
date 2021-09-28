@@ -17,18 +17,23 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
+
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"com.sytoss.repository"})
-@ComponentScan(basePackages = {"com.sytoss.service", "com.sytoss.mapper","com.sytoss.controller","com.sytoss.util"})
+@ComponentScan(basePackages = {
+        "com.sytoss.service"
+        , "com.sytoss.mapper"
+        , "com.sytoss.controller"
+        , "com.sytoss.util"})
 @EnableTransactionManagement
 public class Config {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://192.168.21.125:3306/learning_platform?serverTimezone=UTC");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/learning_platform?serverTimezone=UTC");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
         return dataSource;

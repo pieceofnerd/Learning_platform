@@ -80,7 +80,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     private Purchase createPurchase(Student student, StudyGroup studyGroup) {
-        Purchase purchase = new Purchase(student, studyGroup);
+        Purchase purchase = new Purchase();
+        purchase.setStudent(student);
+        purchase.setStudyGroup(studyGroup);
         purchase.setPurchaseStatus(lookupRepository.findOne(PurchaseStatus.PAYED.getValue()));
         Price price;
         if (Objects.equals(student.getStudentStatus().getId(), StudentStatus.NEWBIE.getValue())) {
