@@ -32,13 +32,19 @@ public class Course {
     private String description;
 
     @JoinColumn(name = "course_photo_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(
+            optional = false,
+            cascade = {CascadeType.ALL}
+    )
     private Media coursePhoto;
 
     @Column(name = "recommended_literature")
     private String recommendedLiterature;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(
+            optional = false,
+            cascade = {CascadeType.ALL}
+    )
     @JoinColumn(name = "certificate_template_id")
     private Media certificateTemplate;
 
@@ -52,13 +58,23 @@ public class Course {
     @ManyToOne(optional = false)
     private Category category;
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "course",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL}
+    )
     private List<Topic> topics;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(
+            mappedBy = "course",
+            cascade = {CascadeType.ALL}
+    )
     private List<Price> prices;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(
+            mappedBy = "course",
+            cascade = {CascadeType.ALL}
+    )
     private List<CourseRating> courseRatings;
 
     @Column(name = "created_date")

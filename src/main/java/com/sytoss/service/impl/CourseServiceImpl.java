@@ -2,8 +2,8 @@ package com.sytoss.service.impl;
 
 import com.sytoss.exception.*;
 import com.sytoss.model.Lookup;
-import com.sytoss.model.PriceType;
-import com.sytoss.model.StudentStatus;
+import com.sytoss.model.enums.PriceType;
+import com.sytoss.model.enums.StudentStatus;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.CourseRating;
 import com.sytoss.model.course.LessonTemplate;

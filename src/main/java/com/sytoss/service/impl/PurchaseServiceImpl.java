@@ -1,13 +1,12 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchPurchaseException;
-import com.sytoss.model.PriceType;
-import com.sytoss.model.PurchaseStatus;
-import com.sytoss.model.StudentStatus;
+import com.sytoss.model.enums.PriceType;
+import com.sytoss.model.enums.PurchaseStatus;
+import com.sytoss.model.enums.StudentStatus;
 import com.sytoss.model.course.Price;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
-import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.course.PriceRepository;
@@ -15,14 +14,10 @@ import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.repository.education.PurchaseRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.PurchaseService;
-import com.sytoss.service.StudentService;
-import com.sytoss.service.StudyGroupService;
-import com.sytoss.service.StudyService;
 import com.sytoss.web.dto.filter.FilterPurchaseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
