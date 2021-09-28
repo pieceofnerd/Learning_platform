@@ -29,7 +29,7 @@ public class Topic {
     @OneToMany(
             mappedBy = "topic",
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.REMOVE,CascadeType.REFRESH}
+            cascade = {CascadeType.ALL}
     )
     private List<LessonTemplate> lessonTemplates;
 

@@ -1,7 +1,7 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchLessonException;
-import com.sytoss.model.HomeworkStatus;
+
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.course.Lesson;
@@ -10,6 +10,7 @@ import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Homework;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.user.Mentor;
+import com.sytoss.model.enums.HomeworkStatus;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.course.LessonRepository;

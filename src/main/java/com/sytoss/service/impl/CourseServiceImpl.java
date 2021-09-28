@@ -127,34 +127,34 @@ public class CourseServiceImpl implements CourseService {
         logger.info("Lesson template {} was removed from {} topic", lessonTemplate.getName(), lessonTemplate.getTopic().getName());
     }
 
-    @Override
-    public void addTopic(Topic topic) throws NoSuchCourseException {
-        if (topic == null) {
-            logger.error("Topic must not be null");
-            return;
-        }
-        checkCourseExistence(topic.getCourse());
-        topicRepository.save(topic);
-        logger.info("Topic {} was added to {} course", topic.getName(), topic.getCourse().getName());
-    }
-
-    @Override
-    public void addLessonTemplate(LessonTemplate lessonTemplate) throws NoSuchTopicException {
-        if (lessonTemplate == null) {
-            logger.error("Lesson template must not be null");
-            throw new NullPointerException();
-        }
-
-        Topic topic = topicRepository.findOne(lessonTemplate.getTopic().getId());
-
-        if (topic == null) {
-            logger.error("Couldn't find topic with id: {}", lessonTemplate.getTopic().getId());
-            throw new NoSuchTopicException();
-        }
-
-        lessonTemplateRepository.save(lessonTemplate);
-        logger.info("Lesson template {} was added to {} topic", lessonTemplate.getName(), lessonTemplate.getTopic().getName());
-    }
+//    @Override
+//    public void addTopic(Topic topic) throws NoSuchCourseException {
+//        if (topic == null) {
+//            logger.error("Topic must not be null");
+//            return;
+//        }
+//        checkCourseExistence(topic.getCourse());
+//        topicRepository.save(topic);
+//        logger.info("Topic {} was added to {} course", topic.getName(), topic.getCourse().getName());
+//    }
+//
+//    @Override
+//    public void addLessonTemplate(LessonTemplate lessonTemplate) throws NoSuchTopicException {
+//        if (lessonTemplate == null) {
+//            logger.error("Lesson template must not be null");
+//            throw new NullPointerException();
+//        }
+//
+//        Topic topic = topicRepository.findOne(lessonTemplate.getTopic().getId());
+//
+//        if (topic == null) {
+//            logger.error("Couldn't find topic with id: {}", lessonTemplate.getTopic().getId());
+//            throw new NoSuchTopicException();
+//        }
+//
+//        lessonTemplateRepository.save(lessonTemplate);
+//        logger.info("Lesson template {} was added to {} topic", lessonTemplate.getName(), lessonTemplate.getTopic().getName());
+//    }
 
     @Override
     public List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException {

@@ -226,7 +226,7 @@ public class LessonMenu {
                     default:
                         return;
                 }
-                    printComments(comments);
+                printComments(comments);
                 break;
             }
         }
@@ -301,7 +301,7 @@ public class LessonMenu {
                 "3. Delete lesson",
                 "4. Hide all comments",
                 "5. Find lesson by filter",
-                "6 Find comments by filter"
+                "6. Find comments by filter"
         );
     }
 
