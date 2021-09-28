@@ -9,6 +9,7 @@ import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.web.dto.PurchaseDTO;
+import com.sytoss.web.dto.StudyDTO;
 import com.sytoss.web.dto.StudyGroupDTO;
 import com.sytoss.web.dto.UserAccountDTO;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
@@ -39,7 +40,8 @@ public class StudentMenu {
                 "3. Join StudyGroup",
                 "4. Leave StudyGroup",
                 "5. Return course",
-                "6. Find all purchase by student"
+                "6. Find all purchase by student",
+                "7. Find all studies by student"
         );
 
         long studentId;
@@ -122,6 +124,22 @@ public class StudentMenu {
                     printField("purchase date", p.getPurchaseDate());
                     printField("purchase status", p.getPurchaseStatus().getValue());
                     printField("updated date", p.getUpdatedDate());
+                }
+                break;
+            case 7:
+                studentId = scanInt("Write student id - ");
+                student = (Student) userAccountRepository.findOne(studentId);
+                userAccountDTO = userAccountMapper.toDTO(student);
+                for (StudyDTO s : studentController.findStudiesByStudent(userAccountDTO)) {
+                    printClassName(s.getClass().getSimpleName());
+                    printField("id", s.getId());
+                    printField("student", s.getStudent().getId());
+                    printField("study group", s.getStudyGroup().getId());
+                    printField("progress", s.getProgress());
+                    printField("assessment", s.getAssessment());
+                    printField("deleted", s.isDeleted());
+                    printField("createdDate", s.getCreatedDate());
+                    printField("updatedDate", s.getUpdatedDate());
                 }
                 break;
         }

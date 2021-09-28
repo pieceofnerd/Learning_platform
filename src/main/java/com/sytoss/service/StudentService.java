@@ -4,6 +4,7 @@ import com.sytoss.exception.NoSuchCourseException;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
+import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface StudentService {
 
-    void rateCourse( Course course, Integer rateValue) throws NoSuchCourseException;
+    void rateCourse(Course course, Integer rateValue) throws NoSuchCourseException;
 
 
     //TODO
@@ -20,6 +21,8 @@ public interface StudentService {
 
     //TODO
     List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup);
+
+    List<Study> findStudiesByStudent(UserAccount student) throws Exception;
 
     List<Purchase> findPurchaseByStudent(UserAccount student);
 
