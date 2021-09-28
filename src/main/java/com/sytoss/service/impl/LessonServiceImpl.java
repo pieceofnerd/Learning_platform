@@ -1,16 +1,21 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchLessonException;
+import com.sytoss.model.HomeworkStatus;
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.course.Lesson;
 import com.sytoss.model.course.LessonTemplate;
 import com.sytoss.model.course.StudyGroup;
+import com.sytoss.model.education.Homework;
+import com.sytoss.model.education.Study;
 import com.sytoss.model.education.user.Mentor;
+import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.communication.CommunicationRepository;
 import com.sytoss.repository.course.LessonRepository;
 import com.sytoss.repository.course.LessonTemplateRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
+import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.LessonService;
 import com.sytoss.web.dto.filter.FilterCommunicationDTO;
@@ -34,32 +39,43 @@ public class LessonServiceImpl implements LessonService {
 
     private final StudyGroupRepository studyGroupRepository;
 
+    private final HomeworkRepository homeworkRepository;
+
     private final CommunicationRepository communicationRepository;
 
     private final LessonTemplateRepository lessonTemplateRepository;
+
+    private final LookupRepository lookupRepository;
 
     private final UserAccountRepository userAccountRepository;
 
     @Autowired
     public LessonServiceImpl(LessonRepository lessonRepository, StudyGroupRepository studyGroupRepository,
-                             CommunicationRepository communicationRepository, LessonTemplateRepository lessonTemplateRepository,
+                             HomeworkRepository homeworkRepository, CommunicationRepository communicationRepository,
+                             LessonTemplateRepository lessonTemplateRepository, LookupRepository lookupRepository,
                              UserAccountRepository userAccountRepository) {
         this.lessonRepository = lessonRepository;
         this.studyGroupRepository = studyGroupRepository;
+        this.homeworkRepository = homeworkRepository;
         this.communicationRepository = communicationRepository;
         this.lessonTemplateRepository = lessonTemplateRepository;
+        this.lookupRepository = lookupRepository;
         this.userAccountRepository = userAccountRepository;
     }
 
     @Override
-    public void createLesson(Lesson lesson) {
-        saveLesson(lesson);
+    public Lesson createLesson(Lesson lesson) {
+        Lesson savedLesson = saveLesson(lesson);
+        createHomeworks(lesson);
         logger.info("Lesson {} was created", lesson.toString());
+        return savedLesson;
     }
+
 
     @Override
     public void updateLesson(Lesson lesson) throws NoSuchLessonException {
         checkExistence(lesson);
+        //homeTaskRepository.save(lesson.getHomeTask());
         saveLesson(lesson);
         logger.info("Lesson {} was updated", lesson.getId());
     }
@@ -95,7 +111,8 @@ public class LessonServiceImpl implements LessonService {
         switch (filter.getFilter()) {
             case TIME_PERIOD: {
                 StudyGroup studyGroup = studyGroupRepository.findOne(filter.getStudyGroupId());
-                return lessonRepository.findLessonsByTimePeriodAndStudyGroupAndActiveIsTrue(studyGroup, filter.getStartTimePeriod(), filter.getEndDatePeriod());
+                List<Lesson> lessons= lessonRepository.findLessonsByTimePeriodAndStudyGroupAndActiveIsTrue(studyGroup, filter.getStartTimePeriod(), filter.getEndDatePeriod());
+                return lessons;
             }
             case FUTURE_LESSONS_FOR_STUDY_GROUP: {
                 StudyGroup studyGroup = studyGroupRepository.findOne(filter.getStudyGroupId());
@@ -124,11 +141,11 @@ public class LessonServiceImpl implements LessonService {
         List<Communication> communications;
         switch (filter.getFilter()) {
             case OLDEST:
-                communications = communicationRepository.findByOrderBySendDate();
+                communications = communicationRepository.findByLessonIdOrderBySendDate(filter.getLessonId());
                 break;
 
             case NEWEST:
-                communications = communicationRepository.findByOrderBySendDateDesc();
+                communications = communicationRepository.findByLessonIdOrderBySendDateDesc(filter.getLessonId());
                 break;
             default:
                 return null;
@@ -141,11 +158,22 @@ public class LessonServiceImpl implements LessonService {
         return comments;
     }
 
-    private void saveLesson(Lesson lesson) {
+    private Lesson saveLesson(Lesson lesson) {
         if (lesson == null) {
             logger.error("Lesson must not be null");
             throw new NullPointerException();
         }
-        lessonRepository.save(lesson);
+        return lessonRepository.save(lesson);
+    }
+
+    private void createHomeworks(Lesson lesson) {
+        StudyGroup studyGroup = lesson.getStudyGroup();
+        for (Study study : studyGroup.getStudies()) {
+            Homework homework = new Homework();
+            homework.setHomeworkState(lookupRepository.findOne(HomeworkStatus.CREATED.getValue()));
+            homework.setAuthor(study.getStudent());
+            homework.setHomeTask(lesson.getHomeTask());
+            homeworkRepository.save(homework);
+        }
     }
 }

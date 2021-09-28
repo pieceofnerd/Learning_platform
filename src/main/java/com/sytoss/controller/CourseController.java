@@ -60,9 +60,13 @@ public class CourseController {
         courseService.removeTopic(topic);
     }
 
-    public void removeLessonTemplate(LessonTemplateDTO lessonTemplateDTO) throws NoSuchLessonTemplateException {
+    public void removeLessonTemplate(LessonTemplateDTO lessonTemplateDTO) {
         final LessonTemplate lessonTemplate = lessonTemplateMapper.toEntity(lessonTemplateDTO);
-        courseService.removeLessonTemplate (lessonTemplate);
+        try {
+            courseService.removeLessonTemplate(lessonTemplate);
+        } catch (NoSuchLessonTemplateException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<CourseDTO> getAll() {

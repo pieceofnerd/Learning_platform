@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Getter
@@ -15,11 +16,20 @@ import java.util.Date;
 @AllArgsConstructor
 public class LessonDTO {
     private Long id;
+
     private UserAccountDTO mentor;
+
     private HomeTaskDTO homeTask;
+
     private LessonTemplateDTO lessonTemplate;
+
     private StudyGroupDTO studyGroup;
+
+    private List<CommunicationDTO> comments;
+
     private Date lessonDate;
+
     private Date createdDate;
+
     private Date updatedDate;
 }

@@ -2,6 +2,7 @@ package com.sytoss.controller;
 
 import com.sytoss.exception.NoSuchLessonException;
 import com.sytoss.mapper.CommunicationMapper;
+import com.sytoss.mapper.HomeTaskMapper;
 import com.sytoss.mapper.LessonMapper;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.course.Lesson;
@@ -10,6 +11,7 @@ import com.sytoss.web.dto.CommunicationDTO;
 import com.sytoss.web.dto.LessonDTO;
 import com.sytoss.web.dto.filter.FilterCommunicationDTO;
 import com.sytoss.web.dto.filter.FilterLessonDTO;
+import com.sytoss.web.dto.save.HomeTaskSaveDTO;
 import com.sytoss.web.dto.save.LessonSaveDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -23,15 +25,21 @@ public class LessonController {
     private final LessonService lessonService;
     private final LessonMapper lessonMapper;
     private final CommunicationMapper communicationMapper;
+    private final HomeTaskMapper homeTaskMapper;
 
-    public void createLesson(LessonSaveDTO lessonSaveDTO) {
-        final Lesson lesson = lessonMapper.toEntity(lessonSaveDTO);
+    public LessonDTO createLesson(LessonSaveDTO lessonSaveDTO) {
         try {
-            lessonService.createLesson(lesson);
-        } catch (NoSuchLessonException e) {
-            e.printStackTrace();
+            Lesson lesson = lessonMapper.toEntity(lessonSaveDTO);
+            if (lesson != null) {
+                lesson = lessonService.createLesson(lesson);
+                return lessonMapper.toDTO(lesson);
+            }
+        } catch (RuntimeException e) {
+            System.out.println("Something went wrong. Please, try again");
         }
+        return null;
     }
+
 
     public void updateLesson(LessonDTO lessonDTO) {
         final Lesson lesson = lessonMapper.toEntity(lessonDTO);

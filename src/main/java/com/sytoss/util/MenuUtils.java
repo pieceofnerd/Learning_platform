@@ -1,6 +1,10 @@
 package com.sytoss.util;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class MenuUtils {
@@ -14,10 +18,20 @@ public class MenuUtils {
         return scanner.nextInt();
     }
 
-    public static int scanInt(){
+    public static int scanInt() {
         System.out.println(colors.ANSI_PURPLE + "----- INPUT INT -----");
         lastScanInteger = true;
         return scanner.nextInt();
+    }
+
+    public static Date scanDate() throws ParseException {
+        System.out.println(colors.ANSI_PURPLE + "----- INPUT DATE IN FORMAT DD/MM/YYYY-----");
+        if (lastScanInteger)
+            scanner.nextLine();// java just ignore first Scanner.nextLine() after Scanner.nextInt();
+        lastScanInteger = false;
+        String date = scanner.nextLine();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.parse(date);
     }
 
     public static String scanLine(String text) {
@@ -42,10 +56,12 @@ public class MenuUtils {
     }
 
     public static void printField(String field, String value) {
-        System.out.println(colors.ANSI_GREEN + field + " : "+colors.ANSI_CYAN + value + colors.ANSI_RESET);
+        System.out.println(colors.ANSI_GREEN + field + " : " + colors.ANSI_CYAN + value + colors.ANSI_RESET);
 
-    }public static void printField(String field, Object value) {
-        System.out.println(colors.ANSI_GREEN + field + " : "+colors.ANSI_CYAN + value + colors.ANSI_RESET);
+    }
+
+    public static void printField(String field, Object value) {
+        System.out.println(colors.ANSI_GREEN + field + " : " + colors.ANSI_CYAN + value + colors.ANSI_RESET);
     }
 
     public static class colors {
