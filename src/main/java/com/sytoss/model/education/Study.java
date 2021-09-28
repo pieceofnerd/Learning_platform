@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -41,7 +40,7 @@ public class Study {
     private Double assessment;
 
     @ManyToOne
-    @Column(name = "certificate_id")
+    @JoinColumn(name = "certificate_id")
     private Media certificate;
 
     @Column(name = "deleted")

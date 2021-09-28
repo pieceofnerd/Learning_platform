@@ -20,11 +20,11 @@ public interface CommunicationRepository extends JpaRepository<Communication,Lon
     @Query("select f from Feedback f inner join Homework  h where h.homeTask=?1")
     List<Feedback> findFeedBacksByHomeTask(HomeTask homeTask);
 
-    @Query("select c from Comment c where c.active=true order by c.sendDate")
-    List<Communication> findByOrderBySendDate();
+    @Query("select c from Comment c where c.active=true  and c.lesson.id=?1 order by c.sendDate")
+    List<Communication> findByLessonIdOrderBySendDate(Long lessonId);
 
-    @Query("select c from Comment c where c.active=true  order by c.sendDate DESC")
-    List<Communication> findByOrderBySendDateDesc();
+    @Query("select c from Comment c where c.active=true and c.lesson.id=?1 order by c.sendDate DESC")
+    List<Communication> findByLessonIdOrderBySendDateDesc(Long lessonId);
 
 
 

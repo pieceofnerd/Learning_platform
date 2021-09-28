@@ -30,7 +30,11 @@ public class StudyController {
     public void saveStudy(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) throws Exception {
         final UserAccount student = userAccountMapper.toEntity(studentDTO);
         final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
-        studyService.saveStudy(student, studyGroup);
+        try {
+            studyService.saveStudy(student, studyGroup);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteStudy(StudyDTO studyDTO) {

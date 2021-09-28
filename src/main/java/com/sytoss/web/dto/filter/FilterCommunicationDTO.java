@@ -11,6 +11,8 @@ public class FilterCommunicationDTO {
 
     private Filter filter;
 
+    private Long lessonId;
+
     private Date startTimePeriod;
 
     private Date endTimePeriod;

@@ -13,11 +13,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PromotionDTO {
+
     private Long id;
+
     private String name;
+
     private Integer percent;
+
     private Date startDate;
+
     private Date endDate;
+
     private LookupDTO promotionState;
+
     private List<PriceDTO> prices;
 }

@@ -11,17 +11,19 @@ public class Menu {
 
     private final StudyMenu studyMenu;
     private final StudyGroupMenu studyGroupMenu;
-    private final StudentMenu studentMenu;
+    private final PurchaseMenu purchaseMenu;
+    private final LessonMenu lessonMenu;
 
 
     public void start() throws Exception {
         while (true) {
             MenuUtils.printMenu(
-                    "What you want to see?",
+                    "What do you want to see?",
                     "-1. Quit",
                     "1. Go to Study menu",
                     "2. Go to StudyGroup menu",
-                    "3. Go to Student menu"
+                    "3. Go to Purchase menu",
+                    "4. Go to Lesson menu"
             );
             switch (scanInt()) {
                 case -1:
@@ -33,7 +35,11 @@ public class Menu {
                     studyGroupMenu.start();
                     break;
                 case 3:
-                    studentMenu.start();
+                    //StudentMenu.start();
+                    break;
+
+                case 4:
+                    lessonMenu.start();
                     break;
             }
         }

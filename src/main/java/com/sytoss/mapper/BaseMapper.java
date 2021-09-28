@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -50,7 +51,7 @@ public abstract class BaseMapper<E, D> implements Mapper<E, D> {
 
     @Override
     public List<D> toListDTO(List<E> eList) {
-        if (eList.isEmpty()) return null;
+        if (eList.isEmpty()) return Collections.emptyList();
         List<D> dList = new ArrayList<>();
         for (E e :
                 eList) {
