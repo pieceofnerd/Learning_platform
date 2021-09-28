@@ -40,7 +40,11 @@ public class Promotion {
     @JoinColumn(name = "promotion_state_id")
     private Lookup promotionState;
 
-    @OneToMany(mappedBy = "promotion",fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "promotion",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.REFRESH}
+    )
     private List<Price> prices;
 
 }

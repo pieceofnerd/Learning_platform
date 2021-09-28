@@ -26,7 +26,11 @@ public class Topic {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "topic",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.REMOVE,CascadeType.REFRESH}
+    )
     private List<LessonTemplate> lessonTemplates;
 
     public Topic() {

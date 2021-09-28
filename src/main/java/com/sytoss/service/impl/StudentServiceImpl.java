@@ -1,7 +1,7 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchCourseException;
-import com.sytoss.model.PurchaseStatus;
+import com.sytoss.model.enums.PurchaseStatus;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.CourseRating;
 import com.sytoss.model.course.StudyGroup;

@@ -1,4 +1,4 @@
-package com.sytoss.model;
+package com.sytoss.model.enums;
 
 public enum StudentStatus {
 
