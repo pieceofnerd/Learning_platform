@@ -42,10 +42,18 @@ public class Homework {
     @Column(name = "fulfillment_date")
     private Date fulfillmentDate;
 
-    @OneToMany(mappedBy = "homework", fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "homework",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.REMOVE, CascadeType.REFRESH}
+    )
     private List<Message> dialog;
 
-    @OneToOne(mappedBy = "homework", fetch = FetchType.LAZY)
+    @OneToOne(
+            mappedBy = "homework",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.REMOVE, CascadeType.REFRESH}
+    )
     private Feedback feedback;
 
     @Column(name = "active")

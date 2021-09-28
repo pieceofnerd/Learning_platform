@@ -1,7 +1,7 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchStudyException;
-import com.sytoss.model.HomeworkStatus;
+import com.sytoss.model.enums.HomeworkStatus;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.course.Lesson;
 import com.sytoss.model.course.StudyGroup;
@@ -13,7 +13,6 @@ import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.repository.education.HomeworkRepository;
 import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.repository.education.UserAccountRepository;
-import com.sytoss.service.StudyGroupService;
 import com.sytoss.service.StudyService;
 import com.sytoss.web.dto.filter.FilterStudyDTO;
 import org.slf4j.Logger;
@@ -36,8 +35,6 @@ public class StudyServiceImpl implements StudyService {
     private final UserAccountRepository userAccountRepository;
 
     private final StudyGroupRepository studyGroupRepository;
-
-//    private final StudyGroupService studyGroupService;
 
     private final HomeworkRepository homeworkRepository;
 
@@ -67,10 +64,7 @@ public class StudyServiceImpl implements StudyService {
         study.setStudent(student);
         study.setStudyGroup(studyGroup);
 
-
         studyRepository.save(study);
-
-//        studyGroupService.updateFreePlaceNumber(studyGroup);
     }
 
     @Override
@@ -89,7 +83,6 @@ public class StudyServiceImpl implements StudyService {
 
         studyRepository.save(study);
 
-//        studyGroupService.updateFreePlaceNumber(study.getStudyGroup());
     }
 
     @Override
@@ -141,6 +134,9 @@ public class StudyServiceImpl implements StudyService {
         }
     }
 
+
+    //unnecessary method
+    //only for testing
     @Override
     public Study findStudyById(Long id) throws Exception {
         if (!studyRepository.exists(id))

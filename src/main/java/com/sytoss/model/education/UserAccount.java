@@ -40,7 +40,7 @@ public class UserAccount {
     @Column(name = "password")
     private char[] password;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 

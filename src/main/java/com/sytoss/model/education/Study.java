@@ -41,7 +41,7 @@ public class Study {
     private Double assessment;
 
     @ManyToOne
-    @Column(name = "certificate_id")
+    @JoinColumn(name = "certificate_id")
     private Media certificate;
 
     @Column(name = "deleted")
