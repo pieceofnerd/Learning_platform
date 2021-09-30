@@ -185,14 +185,14 @@ public class CourseMenu {
                 setCourseDescription(courseDTO);
                 break;
             }
-            case 5:{
+            case 5: {
                 MediaSaveDTO certificateTemplate = addMedia("Please enter a certificate template: ");
                 //courseDTO.setCertificateTemplate(certificateTemplate);
             }
-            case 6:{
+            case 6: {
 
             }
-            case 7:{
+            case 7: {
 
             }
         }
