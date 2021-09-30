@@ -22,10 +22,6 @@ public interface CourseService {
 
     void updateCourseRating(Course course) throws NoSuchCourseException;
 
-    void addTopic( Topic topic) throws NoSuchCourseException;
-
-    void addLessonTemplate( LessonTemplate lessonTemplate) throws NoSuchTopicException;
-
     List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException;
 
     List<Course> getAll();

@@ -13,6 +13,6 @@ public class MediaDTO {
 
     private Long id;
 
-    private String path;
+    private String mediaPath;
 
 }

@@ -63,6 +63,6 @@ class StudyServiceTest {
      void updateProgress() throws Exception {
        Student userAccount = (Student) userAccountRepository.findOne(1L);
        StudyGroup studyGroup = studyGroupRepository.findOne(1L);
-        studyService.updateAssessment(userAccount,studyGroup);
+        studyService.updateProgress(userAccount,studyGroup);
     }
 }

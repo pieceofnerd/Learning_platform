@@ -33,7 +33,6 @@ public class Course {
 
     @JoinColumn(name = "course_photo_id")
     @ManyToOne(
-            optional = false,
             cascade = {CascadeType.ALL}
     )
     private Media coursePhoto;
@@ -42,7 +41,6 @@ public class Course {
     private String recommendedLiterature;
 
     @ManyToOne(
-            optional = false,
             cascade = {CascadeType.ALL}
     )
     @JoinColumn(name = "certificate_template_id")
@@ -57,6 +55,7 @@ public class Course {
     @JoinColumn(name = "category_id")
     @ManyToOne(optional = false)
     private Category category;
+
 
     @OneToMany(
             mappedBy = "course",
@@ -83,6 +82,19 @@ public class Course {
     @Column(name = "updated_date")
     private Date updatedDate = new Date();
 
+    public void setPrices(List<Price> prices) {
+        this.prices = prices;
+        for (Price price : this.prices) {
+            price.setCourse(this);
+        }
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+        for (Topic topic : this.topics) {
+            topic.setCourse(this);
+        }
+    }
 
     public List<Topic> getActiveTopics() {
         List<Topic> activeTopics = new ArrayList<>();
