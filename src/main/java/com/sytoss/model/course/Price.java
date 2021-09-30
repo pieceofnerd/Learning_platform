@@ -26,7 +26,7 @@ public class Price {
     private Long id;
 
     @JoinColumn(name = "course_id")
-    @ManyToOne(optional = false)
+    @ManyToOne()
     private Course course;
 
     @JoinColumn(name = "price_type")

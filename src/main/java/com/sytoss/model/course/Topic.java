@@ -19,7 +19,7 @@ public class Topic {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id")
     private Course course;
 
@@ -92,5 +92,8 @@ public class Topic {
 
     public void setLessonTemplates(List<LessonTemplate> lessonTemplates) {
         this.lessonTemplates = lessonTemplates;
+        for (LessonTemplate lessonTemplate : this.lessonTemplates) {
+            lessonTemplate.setTopic(this);
+        }
     }
 }

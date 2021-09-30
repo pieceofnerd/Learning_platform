@@ -13,6 +13,7 @@ public class Menu {
     private final StudyGroupMenu studyGroupMenu;
     private final PurchaseMenu purchaseMenu;
     private final LessonMenu lessonMenu;
+    private final CourseMenu courseMenu;
 
 
     public void start() throws Exception {
@@ -23,7 +24,8 @@ public class Menu {
                     "1. Go to Study menu",
                     "2. Go to StudyGroup menu",
                     "3. Go to Purchase menu",
-                    "4. Go to Lesson menu"
+                    "4. Go to Lesson menu",
+                    "5. Go to Course menu"
             );
             switch (scanInt()) {
                 case -1:
@@ -40,6 +42,10 @@ public class Menu {
 
                 case 4:
                     lessonMenu.start();
+                    break;
+
+                case 5:
+                    courseMenu.start();
                     break;
             }
         }

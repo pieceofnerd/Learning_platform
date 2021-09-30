@@ -29,14 +29,14 @@ public class LessonTemplate {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "media")
     private Media media;
 
     @Column(name = "duration")
     private Integer duration;
 
-    @ManyToOne(optional = false)
+    @ManyToOne()
     @JoinColumn(name = "topic_id")
     private Topic topic;
 

@@ -126,7 +126,7 @@ public class LessonMenu {
                 }
                 LessonDTO lessonDTO = lessonMapper.toDTO(lessonRepository.findOne(lessonId));
                 MediaDTO mediaDTO = lessonDTO.getHomeTask().getFilePath();
-                mediaDTO.setPath(path);
+                mediaDTO.setMediaPath(path);
 
                 HomeTaskDTO updateHomeTaskDTO = new HomeTaskDTO(lessonDTO.getHomeTask().getId(), task,
                         mediaDTO, deadline);
