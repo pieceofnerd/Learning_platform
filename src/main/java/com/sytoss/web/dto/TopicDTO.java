@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,6 +19,8 @@ public class TopicDTO {
     private String description;
 
     private CourseDTO course;
+
+    private List<LessonTemplateDTO> lessonTemplates;
 
     private Boolean active;
 }

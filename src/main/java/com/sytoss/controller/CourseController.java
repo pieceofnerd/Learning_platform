@@ -13,6 +13,7 @@ import com.sytoss.web.dto.LessonTemplateDTO;
 import com.sytoss.web.dto.TopicDTO;
 import com.sytoss.web.dto.filter.FilterCourseDTO;
 import com.sytoss.web.dto.save.CourseSaveDTO;
+import com.sytoss.web.dto.update.CourseUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +38,7 @@ public class CourseController {
         }
     }
 
-    public void updateCourse(CourseDTO courseDTO) {
+    public void updateCourse(CourseUpdateDTO courseDTO) {
         final Course course = courseMapper.toEntity(courseDTO);
         try {
             courseService.updateCourse(course);

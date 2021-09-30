@@ -9,10 +9,9 @@ import com.sytoss.model.enums.PriceType;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.course.CategoryRepository;
 import com.sytoss.repository.course.CourseRepository;
-import com.sytoss.web.dto.CategoryDTO;
-import com.sytoss.web.dto.CourseDTO;
-import com.sytoss.web.dto.LookupDTO;
+import com.sytoss.web.dto.*;
 import com.sytoss.web.dto.save.*;
+import com.sytoss.web.dto.update.CourseUpdateDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Transactional
 public class CourseMenu {
 
     private final CourseController courseController;
@@ -54,8 +52,15 @@ public class CourseMenu {
         menu();
         switch (MenuUtils.scanInt()) {
             case 1: {
-                MediaSaveDTO coursePhoto = addMedia("Please enter a photo path: ");
-                MediaSaveDTO certificateTemplate = addMedia("Please enter a certificate template: ");
+
+                CourseSaveDTO courseDTO = new CourseSaveDTO();
+                setCourseName(courseDTO);
+                setRecommendedLiterature(courseDTO);
+                setCategoryDTO(courseDTO);
+                setCourseDescription(courseDTO);
+                courseDTO.setCoursePhoto(addMedia("Please add course photo: "));
+                courseDTO.setCertificateTemplate(addMedia("Please add certificate template: "));
+
                 List<TopicSaveDTO> topics = new ArrayList<>();
                 List<LessonTemplateSaveDTO> lessons = new ArrayList<>();
                 boolean addTopic = true;
@@ -89,13 +94,9 @@ public class CourseMenu {
                 prices.add(new PriceSaveDTO(regular, new BigDecimal(MenuUtils.scanLine("Please, input regular price: ")), null));
                 prices.add(new PriceSaveDTO(premium, new BigDecimal(MenuUtils.scanLine("Please, input premium price: ")), null));
 
-                CourseDTO courseDTO = new CourseDTO();
-                setCourseName(courseDTO);
-                setRecommendedLiterature(courseDTO);
-                setCategoryDTO(courseDTO);
-                setCourseDescription(courseDTO);
-//                courseController.createCourse(new CourseSaveDTO(name, recommendedLiterature, description, categoryDTO,
-//                        addMedia("Please add certificate template: "), addMedia("Please add course photo: "), topics, prices));
+                courseDTO.setTopics(topics);
+                courseDTO.setPrices(prices);
+                courseController.createCourse(courseDTO);
                 break;
             }
 
@@ -103,17 +104,31 @@ public class CourseMenu {
             case 2: {
                 try {
                     CourseDTO courseDTO = findCourseDto();
-
+                    CourseUpdateDTO courseUpdateDTO = new CourseUpdateDTO();
+                    courseUpdateDTO.setCategory(courseDTO.getCategory());
+                    courseUpdateDTO.setDescription(courseDTO.getDescription());
+                    courseUpdateDTO.setActive(courseDTO.getActive());
+                    courseUpdateDTO.setTopics(courseDTO.getTopics());
+                    courseUpdateDTO.setName(courseDTO.getName());
+                    courseUpdateDTO.setId(courseDTO.getId());
+                    courseUpdateDTO.setRecommendedLiterature(courseDTO.getRecommendedLiterature());
+                    courseUpdateDTO.setPrices(courseDTO.getPrices());
                     boolean flag = true;
                     while (flag) {
                         updatedMenu();
                         int option = MenuUtils.scanInt("Please, choose field that you want to update: ");
-
+                        updateCourseDTO(courseUpdateDTO, option);
+                        int update = MenuUtils.scanInt("Do you want update other fields? \n1.Yes\n Press any key");
+                        if(update!=1){
+                            flag=false;
+                        }
                     }
+                    courseController.updateCourse(courseUpdateDTO);
                 } catch (Exception e) {
                     System.out.println("There is no such course in our system");
                     return;
                 }
+                break;
             }
 
             case 3: {
@@ -167,7 +182,7 @@ public class CourseMenu {
         );
     }
 
-    private CourseDTO updateCourseDTO(CourseDTO courseDTO, int option) {
+    private CourseUpdateDTO updateCourseDTO(CourseUpdateDTO courseDTO, int option) {
         switch (option) {
             case 1: {
                 setCourseName(courseDTO);
@@ -186,38 +201,127 @@ public class CourseMenu {
                 break;
             }
             case 5: {
-                MediaSaveDTO certificateTemplate = addMedia("Please enter a certificate template: ");
-                //courseDTO.setCertificateTemplate(certificateTemplate);
+
             }
             case 6: {
 
             }
             case 7: {
+                setTopicName(courseDTO);
+                break;
+            }
+            case 8: {
+                setTopicDescription(courseDTO);
+                break;
+            }
+            case 9: {
+                setLessonTemplateName(courseDTO);
+                break;
+            }
+            case 10: {
+                setLessonTemplateDescription(courseDTO);
+                break;
+            }
+            case 11: {
 
+            }
+            case 12: {
+                setLessonTemplateDuration(courseDTO);
+                break;
             }
         }
         return courseDTO;
     }
 
-    private void setRecommendedLiterature(CourseDTO courseDTO) {
+    private void setRecommendedLiterature(CourseUpdateDTO courseDTO) {
         String recommendedLiterature = MenuUtils.scanLine("Please, input course recommended literature : ");
         courseDTO.setRecommendedLiterature(recommendedLiterature);
     }
 
-    private void setCourseName(CourseDTO courseDTO) {
+    private void setRecommendedLiterature(CourseSaveDTO courseDTO) {
+        String recommendedLiterature = MenuUtils.scanLine("Please, input course recommended literature : ");
+        courseDTO.setRecommendedLiterature(recommendedLiterature);
+    }
+
+    private void setCourseName(CourseUpdateDTO courseDTO) {
         String name = MenuUtils.scanLine("Please, input new course name: ");
         courseDTO.setName(name);
     }
 
-    private void setCourseDescription(CourseDTO courseDTO) {
-        String description = MenuUtils.scanLine("Please, input new course description: ");
-        courseDTO.setDescription(description);
+    private void setCourseName(CourseSaveDTO courseDTO) {
+        String name = MenuUtils.scanLine("Please, input  course name: ");
+        courseDTO.setName(name);
     }
 
-    private void setCategoryDTO(CourseDTO courseDTO) {
+    private void setCourseDescription(CourseUpdateDTO courseDTO) {
+        String name = MenuUtils.scanLine("Please, input new course description: ");
+        courseDTO.setDescription(name);
+    }
+
+    private void setCourseDescription(CourseSaveDTO courseDTO) {
+        String name = MenuUtils.scanLine("Please, input  course description: ");
+        courseDTO.setDescription(name);
+    }
+
+    private void setCategoryDTO(CourseUpdateDTO courseDTO) {
         long categoryId = MenuUtils.scanInt("Please, enter a category id: ");
         CategoryDTO categoryDTO = categoryMapper.toDTO(categoryRepository.findOne(categoryId));
         courseDTO.setCategory(categoryDTO);
+    }
+
+    private void setCategoryDTO(CourseSaveDTO courseDTO) {
+        long categoryId = MenuUtils.scanInt("Please, enter a category id: ");
+        CategoryDTO categoryDTO = categoryMapper.toDTO(categoryRepository.findOne(categoryId));
+        courseDTO.setCategory(categoryDTO);
+    }
+
+    private void setTopicName(CourseUpdateDTO courseDTO) {
+        int topicId = getTopicId(courseDTO);
+        String topicName = MenuUtils.scanLine("Please, enter a topic name: ");
+        courseDTO.getTopics().get(topicId).setName(topicName);
+    }
+
+    private void setTopicDescription(CourseUpdateDTO courseDTO) {
+        int topicId = getTopicId(courseDTO);
+        String topicDescription = MenuUtils.scanLine("Please, enter a topic description: ");
+        courseDTO.getTopics().get(topicId).setDescription(topicDescription);
+    }
+
+    private int getTopicId(CourseUpdateDTO courseDTO) {
+        for (TopicDTO topic : courseDTO.getTopics()) {
+            MenuUtils.printField("Topic " + topic.getId(), topic);
+        }
+        return MenuUtils.scanInt("Please, enter a topic id: ");
+    }
+
+    private void setLessonTemplateName(CourseUpdateDTO courseDTO) {
+        int topicId = getTopicId(courseDTO);
+        int lessonTemplateId = getLessonId(courseDTO, topicId);
+        String lessonTemplateName = MenuUtils.scanLine("Please, enter a lesson template name: ");
+        courseDTO.getTopics().get(topicId).getLessonTemplates().get(lessonTemplateId).setName(lessonTemplateName);
+    }
+
+    private void setLessonTemplateDescription(CourseUpdateDTO courseDTO) {
+        int topicId = getTopicId(courseDTO);
+        int lessonTemplateId = getLessonId(courseDTO, topicId);
+
+        String lessonTemplateDescription = MenuUtils.scanLine("Please, enter a lesson template description: ");
+        courseDTO.getTopics().get(topicId).getLessonTemplates().get(lessonTemplateId).setDescription(lessonTemplateDescription);
+    }
+
+    private void setLessonTemplateDuration(CourseUpdateDTO courseDTO) {
+        int topicId = getTopicId(courseDTO);
+        int lessonTemplateId = getLessonId(courseDTO, topicId);
+
+        int lessonTemplateDuration = MenuUtils.scanInt("Please, enter a lesson template duration: ");
+        courseDTO.getTopics().get(topicId).getLessonTemplates().get(lessonTemplateId).setDuration(lessonTemplateDuration);
+    }
+
+    private int getLessonId(CourseUpdateDTO courseDTO, int topicId) {
+        for (LessonTemplateDTO lessonTemplate : courseDTO.getTopics().get(topicId).getLessonTemplates()) {
+            MenuUtils.printField("Lesson " + lessonTemplate.getId(), lessonTemplate);
+        }
+        return MenuUtils.scanInt("Please, enter a lesson template id: ");
     }
 
     private static MediaSaveDTO addMedia(String message) {

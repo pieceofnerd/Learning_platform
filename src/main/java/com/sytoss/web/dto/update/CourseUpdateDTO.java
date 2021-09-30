@@ -29,9 +29,7 @@ public class CourseUpdateDTO {
     private MediaSaveDTO coursePhoto;
 
     private CategoryDTO category;
-
-    private Double rating;
-
+    
     private String description;
 
     private MediaDTO certificateTemplate;
