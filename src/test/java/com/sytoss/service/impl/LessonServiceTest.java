@@ -30,6 +30,6 @@ class LessonServiceTest {
     @Test
     void findCommentsByFilter() {
 //        new FilterCommunicationDTO(Filter.NEWEST,new Date(), new Date());
-        lessonService.findCommentsByFilter(new FilterCommunicationDTO(Filter.OLDEST,new Date(), new Date()));
+//        lessonService.findCommentsByFilter(new FilterCommunicationDTO(Filter.OLDEST,new Date(), new Date()));
     }
 }

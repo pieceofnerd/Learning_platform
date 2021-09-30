@@ -18,6 +18,7 @@ import java.util.Date;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role_id")
+@DiscriminatorValue("null")
 @Table(name = "user_account")
 public class UserAccount {
 
@@ -34,6 +35,9 @@ public class UserAccount {
     @Column(name = "birthday_date")
     private Date birthday;
 
+    @Column(name = "bio")
+    private String bio;
+
     @Column(name = "email")
     private String email;
 
@@ -45,7 +49,7 @@ public class UserAccount {
     private Address address;
 
     @Column(name = "last_activity")
-    private Date lastActivity;
+    private Date lastActivity = new Date();
 
     @ManyToOne
     @JoinColumn(name = "image_path")

@@ -41,9 +41,13 @@ public class UserAccountController {
         return userAccountService.findUsersByFilter(filter);
     }
 
-    public void saveUserAccount(UserAccountSaveDTO userAccountSaveDTO) {
+    public void registerUserAccount(UserAccountSaveDTO userAccountSaveDTO) {
         final UserAccount userAccount = userAccountMapper.toEntity(userAccountSaveDTO);
-        //TODO
+        try {
+            userAccountService.registerUserAccount(userAccount);
+        } catch (EmailAlreadyExistsException e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteUserAccount(UserAccountDTO userAccountDTO) throws NoSuchUserAccountException {

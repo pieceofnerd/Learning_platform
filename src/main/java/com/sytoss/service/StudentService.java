@@ -22,7 +22,7 @@ public interface StudentService {
     //TODO
     List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup);
 
-    List<Study> findStudiesByStudent(UserAccount student) throws Exception;
+    List<Study> findStudiesByStudent(Student student) throws Exception;
 
     List<Purchase> findPurchaseByStudent(UserAccount student);
 

@@ -57,7 +57,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Study> findStudiesByStudent(UserAccount student) throws Exception {
+    public List<Study> findStudiesByStudent(Student student) throws Exception {
         if (student == null)
             throw new Exception("Student is null");
         if (!userAccountRepository.exists(student.getId()))

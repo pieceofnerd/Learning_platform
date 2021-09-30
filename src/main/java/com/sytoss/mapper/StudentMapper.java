@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentMapper extends BaseMapper<Student, UserAccountDTO> {
 
-    protected StudentMapper()  {
+    protected StudentMapper() {
         super(Student.class,UserAccountDTO.class);
     }
 

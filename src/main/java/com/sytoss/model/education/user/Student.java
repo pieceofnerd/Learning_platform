@@ -21,9 +21,6 @@ import java.util.List;
 @DiscriminatorValue("3")
 public class Student extends UserAccount {
 
-    @Column(name = "bio")
-    private String bio;
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "student_status")
     private Lookup studentStatus;

@@ -19,9 +19,6 @@ import java.util.List;
 @DiscriminatorValue("2")
 public class Mentor extends UserAccount {
 
-    @Column
-    private String bio;
-
     @OneToMany(mappedBy = "mentor", fetch = FetchType.LAZY)
     private List<Lesson> lessons;
 

@@ -1,7 +1,7 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchLessonException;
-import com.sytoss.model.HomeworkStatus;
+import com.sytoss.model.enums.HomeworkStatus;
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.course.Lesson;
