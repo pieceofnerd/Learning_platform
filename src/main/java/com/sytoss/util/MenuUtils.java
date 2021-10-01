@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 public class MenuUtils {
     private static final Scanner scanner = new Scanner(System.in);
@@ -31,6 +32,21 @@ public class MenuUtils {
         lastScanInteger = false;
         String date = scanner.nextLine();
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        return format.parse(date);
+    }
+
+    public static Date scanDate(String text) throws ParseException {
+        System.out.println(colors.ANSI_PURPLE + "----- INPUT LINE -----");
+        System.out.print(text + colors.ANSI_RESET);
+        if (lastScanInteger)
+            scanner.nextLine();// java just ignore first Scanner.nextLine() after Scanner.nextInt();
+        lastScanInteger = false;
+        String date = scanner.nextLine();
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        if (date.equals("")) {
+            return format.parse("2000/01/01 00:00");
+        }
         return format.parse(date);
     }
 

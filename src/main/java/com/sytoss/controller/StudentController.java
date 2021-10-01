@@ -82,4 +82,5 @@ public class StudentController {
         StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
         studentService.leaveStudyGroup(student, studyGroup);
     }
+
 }
