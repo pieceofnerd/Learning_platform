@@ -11,10 +11,16 @@ import static com.sytoss.util.MenuUtils.scanInt;
 public class Menu {
 
     private final StudyMenu studyMenu;
+
     private final StudyGroupMenu studyGroupMenu;
+
     private final StudentMenu studentMenu;
+
     private final LessonMenu lessonMenu;
+
     private final UserAccountMenu userAccountMenu;
+
+    private final CourseMenu courseMenu;
 
 
     public void start() throws Exception {
@@ -45,6 +51,10 @@ public class Menu {
                     break;
                 case 5:
                     userAccountMenu.start();
+                    break;
+
+                case 6:
+                    courseMenu.start();
                     break;
             }
         }

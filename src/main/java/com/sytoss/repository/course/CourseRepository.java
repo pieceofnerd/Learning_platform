@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.math.BigDecimal;
 import java.util.List;
 
-
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query("select c from Course c where c.active = true")
@@ -16,6 +15,10 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     List<Course> findDistinctFirst10ByActiveIsTrueOrderByCreatedDateDesc();
 
+    @Query("select c from Course c " +
+            "left join fetch c.topics " +
+            "where c.id = ?1")
+    Course findById(Long id);
 
     @Query("select c from Course c where c.name = ?1 and c.active = true")
     Course findCourseByNameAndActiveIsTrue(String name);

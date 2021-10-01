@@ -9,6 +9,7 @@ import com.sytoss.model.enums.PriceType;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.course.CategoryRepository;
 import com.sytoss.repository.course.CourseRepository;
+import com.sytoss.service.CourseService;
 import com.sytoss.web.dto.*;
 import com.sytoss.web.dto.save.*;
 import com.sytoss.web.dto.update.CourseUpdateDTO;
@@ -19,7 +20,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sytoss.util.MenuUtils.printField;
+
 @Component
+@Transactional
 public class CourseMenu {
 
     private final CourseController courseController;
@@ -27,6 +31,8 @@ public class CourseMenu {
     private final CategoryRepository categoryRepository;
 
     private final CourseRepository courseRepository;
+
+    private final CourseService courseService;
 
     private final LookupRepository lookupRepository;
 
@@ -37,11 +43,12 @@ public class CourseMenu {
     private final LookupMapper lookupMapper;
 
     public CourseMenu(CourseController courseController, CategoryRepository categoryRepository,
-                      CourseRepository courseRepository, LookupRepository lookupRepository, CategoryMapper categoryMapper,
+                      CourseRepository courseRepository, CourseService courseService, LookupRepository lookupRepository, CategoryMapper categoryMapper,
                       CourseMapper courseMapper, LookupMapper lookupMapper) {
         this.courseController = courseController;
         this.categoryRepository = categoryRepository;
         this.courseRepository = courseRepository;
+        this.courseService = courseService;
         this.lookupRepository = lookupRepository;
         this.categoryMapper = categoryMapper;
         this.courseMapper = courseMapper;
@@ -119,12 +126,13 @@ public class CourseMenu {
                         int option = MenuUtils.scanInt("Please, choose field that you want to update: ");
                         updateCourseDTO(courseUpdateDTO, option);
                         int update = MenuUtils.scanInt("Do you want update other fields? \n1.Yes\n Press any key");
-                        if(update!=1){
-                            flag=false;
+                        if (update != 1) {
+                            flag = false;
                         }
                     }
                     courseController.updateCourse(courseUpdateDTO);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     System.out.println("There is no such course in our system");
                     return;
                 }
@@ -145,7 +153,7 @@ public class CourseMenu {
 
     private CourseDTO findCourseDto() throws Exception {
         long courseId = MenuUtils.scanInt("Please, enter course id: ");
-        Course course = courseRepository.findOne(courseId);
+        Course course = courseService.findById(courseId);
         if (course != null) {
             return courseMapper.toDTO(course);
         } else throw new Exception();
@@ -180,6 +188,20 @@ public class CourseMenu {
                 "11. Lesson template media",
                 "12. Lesson duration"
         );
+    }
+
+
+    private static void printTopic(TopicDTO topic) {
+        printField("Topic", topic.getId());
+        printField("Topic name", topic.getName());
+        printField("Topic description", topic.getDescription());
+    }
+
+    private static void printLessonTemplate(LessonTemplateDTO lessonTemplateDTO) {
+        printField("Lesson template", lessonTemplateDTO.getId());
+        printField("Lesson template title", lessonTemplateDTO.getName());
+        printField("Lesson template description", lessonTemplateDTO.getDescription());
+        printField("Lesson template duration", lessonTemplateDTO.getDuration());
     }
 
     private CourseUpdateDTO updateCourseDTO(CourseUpdateDTO courseDTO, int option) {
@@ -289,9 +311,10 @@ public class CourseMenu {
 
     private int getTopicId(CourseUpdateDTO courseDTO) {
         for (TopicDTO topic : courseDTO.getTopics()) {
-            MenuUtils.printField("Topic " + topic.getId(), topic);
+            MenuUtils.printField("topic number", courseDTO.getTopics().indexOf(topic) + 1);
+            printTopic(topic);
         }
-        return MenuUtils.scanInt("Please, enter a topic id: ");
+        return MenuUtils.scanInt("Please, enter a topic : ") -1;
     }
 
     private void setLessonTemplateName(CourseUpdateDTO courseDTO) {
@@ -319,9 +342,10 @@ public class CourseMenu {
 
     private int getLessonId(CourseUpdateDTO courseDTO, int topicId) {
         for (LessonTemplateDTO lessonTemplate : courseDTO.getTopics().get(topicId).getLessonTemplates()) {
-            MenuUtils.printField("Lesson " + lessonTemplate.getId(), lessonTemplate);
+            MenuUtils.printField("lesson template number", courseDTO.getTopics().get(topicId).getLessonTemplates().indexOf(lessonTemplate) + 1);
+            printLessonTemplate(lessonTemplate);
         }
-        return MenuUtils.scanInt("Please, enter a lesson template id: ");
+        return MenuUtils.scanInt("Please, enter a lesson template : ")-1;
     }
 
     private static MediaSaveDTO addMedia(String message) {

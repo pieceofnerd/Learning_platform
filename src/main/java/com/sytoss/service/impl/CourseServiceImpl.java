@@ -94,13 +94,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void removeTopic(Topic topic) throws  NoSuchTopicException {
+    public void removeTopic(Topic topic) throws NoSuchTopicException {
         if (topic == null) {
             logger.error("Topic could not be null");
-           return;
+            return;
         }
 
-        if(!topicRepository.exists(topic.getId())){
+        if (!topicRepository.exists(topic.getId())) {
             logger.error("Couldn't find topic with id: {}", topic.getId());
             throw new NoSuchTopicException();
         }
@@ -117,7 +117,7 @@ public class CourseServiceImpl implements CourseService {
             return;
         }
 
-        if(!topicRepository.exists(lessonTemplate.getId())){
+        if (!topicRepository.exists(lessonTemplate.getId())) {
             logger.error("Couldn't find topic with id: {}", lessonTemplate.getId());
             throw new NoSuchLessonTemplateException();
         }
@@ -154,7 +154,7 @@ public class CourseServiceImpl implements CourseService {
 //
 //        lessonTemplateRepository.save(lessonTemplate);
 //        logger.info("Lesson template {} was added to {} topic", lessonTemplate.getName(), lessonTemplate.getTopic().getName());
-//    }
+//    }communication
 
     @Override
     public List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException {
@@ -166,6 +166,12 @@ public class CourseServiceImpl implements CourseService {
             }
         }
         return null;
+    }
+
+    @Transactional
+    public Course findById(Long id) {
+        Course course = courseRepository.findById(id);
+        return course;
     }
 
     private void validateCourseName(Course course) throws DuplicateCourseNameException {
@@ -200,7 +206,7 @@ public class CourseServiceImpl implements CourseService {
     private void saveCourse(Course course) {
         if (course == null) {
             logger.error("Course must not be null");
-           return;
+            return;
         }
         courseRepository.save(course);
     }

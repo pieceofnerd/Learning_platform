@@ -43,4 +43,9 @@ class CourseServiceTest {
             System.out.println(course);
         }
     }
+
+    @Test
+    void findById() {
+        courseService.findById(80L);
+    }
 }
