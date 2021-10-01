@@ -18,7 +18,7 @@ public interface UserAccountService {
 
     void deleteUserAccount(UserAccount userAccount) throws NoSuchUserAccountException;
 
-    void resetPassword(UserAccount userAccount, char[] newPassword) throws NoSuchUserAccountException;
+    void resetPassword(UserAccount userAccount,char[] oldPassword, char[] newPassword) throws Exception;
 
     void forgotPassword(String email);
 

@@ -20,6 +20,7 @@ import com.sytoss.web.dto.UserAccountDTO;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 import com.sytoss.web.dto.save.PurchaseSaveDTO;
 import com.sytoss.web.dto.save.UserAccountSaveDTO;
+import com.sytoss.web.dto.update.UserAccountUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +37,6 @@ public class UserAccountController {
     private final StudyGroupMapper studyGroupMapper;
 
 
-
     public List<UserAccount> findUserAccountsByFilter(FilterUserAccountDTO filter) {
         return userAccountService.findUsersByFilter(filter);
     }
@@ -50,12 +50,12 @@ public class UserAccountController {
         }
     }
 
-    public void deleteUserAccount(UserAccountDTO userAccountDTO) throws NoSuchUserAccountException {
-        final UserAccount userAccount = userAccountMapper.toEntity(userAccountDTO);
+    public void deleteUserAccount(UserAccountUpdateDTO userAccountUpdateDTO) throws NoSuchUserAccountException {
+        UserAccount userAccount = userAccountMapper.toEntity(userAccountUpdateDTO);
         userAccountService.deleteUserAccount(userAccount);
     }
 
-    public void updateUserAccount(UserAccountDTO userAccountDTO) throws EmailAlreadyExistsException, NoSuchUserAccountException {
+    public void updateUserAccount(UserAccountUpdateDTO userAccountDTO) throws EmailAlreadyExistsException, NoSuchUserAccountException {
         final UserAccount userAccount = userAccountMapper.toEntity(userAccountDTO);
         userAccountService.updateUserAccount(userAccount);
     }
@@ -69,7 +69,9 @@ public class UserAccountController {
         //TODO
     }
 
-    public void resetPassword(UserAccountDTO userAccountDTO, char[] newPassword) {
-        //TODO
+    public void resetPassword(UserAccountUpdateDTO userAccountDTO, char[] oldPassword, char[] newPassword) throws Exception {
+        UserAccount userAccount = userAccountMapper.toEntity(userAccountDTO);
+
+        userAccountService.resetPassword(userAccount,oldPassword,newPassword);
     }
 }
