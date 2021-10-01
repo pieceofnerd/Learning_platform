@@ -30,8 +30,6 @@ public class CourseMenu {
 
     private final CategoryRepository categoryRepository;
 
-    private final CourseRepository courseRepository;
-
     private final CourseService courseService;
 
     private final LookupRepository lookupRepository;
@@ -43,11 +41,10 @@ public class CourseMenu {
     private final LookupMapper lookupMapper;
 
     public CourseMenu(CourseController courseController, CategoryRepository categoryRepository,
-                      CourseRepository courseRepository, CourseService courseService, LookupRepository lookupRepository, CategoryMapper categoryMapper,
+                      CourseService courseService, LookupRepository lookupRepository, CategoryMapper categoryMapper,
                       CourseMapper courseMapper, LookupMapper lookupMapper) {
         this.courseController = courseController;
         this.categoryRepository = categoryRepository;
-        this.courseRepository = courseRepository;
         this.courseService = courseService;
         this.lookupRepository = lookupRepository;
         this.categoryMapper = categoryMapper;
@@ -146,6 +143,7 @@ public class CourseMenu {
                     System.out.println("There is no such course in our system");
                     return;
                 }
+                break;
             }
         }
     }
