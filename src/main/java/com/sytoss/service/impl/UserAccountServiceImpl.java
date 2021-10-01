@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -56,8 +58,18 @@ public class UserAccountServiceImpl implements UserAccountService {
             return;
         }
         checkUserAccountExistence(userAccount);
-        validateEmail(userAccount);
-        userAccountRepository.save(userAccount);
+
+        UserAccount user = userAccountRepository.findOne(userAccount.getId());
+        user.setFirstName(userAccount.getFirstName());
+        user.setSecondName(userAccount.getSecondName());
+        user.setBirthday(userAccount.getBirthday());
+        user.setBio(userAccount.getBio());
+        user.setPhoto(userAccount.getPhoto());
+        user.setAddress(userAccount.getAddress());
+        user.setEmail(userAccount.getEmail());
+
+        user.setUpdatedDate(new Date());
+        userAccountRepository.save(user);
     }
 
     @Override
@@ -66,23 +78,40 @@ public class UserAccountServiceImpl implements UserAccountService {
             logger.error("user account must be not null");
             return;
         }
+        UserAccount user = userAccountRepository.findOne(userAccount.getId());
         checkUserAccountExistence(userAccount);
-        userAccount.setDeleted(true);
-        userAccountRepository.save(userAccount);
+        user.setDeleted(true);
+        userAccountRepository.save(user);
     }
 
     @Override
-    public void resetPassword(UserAccount userAccount, char[] newPassword) throws NoSuchUserAccountException {
+    public void resetPassword(UserAccount userAccount, char[] oldPassword, char[] newPassword) throws Exception {
         if (userAccount == null) {
             logger.error("user account must be not null");
             return;
         }
         checkUserAccountExistence(userAccount);
 
-        userAccount.setPassword(newPassword);
-        userAccountRepository.save(userAccount);
-        //TODO
+        if(oldPassword == null){
+            logger.info("Old password is empty");
+            throw new Exception("Old password is empty");
+        }
+        if(newPassword == null){
+            logger.info("New password is empty");
+            throw new Exception("New password is empty");
+        }
+        if(Arrays.toString(newPassword).equals(Arrays.toString(oldPassword))){
+            logger.info("Passwords are the same");
+            throw new Exception("Passwords are the same");
+        }
+        UserAccount user = userAccountRepository.findOne(userAccount.getId());
 
+        if(!Arrays.toString(user.getPassword()).equals(Arrays.toString(oldPassword))){
+            logger.info("User password not equals old password");
+            throw new Exception("User password not equals old password");
+        }
+        user.setPassword(newPassword);
+        userAccountRepository.save(user);
 
     }
 
