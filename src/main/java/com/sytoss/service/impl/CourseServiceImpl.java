@@ -162,7 +162,8 @@ public class CourseServiceImpl implements CourseService {
             case NEWEST:
                 return courseRepository.findDistinctFirst10ByActiveIsTrueOrderByCreatedDateDesc();
             case COST_RANGE: {
-                return findCoursesByPriceRange(filter);
+               List<Course> courses= findCoursesByPriceRange(filter);
+               return courses;
             }
         }
         return null;

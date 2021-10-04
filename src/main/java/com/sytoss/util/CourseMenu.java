@@ -11,12 +11,15 @@ import com.sytoss.repository.course.CategoryRepository;
 import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.service.CourseService;
 import com.sytoss.web.dto.*;
+import com.sytoss.web.dto.filter.Filter;
+import com.sytoss.web.dto.filter.FilterCourseDTO;
 import com.sytoss.web.dto.save.*;
 import com.sytoss.web.dto.update.CourseUpdateDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,6 +148,32 @@ public class CourseMenu {
                 }
                 break;
             }
+
+            case 6: {
+                try {
+                    filterMenu();
+                    int option = MenuUtils.scanInt("Please, choose the filter: ");
+                    List<CourseDTO> courses = new ArrayList<>();
+                    switch (option) {
+                        case 1:
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.NEWEST, null, null, null));
+                            break;
+                        case 2:
+                            BigDecimal lowPrice = BigDecimal.valueOf(MenuUtils.scanInt("please enter the lower price range:  "));
+                            BigDecimal highPrice = BigDecimal.valueOf(MenuUtils.scanInt("please enter the upper price range:  "));
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.COST_RANGE, lowPrice, highPrice, null));
+                            break;
+                    }
+                    for (CourseDTO course : courses) {
+                        printCourse(course);
+                        System.out.println();
+                    }
+                } catch (Exception e) {
+                    System.out.println("There is no such course in our system");
+                    return;
+                }
+                break;
+            }
         }
     }
 
@@ -189,6 +218,14 @@ public class CourseMenu {
     }
 
 
+    private static void filterMenu() {
+        MenuUtils.printMenu(
+                "1. Find newest course",
+                "2. Find course in a price range"
+        );
+
+    }
+
     private static void printTopic(TopicDTO topic) {
         printField("Topic", topic.getId());
         printField("Topic name", topic.getName());
@@ -200,6 +237,15 @@ public class CourseMenu {
         printField("Lesson template title", lessonTemplateDTO.getName());
         printField("Lesson template description", lessonTemplateDTO.getDescription());
         printField("Lesson template duration", lessonTemplateDTO.getDuration());
+    }
+
+    private static void printCourse(CourseDTO courseDTO) {
+        printField("Course", courseDTO.getId());
+        printField("Course title", courseDTO.getName());
+        printField("Course description", courseDTO.getDescription());
+        printField("Course recommended literature", courseDTO.getRecommendedLiterature());
+        printField("Course category", courseDTO.getCategory().getName());
+        printField("Course rating", courseDTO.getRating());
     }
 
     private CourseUpdateDTO updateCourseDTO(CourseUpdateDTO courseDTO, int option) {
@@ -312,7 +358,7 @@ public class CourseMenu {
             MenuUtils.printField("topic number", courseDTO.getTopics().indexOf(topic) + 1);
             printTopic(topic);
         }
-        return MenuUtils.scanInt("Please, enter a topic : ") -1;
+        return MenuUtils.scanInt("Please, enter a topic : ") - 1;
     }
 
     private void setLessonTemplateName(CourseUpdateDTO courseDTO) {
@@ -343,7 +389,7 @@ public class CourseMenu {
             MenuUtils.printField("lesson template number", courseDTO.getTopics().get(topicId).getLessonTemplates().indexOf(lessonTemplate) + 1);
             printLessonTemplate(lessonTemplate);
         }
-        return MenuUtils.scanInt("Please, enter a lesson template : ")-1;
+        return MenuUtils.scanInt("Please, enter a lesson template : ") - 1;
     }
 
     private static MediaSaveDTO addMedia(String message) {
