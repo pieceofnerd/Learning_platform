@@ -22,7 +22,7 @@ public interface CourseService {
 
     void updateCourseRating(Course course) throws NoSuchCourseException;
 
-    List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException;
+    List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException, NoSuchCategoryException;
 
     List<Course> getAll();
 

@@ -17,4 +17,6 @@ public class FilterCourseDTO {
 
     private Long studentId;
 
+    private Long categoryId;
+
 }

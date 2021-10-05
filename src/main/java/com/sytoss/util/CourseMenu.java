@@ -4,11 +4,13 @@ import com.sytoss.controller.CourseController;
 import com.sytoss.mapper.CategoryMapper;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.LookupMapper;
+import com.sytoss.mapper.StudentMapper;
 import com.sytoss.model.course.Course;
+import com.sytoss.model.education.user.Student;
 import com.sytoss.model.enums.PriceType;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.course.CategoryRepository;
-import com.sytoss.repository.course.CourseRepository;
+import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.CourseService;
 import com.sytoss.web.dto.*;
 import com.sytoss.web.dto.filter.Filter;
@@ -19,7 +21,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,10 @@ public class CourseMenu {
 
     private final LookupRepository lookupRepository;
 
+    private final UserAccountRepository userAccountRepository;
+
+    private final StudentMapper studentMapper;
+
     private final CategoryMapper categoryMapper;
 
     private final CourseMapper courseMapper;
@@ -44,12 +49,15 @@ public class CourseMenu {
     private final LookupMapper lookupMapper;
 
     public CourseMenu(CourseController courseController, CategoryRepository categoryRepository,
-                      CourseService courseService, LookupRepository lookupRepository, CategoryMapper categoryMapper,
+                      CourseService courseService, LookupRepository lookupRepository,
+                      UserAccountRepository userAccountRepository, StudentMapper studentMapper, CategoryMapper categoryMapper,
                       CourseMapper courseMapper, LookupMapper lookupMapper) {
         this.courseController = courseController;
         this.categoryRepository = categoryRepository;
         this.courseService = courseService;
         this.lookupRepository = lookupRepository;
+        this.userAccountRepository = userAccountRepository;
+        this.studentMapper = studentMapper;
         this.categoryMapper = categoryMapper;
         this.courseMapper = courseMapper;
         this.lookupMapper = lookupMapper;
@@ -156,24 +164,53 @@ public class CourseMenu {
                     List<CourseDTO> courses = new ArrayList<>();
                     switch (option) {
                         case 1:
-                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.NEWEST, null, null, null));
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.NEWEST, null, null, null, null));
                             break;
-                        case 2:
+                        case 2: {
                             BigDecimal lowPrice = BigDecimal.valueOf(MenuUtils.scanInt("please enter the lower price range:  "));
                             BigDecimal highPrice = BigDecimal.valueOf(MenuUtils.scanInt("please enter the upper price range:  "));
-                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.COST_RANGE, lowPrice, highPrice, null));
+                            long studentId = MenuUtils.scanInt("please, enter student's id: ");
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.COST_RANGE, lowPrice, highPrice, studentId, null));
                             break;
+                        }
+
+                        case 3:
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.TOP_BY_RATING, null, null, null, null));
+                            break;
+                        case 4: {
+                            long studentId = MenuUtils.scanInt("please, enter student's id: ");
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.LOW_HIGH, null, null, studentId, null));
+                            break;
+                        }
+                        case 5: {
+                            long studentId = MenuUtils.scanInt("please, enter student's id: ");
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.HIGH_LOW, null, null, studentId, null));
+                            break;
+                        }
+                        case 6:{
+                            long studentId = MenuUtils.scanInt("please, enter category id: ");
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.HIGH_LOW, null, null, studentId, null));
+                            break;
+                        }
+
                     }
-                    for (CourseDTO course : courses) {
-                        printCourse(course);
-                        System.out.println();
-                    }
+                    printAllCourses(courses);
                 } catch (Exception e) {
                     System.out.println("There is no such course in our system");
                     return;
                 }
                 break;
             }
+            case 7:{
+                printAllCourses(courseController.getAll());
+            }
+        }
+    }
+
+    private void printAllCourses(List<CourseDTO> courses) {
+        for (CourseDTO course : courses) {
+            printCourse(course);
+            System.out.println();
         }
     }
 
@@ -221,7 +258,11 @@ public class CourseMenu {
     private static void filterMenu() {
         MenuUtils.printMenu(
                 "1. Find newest course",
-                "2. Find course in a price range"
+                "2. Find courses in a price range",
+                "3. Find the most rated courses",
+                "4. Show courses from cheap to expensive",
+                "5. Show courses from expensive to cheap",
+                "6. Show courses by the category"
         );
 
     }
