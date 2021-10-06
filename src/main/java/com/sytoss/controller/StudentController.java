@@ -1,12 +1,10 @@
 package com.sytoss.controller;
 
-import com.sytoss.exception.NoSuchCourseException;
+import com.sytoss.exception.no_such_exception.NoSuchCourseException;
 import com.sytoss.mapper.*;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
-import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.Study;
-import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
 import com.sytoss.service.StudentService;
 import com.sytoss.service.UserAccountService;

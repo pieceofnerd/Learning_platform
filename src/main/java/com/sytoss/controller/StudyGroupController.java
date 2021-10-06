@@ -1,15 +1,12 @@
 package com.sytoss.controller;
 
-import com.sytoss.exception.NoSuchStudyGroupException;
+import com.sytoss.exception.no_such_exception.NoSuchStudyGroupException;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.StudyGroupMapper;
 import com.sytoss.mapper.UserAccountMapper;
-import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.service.StudyGroupService;
-import com.sytoss.web.dto.CourseDTO;
 import com.sytoss.web.dto.StudyGroupDTO;
-import com.sytoss.web.dto.UserAccountDTO;
 import com.sytoss.web.dto.filter.FilterStudyGroupDTO;
 import com.sytoss.web.dto.save.StudyGroupSaveDTO;
 import lombok.RequiredArgsConstructor;

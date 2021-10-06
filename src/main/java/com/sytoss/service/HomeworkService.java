@@ -1,6 +1,6 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.NoSuchHomeworkException;
+import com.sytoss.exception.no_such_exception.NoSuchHomeworkException;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.Homework;
 import com.sytoss.web.dto.filter.FilterHomeworkDTO;

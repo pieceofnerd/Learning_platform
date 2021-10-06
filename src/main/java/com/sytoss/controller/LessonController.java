@@ -1,6 +1,6 @@
 package com.sytoss.controller;
 
-import com.sytoss.exception.NoSuchLessonException;
+import com.sytoss.exception.no_such_exception.NoSuchLessonException;
 import com.sytoss.mapper.CommunicationMapper;
 import com.sytoss.mapper.HomeTaskMapper;
 import com.sytoss.mapper.LessonMapper;
@@ -11,7 +11,6 @@ import com.sytoss.web.dto.CommunicationDTO;
 import com.sytoss.web.dto.LessonDTO;
 import com.sytoss.web.dto.filter.FilterCommunicationDTO;
 import com.sytoss.web.dto.filter.FilterLessonDTO;
-import com.sytoss.web.dto.save.HomeTaskSaveDTO;
 import com.sytoss.web.dto.save.LessonSaveDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

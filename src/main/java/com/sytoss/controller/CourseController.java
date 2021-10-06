@@ -1,6 +1,10 @@
 package com.sytoss.controller;
 
 import com.sytoss.exception.*;
+import com.sytoss.exception.no_contet_exception.CourseNoContentException;
+import com.sytoss.exception.no_contet_exception.LessonTemplateNoContentException;
+import com.sytoss.exception.no_contet_exception.TopicNoContentException;
+import com.sytoss.exception.no_such_exception.*;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.LessonTemplateMapper;
 import com.sytoss.mapper.TopicMapper;
@@ -35,6 +39,8 @@ public class CourseController {
             courseService.createCourse(course);
         } catch (NoSuchCourseException | DuplicateCourseNameException e) {
             e.printStackTrace();
+        } catch (CourseNoContentException e) {
+            e.printStackTrace();
         }
     }
 
@@ -58,7 +64,11 @@ public class CourseController {
 
     public void removeTopic(TopicDTO topicDTO) throws NoSuchTopicException {
         final Topic topic = topicMapper.toEntity(topicDTO);
-        courseService.removeTopic(topic);
+        try {
+            courseService.removeTopic(topic);
+        } catch (TopicNoContentException e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeLessonTemplate(LessonTemplateDTO lessonTemplateDTO) {
@@ -66,6 +76,8 @@ public class CourseController {
         try {
             courseService.removeLessonTemplate(lessonTemplate);
         } catch (NoSuchLessonTemplateException e) {
+            e.printStackTrace();
+        } catch (LessonTemplateNoContentException e) {
             e.printStackTrace();
         }
     }

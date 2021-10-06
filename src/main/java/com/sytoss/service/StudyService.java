@@ -1,9 +1,8 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.NoSuchStudyException;
-import com.sytoss.exception.StudyGroupNoContentException;
-import com.sytoss.exception.StudyNoContentException;
-import com.sytoss.exception.UserAccountNoContentException;
+import com.sytoss.exception.no_contet_exception.StudyGroupNoContentException;
+import com.sytoss.exception.no_contet_exception.StudyNoContentException;
+import com.sytoss.exception.no_contet_exception.UserAccountNoContentException;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;

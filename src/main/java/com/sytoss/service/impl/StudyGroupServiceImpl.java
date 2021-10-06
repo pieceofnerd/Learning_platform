@@ -1,6 +1,6 @@
 package com.sytoss.service.impl;
 
-import com.sytoss.exception.NoSuchStudyGroupException;
+import com.sytoss.exception.no_such_exception.NoSuchStudyGroupException;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Study;

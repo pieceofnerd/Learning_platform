@@ -1,6 +1,6 @@
 package com.sytoss.service.impl;
 
-import com.sytoss.exception.NoSuchPromotionException;
+import com.sytoss.exception.no_such_exception.NoSuchPromotionException;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.course.Promotion;
 import com.sytoss.repository.LookupRepository;

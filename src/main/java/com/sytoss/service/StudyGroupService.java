@@ -1,9 +1,8 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.NoSuchStudyGroupException;
+import com.sytoss.exception.no_such_exception.NoSuchStudyGroupException;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
-import com.sytoss.model.education.UserAccount;
 import com.sytoss.web.dto.filter.FilterStudyGroupDTO;
 
 import java.util.List;

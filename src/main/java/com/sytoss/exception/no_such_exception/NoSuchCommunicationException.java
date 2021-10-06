@@ -1,4 +1,4 @@
-package com.sytoss.exception;
+package com.sytoss.exception.no_such_exception;
 
 import com.sytoss.model.communication.Communication;
 

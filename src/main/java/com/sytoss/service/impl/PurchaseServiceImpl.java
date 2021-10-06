@@ -1,6 +1,6 @@
 package com.sytoss.service.impl;
 
-import com.sytoss.exception.NoSuchPurchaseException;
+import com.sytoss.exception.no_such_exception.NoSuchPurchaseException;
 import com.sytoss.model.enums.PriceType;
 import com.sytoss.model.enums.PurchaseStatus;
 import com.sytoss.model.enums.StudentStatus;

@@ -1,12 +1,9 @@
 package com.sytoss.service.impl;
 
-import com.sytoss.exception.NoSuchPriceException;
-import com.sytoss.mapper.PriceMapper;
+import com.sytoss.exception.no_such_exception.NoSuchPriceException;
 import com.sytoss.model.course.Price;
 import com.sytoss.repository.course.PriceRepository;
 import com.sytoss.service.PriceService;
-import com.sytoss.web.dto.PriceDTO;
-import com.sytoss.web.dto.save.PriceSaveDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

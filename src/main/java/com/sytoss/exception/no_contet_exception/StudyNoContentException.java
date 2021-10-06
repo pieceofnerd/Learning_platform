@@ -1,4 +1,4 @@
-package com.sytoss.exception;
+package com.sytoss.exception.no_contet_exception;
 
 public class StudyNoContentException extends Exception{
     public StudyNoContentException(String message) {

@@ -1,6 +1,8 @@
 package com.sytoss.service;
 
 import com.sytoss.exception.*;
+import com.sytoss.exception.no_contet_exception.*;
+import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
@@ -24,7 +26,7 @@ public interface UserAccountService {
 
     void forgotPassword(String email) throws UserAccountNoContentException;
 
-    void leaveComment(Communication comment) throws CommentNoContentException;
+    void leaveComment(Communication comment) throws CommentNoContentException, CommunicationNoContentException;
 
-    void leaveMessage(Communication message) throws MessageNoContentException;
+    void leaveMessage(Communication message) throws MessageNoContentException, CommunicationNoContentException;
 }

@@ -1,6 +1,8 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.exception.*;
+import com.sytoss.exception.no_contet_exception.*;
+import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
@@ -143,7 +145,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public void leaveComment(Communication comment) throws CommentNoContentException {
+    public void leaveComment(Communication comment) throws CommentNoContentException, CommunicationNoContentException {
         if (comment == null) {
             logger.error("Comment must not be null");
             throw new CommentNoContentException("Comment is null");
@@ -152,7 +154,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public void leaveMessage(Communication message) throws MessageNoContentException {
+    public void leaveMessage(Communication message) throws MessageNoContentException, CommunicationNoContentException {
         if (message == null) {
             logger.error("Message must not be null");
             throw new MessageNoContentException("Message is null");
@@ -186,8 +188,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private void checkUserAccountExistence(UserAccount userAccount) throws NoSuchUserAccountException {
         if (!userAccountRepository.exists(userAccount.getId())) {
-            logger.error("Couldn't find user account with id: {}", userAccount.getId());
-            throw new NoSuchUserAccountException();
+            throw new NoSuchUserAccountException("Couldn't find user account with id: "+ userAccount.getId());
         }
     }
 

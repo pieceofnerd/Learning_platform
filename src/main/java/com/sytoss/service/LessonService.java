@@ -1,8 +1,7 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.NoSuchLessonException;
+import com.sytoss.exception.no_such_exception.NoSuchLessonException;
 import com.sytoss.model.communication.Comment;
-import com.sytoss.model.course.HomeTask;
 import com.sytoss.model.course.Lesson;
 import com.sytoss.web.dto.filter.FilterCommunicationDTO;
 import com.sytoss.web.dto.filter.FilterLessonDTO;

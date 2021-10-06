@@ -1,6 +1,6 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.NoSuchPriceException;
+import com.sytoss.exception.no_such_exception.NoSuchPriceException;
 import com.sytoss.model.course.Price;
 
 public interface PriceService {

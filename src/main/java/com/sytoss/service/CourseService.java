@@ -1,6 +1,10 @@
 package com.sytoss.service;
 
 import com.sytoss.exception.*;
+import com.sytoss.exception.no_contet_exception.CourseNoContentException;
+import com.sytoss.exception.no_contet_exception.LessonTemplateNoContentException;
+import com.sytoss.exception.no_contet_exception.TopicNoContentException;
+import com.sytoss.exception.no_such_exception.*;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.LessonTemplate;
 import com.sytoss.model.course.Topic;
@@ -10,15 +14,15 @@ import java.util.List;
 
 public interface CourseService {
 
-    void createCourse(Course course) throws NoSuchCourseException, DuplicateCourseNameException;
+    void createCourse(Course course) throws NoSuchCourseException, DuplicateCourseNameException, CourseNoContentException;
 
     void updateCourse(Course course) throws NoSuchCourseException;
 
     void closeCourse(Course course) throws NoSuchCourseException;
 
-    void removeTopic(Topic topic) throws NoSuchTopicException;
+    void removeTopic(Topic topic) throws NoSuchTopicException, TopicNoContentException;
 
-    void removeLessonTemplate(LessonTemplate lessonTemplate) throws NoSuchLessonTemplateException;
+    void removeLessonTemplate(LessonTemplate lessonTemplate) throws NoSuchLessonTemplateException, LessonTemplateNoContentException;
 
     void updateCourseRating(Course course) throws NoSuchCourseException;
 
@@ -26,6 +30,6 @@ public interface CourseService {
 
     List<Course> getAll();
 
-    Course findById(Long id);
+    Course findById(Long id) throws NoSuchCourseException;
 
 }

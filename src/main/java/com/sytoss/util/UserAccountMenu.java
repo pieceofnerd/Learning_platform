@@ -1,8 +1,6 @@
 package com.sytoss.util;
 
 import com.sytoss.controller.UserAccountController;
-import com.sytoss.exception.EmailAlreadyExistsException;
-import com.sytoss.exception.NoSuchUserAccountException;
 import com.sytoss.mapper.*;
 import com.sytoss.model.course.*;
 import com.sytoss.model.education.Homework;
@@ -26,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 

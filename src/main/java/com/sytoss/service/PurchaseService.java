@@ -1,9 +1,8 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.NoSuchPurchaseException;
+import com.sytoss.exception.no_such_exception.NoSuchPurchaseException;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
-import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
 import com.sytoss.web.dto.filter.FilterPurchaseDTO;
 

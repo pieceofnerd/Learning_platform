@@ -1,4 +1,4 @@
-package com.sytoss.exception;
+package com.sytoss.exception.no_contet_exception;
 
 public class CommentNoContentException extends Exception{
     public CommentNoContentException(String message) {

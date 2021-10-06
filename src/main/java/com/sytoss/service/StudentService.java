@@ -1,6 +1,6 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.NoSuchCourseException;
+import com.sytoss.exception.no_such_exception.NoSuchCourseException;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
