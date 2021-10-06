@@ -2,19 +2,13 @@ package com.sytoss.service.impl;
 
 import com.sytoss.exception.*;
 import com.sytoss.model.Lookup;
+import com.sytoss.model.course.*;
 import com.sytoss.model.enums.PriceType;
 import com.sytoss.model.enums.StudentStatus;
-import com.sytoss.model.course.Course;
-import com.sytoss.model.course.CourseRating;
-import com.sytoss.model.course.LessonTemplate;
-import com.sytoss.model.course.Topic;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.LookupRepository;
-import com.sytoss.repository.course.CourseRatingRepository;
-import com.sytoss.repository.course.CourseRepository;
-import com.sytoss.repository.course.LessonTemplateRepository;
-import com.sytoss.repository.course.TopicRepository;
+import com.sytoss.repository.course.*;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.CourseService;
 import com.sytoss.web.dto.filter.FilterCourseDTO;
@@ -35,6 +29,8 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
 
+    private final CategoryRepository categoryRepository;
+
     private final TopicRepository topicRepository;
 
     private final LessonTemplateRepository lessonTemplateRepository;
@@ -46,10 +42,11 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRatingRepository courseRatingRepository;
 
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, TopicRepository topicRepository,
+    public CourseServiceImpl(CourseRepository courseRepository, CategoryRepository categoryRepository, TopicRepository topicRepository,
                              LessonTemplateRepository lessonTemplateRepository, LookupRepository lookupRepository,
                              UserAccountRepository userAccountRepository, CourseRatingRepository courseRatingRepository) {
         this.courseRepository = courseRepository;
+        this.categoryRepository = categoryRepository;
         this.topicRepository = topicRepository;
         this.lessonTemplateRepository = lessonTemplateRepository;
         this.lookupRepository = lookupRepository;
@@ -157,12 +154,30 @@ public class CourseServiceImpl implements CourseService {
 //    }communication
 
     @Override
-    public List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException {
+    public List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException, NoSuchCategoryException {
         switch (filter.getFilter()) {
             case NEWEST:
                 return courseRepository.findDistinctFirst10ByActiveIsTrueOrderByCreatedDateDesc();
             case COST_RANGE: {
-                return findCoursesByPriceRange(filter);
+                Lookup price = definePriceType(filter);
+                return courseRepository.findActiveCourseByPriceRange(price, filter.getLowCost(), filter.getHighCost());
+            }
+            case TOP_BY_RATING:
+                return courseRepository.findDistinctFirst10ByActiveIsTrueOrderByRatingDesc();
+            case LOW_HIGH: {
+                Lookup price = definePriceType(filter);
+                return courseRepository.findAllOrderByPriceDesc(price);
+            }
+            case HIGH_LOW: {
+                Lookup price = definePriceType(filter);
+                return courseRepository.findAllOrderByPriceAsc(price);
+            }
+            case CATEGORY:{
+                Category category= categoryRepository.findOne(filter.getCategoryId());
+                if(category==null){
+                    throw new NoSuchCategoryException();
+                }
+                return courseRepository.findActiveCoursesByCategory(category);
             }
         }
         return null;
@@ -180,7 +195,7 @@ public class CourseServiceImpl implements CourseService {
             throw new DuplicateCourseNameException();
     }
 
-    private List<Course> findCoursesByPriceRange(FilterCourseDTO filter) throws NoSuchUserAccountException {
+    private Lookup definePriceType(FilterCourseDTO filter) throws NoSuchUserAccountException {
         UserAccount student = userAccountRepository.findOne(filter.getStudentId());
 
         if (student == null) {
@@ -198,9 +213,7 @@ public class CourseServiceImpl implements CourseService {
             price = lookupRepository.findOne(PriceType.REGULAR.getValue());
         else
             price = lookupRepository.findOne(PriceType.PREMIUM.getValue());
-
-        return courseRepository.findActiveCourseByPriceRange(price, filter.getLowCost(), filter.getHighCost());
-
+        return price;
     }
 
     private void saveCourse(Course course) {

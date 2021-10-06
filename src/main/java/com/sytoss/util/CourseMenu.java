@@ -4,13 +4,11 @@ import com.sytoss.controller.CourseController;
 import com.sytoss.mapper.CategoryMapper;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.LookupMapper;
-import com.sytoss.mapper.TopicMapper;
 import com.sytoss.model.course.Course;
-import com.sytoss.model.course.Topic;
 import com.sytoss.model.enums.PriceType;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.course.CategoryRepository;
-import com.sytoss.repository.course.TopicRepository;
+import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.service.CourseService;
 import com.sytoss.web.dto.*;
 import com.sytoss.web.dto.save.*;
@@ -23,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.sytoss.util.MenuUtils.printField;
-import static com.sytoss.util.MenuUtils.scanInt;
 
 @Component
 @Transactional
@@ -37,6 +34,10 @@ public class CourseMenu {
 
     private final LookupRepository lookupRepository;
 
+    private final UserAccountRepository userAccountRepository;
+
+    private final StudentMapper studentMapper;
+
     private final TopicRepository topicRepository;
 
     private final CategoryMapper categoryMapper;
@@ -48,16 +49,20 @@ public class CourseMenu {
     private final LookupMapper lookupMapper;
 
     public CourseMenu(CourseController courseController, CategoryRepository categoryRepository,
+                      CourseService courseService, LookupRepository lookupRepository,
+                      UserAccountRepository userAccountRepository, StudentMapper studentMapper, CategoryMapper categoryMapper,
+                      CourseMapper courseMapper, LookupMapper lookupMapper) {
                       CourseService courseService, LookupRepository lookupRepository, TopicRepository topicRepository,
                       CategoryMapper categoryMapper, CourseMapper courseMapper, TopicMapper topicMapper, LookupMapper lookupMapper) {
         this.courseController = courseController;
         this.categoryRepository = categoryRepository;
         this.courseService = courseService;
         this.lookupRepository = lookupRepository;
+        this.userAccountRepository = userAccountRepository;
+        this.studentMapper = studentMapper;
         this.topicRepository = topicRepository;
         this.categoryMapper = categoryMapper;
         this.courseMapper = courseMapper;
-        this.topicMapper = topicMapper;
         this.lookupMapper = lookupMapper;
     }
 
@@ -179,6 +184,61 @@ public class CourseMenu {
                 }
                 break;
             }
+
+            case 6: {
+                try {
+                    filterMenu();
+                    int option = MenuUtils.scanInt("Please, choose the filter: ");
+                    List<CourseDTO> courses = new ArrayList<>();
+                    switch (option) {
+                        case 1:
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.NEWEST, null, null, null, null));
+                            break;
+                        case 2: {
+                            BigDecimal lowPrice = BigDecimal.valueOf(MenuUtils.scanInt("please enter the lower price range:  "));
+                            BigDecimal highPrice = BigDecimal.valueOf(MenuUtils.scanInt("please enter the upper price range:  "));
+                            long studentId = MenuUtils.scanInt("please, enter student's id: ");
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.COST_RANGE, lowPrice, highPrice, studentId, null));
+                            break;
+                        }
+
+                        case 3:
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.TOP_BY_RATING, null, null, null, null));
+                            break;
+                        case 4: {
+                            long studentId = MenuUtils.scanInt("please, enter student's id: ");
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.LOW_HIGH, null, null, studentId, null));
+                            break;
+                        }
+                        case 5: {
+                            long studentId = MenuUtils.scanInt("please, enter student's id: ");
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.HIGH_LOW, null, null, studentId, null));
+                            break;
+                        }
+                        case 6:{
+                            long studentId = MenuUtils.scanInt("please, enter category id: ");
+                            courses = courseController.findByFilter(new FilterCourseDTO(Filter.HIGH_LOW, null, null, studentId, null));
+                            break;
+                        }
+
+                    }
+                    printAllCourses(courses);
+                } catch (Exception e) {
+                    System.out.println("There is no such course in our system");
+                    return;
+                }
+                break;
+            }
+            case 7:{
+                printAllCourses(courseController.getAll());
+            }
+        }
+    }
+
+    private void printAllCourses(List<CourseDTO> courses) {
+        for (CourseDTO course : courses) {
+            printCourse(course);
+            System.out.println();
         }
     }
 
@@ -223,6 +283,18 @@ public class CourseMenu {
     }
 
 
+    private static void filterMenu() {
+        MenuUtils.printMenu(
+                "1. Find newest course",
+                "2. Find courses in a price range",
+                "3. Find the most rated courses",
+                "4. Show courses from cheap to expensive",
+                "5. Show courses from expensive to cheap",
+                "6. Show courses by the category"
+        );
+
+    }
+
     private static void printTopic(TopicDTO topic) {
         printField("Topic", topic.getId());
         printField("Topic name", topic.getName());
@@ -234,6 +306,15 @@ public class CourseMenu {
         printField("Lesson template title", lessonTemplateDTO.getName());
         printField("Lesson template description", lessonTemplateDTO.getDescription());
         printField("Lesson template duration", lessonTemplateDTO.getDuration());
+    }
+
+    private static void printCourse(CourseDTO courseDTO) {
+        printField("Course", courseDTO.getId());
+        printField("Course title", courseDTO.getName());
+        printField("Course description", courseDTO.getDescription());
+        printField("Course recommended literature", courseDTO.getRecommendedLiterature());
+        printField("Course category", courseDTO.getCategory().getName());
+        printField("Course rating", courseDTO.getRating());
     }
 
     private CourseUpdateDTO updateCourseDTO(CourseUpdateDTO courseDTO, int option) {
@@ -351,6 +432,7 @@ public class CourseMenu {
             MenuUtils.printField("topic number", courseDTO.getTopics().indexOf(topic) + 1);
             printTopic(topic);
         }
+        return MenuUtils.scanInt("Please, enter a topic : ") - 1;
     }
 
     private void printTopicsByCourse(CourseDTO courseDTO) {
@@ -388,7 +470,7 @@ public class CourseMenu {
             MenuUtils.printField("lesson template number", courseDTO.getTopics().get(topicId).getLessonTemplates().indexOf(lessonTemplate) + 1);
             printLessonTemplate(lessonTemplate);
         }
-        return MenuUtils.scanInt("Please, enter a lesson template : ") - 1;
+        return MenuUtils.scanInt("Please, enter a lesson template : ")-1;
     }
 
     private static MediaSaveDTO addMedia(String message) {

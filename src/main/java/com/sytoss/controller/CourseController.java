@@ -80,6 +80,8 @@ public class CourseController {
             courses.addAll(courseMapper.toListDTO(courseService.findByFilter(filter)));
         } catch (NoSuchUserAccountException e) {
             e.printStackTrace();
+        } catch (NoSuchCategoryException e) {
+            e.printStackTrace();
         }
         return courses;
     }

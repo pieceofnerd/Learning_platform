@@ -17,5 +17,10 @@ public enum Filter {
     FULL_NAME,
     FIRST_NAME,
     SECOND_NAME,
-    PROMOTION_STATE
+    PROMOTION_STATE,
+    TOP_BY_RATING,
+    LOW_HIGH,
+    HIGH_LOW,
+    CATEGORY
+
 }
