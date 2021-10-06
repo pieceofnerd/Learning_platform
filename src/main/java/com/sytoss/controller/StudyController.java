@@ -56,7 +56,7 @@ public class StudyController {
         final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
         try {
             studyService.updateAssessment(student, studyGroup);
-        } catch (StudyNoContentException e) {
+        } catch (StudyNoContentException | UserAccountNoContentException | StudyGroupNoContentException e) {
             logger.error(e.getMessage());
         }
     }
@@ -67,12 +67,12 @@ public class StudyController {
 
         try {
             studyService.updateProgress(student, studyGroup);
-        } catch (StudyNoContentException e) {
+        } catch (StudyNoContentException | UserAccountNoContentException | StudyGroupNoContentException e) {
             logger.error(e.getMessage());
         }
     }
 
-    public List<StudyDTO> findStudiesByFilter(FilterStudyDTO filter) throws Exception {
+    public List<StudyDTO> findStudiesByFilter(FilterStudyDTO filter)  {
         final List<Study> studies = studyService.findStudiesByFilter(filter);
         return studyMapper.toListDTO(studies);
     }

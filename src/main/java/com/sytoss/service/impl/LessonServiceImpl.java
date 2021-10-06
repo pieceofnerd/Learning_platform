@@ -1,7 +1,7 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.no_contet_exception.LessonNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchLessonException;
-
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.course.Lesson;
@@ -65,7 +65,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public Lesson createLesson(Lesson lesson) {
+    public Lesson createLesson(Lesson lesson) throws LessonNoContentException {
         Lesson savedLesson = saveLesson(lesson);
         createHomeworks(lesson);
         logger.info("Lesson {} was created", lesson.toString());
@@ -74,7 +74,7 @@ public class LessonServiceImpl implements LessonService {
 
 
     @Override
-    public void updateLesson(Lesson lesson) throws NoSuchLessonException {
+    public void updateLesson(Lesson lesson) throws NoSuchLessonException, LessonNoContentException {
         checkExistence(lesson);
         //homeTaskRepository.save(lesson.getHomeTask());
         saveLesson(lesson);
@@ -84,7 +84,7 @@ public class LessonServiceImpl implements LessonService {
     private void checkExistence(Lesson lesson) throws NoSuchLessonException {
         if (!lessonRepository.exists(lesson.getId())) {
             logger.error("Couldn't find lesson with id: {}", lesson.getId());
-            throw new NoSuchLessonException();
+            throw new NoSuchLessonException("No such lesson exists");
         }
     }
 
@@ -159,10 +159,10 @@ public class LessonServiceImpl implements LessonService {
         return comments;
     }
 
-    private Lesson saveLesson(Lesson lesson) {
+    private Lesson saveLesson(Lesson lesson) throws LessonNoContentException {
         if (lesson == null) {
             logger.error("Lesson must not be null");
-            throw new NullPointerException();
+            throw new LessonNoContentException("Lesson is null");
         }
         return lessonRepository.save(lesson);
     }

@@ -2,6 +2,7 @@ package com.sytoss.service.impl;
 
 import com.sytoss.exception.*;
 import com.sytoss.exception.no_contet_exception.*;
+import com.sytoss.exception.no_contet_exception.CommunicationNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;

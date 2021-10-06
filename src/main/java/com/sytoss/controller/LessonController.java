@@ -1,5 +1,6 @@
 package com.sytoss.controller;
 
+import com.sytoss.exception.no_contet_exception.LessonNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchLessonException;
 import com.sytoss.mapper.CommunicationMapper;
 import com.sytoss.mapper.HomeTaskMapper;
@@ -13,6 +14,8 @@ import com.sytoss.web.dto.filter.FilterCommunicationDTO;
 import com.sytoss.web.dto.filter.FilterLessonDTO;
 import com.sytoss.web.dto.save.LessonSaveDTO;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class LessonController {
+    private static final Logger logger = LoggerFactory.getLogger(LessonController.class);
     private final LessonService lessonService;
     private final LessonMapper lessonMapper;
     private final CommunicationMapper communicationMapper;
@@ -33,7 +37,7 @@ public class LessonController {
                 lesson = lessonService.createLesson(lesson);
                 return lessonMapper.toDTO(lesson);
             }
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | LessonNoContentException e) {
             System.out.println("Something went wrong. Please, try again");
         }
         return null;
@@ -44,8 +48,8 @@ public class LessonController {
         final Lesson lesson = lessonMapper.toEntity(lessonDTO);
         try {
             lessonService.updateLesson(lesson);
-        } catch (NoSuchLessonException e) {
-            e.printStackTrace();
+        } catch (NoSuchLessonException | LessonNoContentException e) {
+            logger.error(e.getMessage());
         }
     }
 
@@ -54,7 +58,7 @@ public class LessonController {
         try {
             lessonService.deleteLesson(lesson);
         } catch (NoSuchLessonException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -63,7 +67,7 @@ public class LessonController {
         try {
             lessonService.deleteAllComments(lesson);
         } catch (NoSuchLessonException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 

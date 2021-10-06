@@ -1,5 +1,7 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.no_contet_exception.CourseNoContentException;
+import com.sytoss.exception.no_contet_exception.StudyGroupNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchStudyGroupException;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
@@ -32,19 +34,19 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     private final StudyRepository studyRepository;
 
     @Override
-    public void createStudyGroup(StudyGroup studyGroup) {
+    public void createStudyGroup(StudyGroup studyGroup) throws StudyGroupNoContentException {
         if (studyGroup == null) {
             logger.error("Study group cannot be null");
-            return;
+            throw new StudyGroupNoContentException("Study group is null");
         }
         studyGroupRepository.save(studyGroup);
     }
 
     @Override
-    public void updateStudyGroup(StudyGroup studyGroup) throws NoSuchStudyGroupException {
+    public void updateStudyGroup(StudyGroup studyGroup) throws NoSuchStudyGroupException, StudyGroupNoContentException {
         if (studyGroup == null) {
             logger.error("Study group cannot be null");
-            return;
+            throw new StudyGroupNoContentException("Study group is null");
         }
         checkExistence(studyGroup);
         studyGroupRepository.save(studyGroup);
@@ -65,9 +67,9 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     @Override
-    public void updateFreePlaceNumber(StudyGroup studyGroup) throws Exception {
+    public void updateFreePlaceNumber(StudyGroup studyGroup) throws StudyGroupNoContentException {
         if (studyGroup == null)
-            throw new Exception("StudyGroup is null");
+            throw new StudyGroupNoContentException("StudyGroup is null");
 
         studyGroup.setFreePlaceNumber(freePlaceNumberCalc(studyGroup));
         studyGroup.setUpdatedDate(new Date());
@@ -76,10 +78,10 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     @Override
-    public List<StudyGroup> findStudyGroupsByCourse(Course course) {
+    public List<StudyGroup> findStudyGroupsByCourse(Course course) throws CourseNoContentException {
         if (course == null) {
             logger.error("Course must not be null");
-            return null;
+            throw new CourseNoContentException("Course is null");
         }
         return studyGroupRepository.findStudyGroupsByCourseAndDeletedIsFalse(course);
     }
@@ -100,7 +102,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     private void checkExistence(StudyGroup studyGroup) throws NoSuchStudyGroupException {
         if (!studyGroupRepository.exists(studyGroup.getId())) {
             logger.error("Couldn't find study group with id: {}", studyGroup.getId());
-            throw new NoSuchStudyGroupException();
+            throw new NoSuchStudyGroupException("No such study group exists");
         }
     }
 

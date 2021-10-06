@@ -66,7 +66,7 @@ public class CommunicationServiceImpl implements CommunicationService {
     private void checkCommunicationExistence(Communication communication) throws NoSuchCommunicationException {
         if (!communicationRepository.exists(communication.getId())) {
             logger.error("Cannot find communication with id: {}", communication);
-            throw new NoSuchCommunicationException();
+            throw new NoSuchCommunicationException("No such communication exists");
         }
     }
 

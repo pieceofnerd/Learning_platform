@@ -1,9 +1,7 @@
 package com.sytoss.controller;
 
-import com.sytoss.exception.*;
-import com.sytoss.exception.no_contet_exception.CourseNoContentException;
-import com.sytoss.exception.no_contet_exception.LessonTemplateNoContentException;
-import com.sytoss.exception.no_contet_exception.TopicNoContentException;
+import com.sytoss.exception.DuplicateCourseNameException;
+import com.sytoss.exception.no_contet_exception.*;
 import com.sytoss.exception.no_such_exception.*;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.LessonTemplateMapper;
@@ -19,6 +17,8 @@ import com.sytoss.web.dto.filter.FilterCourseDTO;
 import com.sytoss.web.dto.save.CourseSaveDTO;
 import com.sytoss.web.dto.update.CourseUpdateDTO;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
     private final CourseService courseService;
     private final CourseMapper courseMapper;
     private final TopicMapper topicMapper;
@@ -37,10 +38,8 @@ public class CourseController {
         final Course course = courseMapper.toEntity(courseSaveDTO);
         try {
             courseService.createCourse(course);
-        } catch (NoSuchCourseException | DuplicateCourseNameException e) {
-            e.printStackTrace();
-        } catch (CourseNoContentException e) {
-            e.printStackTrace();
+        } catch (NoSuchCourseException | DuplicateCourseNameException | CourseNoContentException e) {
+            logger.error(e.getMessage());
         }
     }
 
@@ -49,7 +48,7 @@ public class CourseController {
         try {
             courseService.updateCourse(course);
         } catch (NoSuchCourseException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -58,16 +57,16 @@ public class CourseController {
         try {
             courseService.closeCourse(course);
         } catch (NoSuchCourseException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
-    public void removeTopic(TopicDTO topicDTO) throws NoSuchTopicException {
+    public void removeTopic(TopicDTO topicDTO) throws NoSuchTopicException, TopicNoContentException {
         final Topic topic = topicMapper.toEntity(topicDTO);
         try {
             courseService.removeTopic(topic);
         } catch (TopicNoContentException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -75,10 +74,8 @@ public class CourseController {
         final LessonTemplate lessonTemplate = lessonTemplateMapper.toEntity(lessonTemplateDTO);
         try {
             courseService.removeLessonTemplate(lessonTemplate);
-        } catch (NoSuchLessonTemplateException e) {
-            e.printStackTrace();
-        } catch (LessonTemplateNoContentException e) {
-            e.printStackTrace();
+        } catch (NoSuchLessonTemplateException | LessonTemplateNoContentException e) {
+            logger.error(e.getMessage());
         }
     }
 
@@ -90,10 +87,8 @@ public class CourseController {
         List<CourseDTO> courses = new ArrayList<>();
         try {
             courses.addAll(courseMapper.toListDTO(courseService.findByFilter(filter)));
-        } catch (NoSuchUserAccountException e) {
-            e.printStackTrace();
-        } catch (NoSuchCategoryException e) {
-            e.printStackTrace();
+        } catch (NoSuchUserAccountException | NoSuchCategoryException | CategoryNoContentException | UserAccountNoContentException e) {
+            logger.error(e.getMessage());
         }
         return courses;
     }

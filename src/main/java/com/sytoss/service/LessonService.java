@@ -1,5 +1,6 @@
 package com.sytoss.service;
 
+import com.sytoss.exception.no_contet_exception.LessonNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchLessonException;
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.course.Lesson;
@@ -10,9 +11,9 @@ import java.util.List;
 
 public interface LessonService {
 
-    Lesson createLesson(Lesson lesson);
+    Lesson createLesson(Lesson lesson) throws LessonNoContentException;
 
-    void updateLesson(Lesson lesson) throws NoSuchLessonException;
+    void updateLesson(Lesson lesson) throws NoSuchLessonException, LessonNoContentException;
 
     void deleteLesson(Lesson lesson) throws NoSuchLessonException;
 

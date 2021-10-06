@@ -1,7 +1,11 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.CourseNotPaidException;
+import com.sytoss.exception.no_contet_exception.*;
 import com.sytoss.exception.no_such_exception.NoSuchCourseException;
-import com.sytoss.model.enums.PurchaseStatus;
+import com.sytoss.exception.no_such_exception.NoSuchStudyException;
+import com.sytoss.exception.no_such_exception.NoSuchStudyGroupException;
+import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.CourseRating;
 import com.sytoss.model.course.StudyGroup;
@@ -9,6 +13,7 @@ import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
+import com.sytoss.model.enums.PurchaseStatus;
 import com.sytoss.repository.course.CourseRatingRepository;
 import com.sytoss.repository.education.PurchaseRepository;
 import com.sytoss.repository.education.StudyRepository;
@@ -57,16 +62,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Study> findStudiesByStudent(Student student) throws Exception {
+    public List<Study> findStudiesByStudent(Student student) throws NoSuchUserAccountException, UserAccountNoContentException {
         if (student == null)
-            throw new Exception("Student is null");
+            throw new UserAccountNoContentException("User account is null");
+
         if (!userAccountRepository.exists(student.getId()))
-            throw new Exception("Student not exist");
+            throw new NoSuchUserAccountException("User account not exist");
+
         return studyRepository.findStudiesByDeletedIsFalseAndStudent(student);
     }
 
     @Override
-    public void rateCourse(Course course, Integer rateValue) throws NoSuchCourseException {
+    public void rateCourse(Course course, Integer rateValue) throws NoSuchCourseException, CourseNoContentException {
         CourseRating courseRating = new CourseRating();
         courseRating.setRating(rateValue);
         courseRating.setCourse(course);
@@ -80,14 +87,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Purchase payCourse(Student student, StudyGroup studyGroup) throws Exception {
+    public Purchase payCourse(Student student, StudyGroup studyGroup) throws CourseNotPaidException, UserAccountNoContentException, PurchaseNoContentException, StudyGroupNoContentException, NoSuchStudyGroupException, NoSuchUserAccountException {
         Purchase purchase = purchaseService.payCourse(student, studyGroup);
         joinStudyGroup(student, studyGroup);
         return purchase;
     }
 
     @Override
-    public void returnCourse(UserAccount student, StudyGroup studyGroup) throws Exception {
+    public void returnCourse(UserAccount student, StudyGroup studyGroup) throws StudyGroupNoContentException, NoSuchStudyException, StudyNoContentException {
         Purchase purchase = purchaseRepository.findByStudentAndStudyGroup(student, studyGroup);
 
         purchaseService.refundMoney(purchase);
@@ -95,12 +102,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void joinStudyGroup(UserAccount student, StudyGroup studyGroup) throws Exception {
+    public void joinStudyGroup(UserAccount student, StudyGroup studyGroup) throws PurchaseNoContentException, CourseNotPaidException, UserAccountNoContentException, StudyGroupNoContentException {
         Purchase purchase = purchaseRepository.findByStudentAndStudyGroup(student, studyGroup);
+
         if (purchase == null)
-            throw new Exception("Student did not pay for the course");
+            throw new PurchaseNoContentException("Purchase is null");
+
         if (!purchase.getPurchaseStatus().getId().equals(PurchaseStatus.PAYED.getValue()))
-            throw new Exception("Student did not pay for the course");
+            throw new CourseNotPaidException("Student did not pay for the course");
 
         studyService.saveStudy(student, studyGroup);
 
@@ -108,7 +117,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) throws Exception {
+    public void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) throws NoSuchStudyException, StudyNoContentException, StudyGroupNoContentException {
 
         //when a student leaves the group, all studies of the student in this group are deleted.
         Study study = studyRepository.findStudyByDeletedIsFalseAndStudentAndStudyGroup(student, studyGroup);

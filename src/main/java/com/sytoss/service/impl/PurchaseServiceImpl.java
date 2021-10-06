@@ -1,13 +1,17 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.no_contet_exception.StudyGroupNoContentException;
+import com.sytoss.exception.no_contet_exception.UserAccountNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchPurchaseException;
-import com.sytoss.model.enums.PriceType;
-import com.sytoss.model.enums.PurchaseStatus;
-import com.sytoss.model.enums.StudentStatus;
+import com.sytoss.exception.no_such_exception.NoSuchStudyGroupException;
+import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.model.course.Price;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
 import com.sytoss.model.education.user.Student;
+import com.sytoss.model.enums.PriceType;
+import com.sytoss.model.enums.PurchaseStatus;
+import com.sytoss.model.enums.StudentStatus;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.course.PriceRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
@@ -38,8 +42,6 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     private final StudyGroupRepository studyGroupRepository;
 
-//    private final StudentService studentService;
-
     private final LookupRepository lookupRepository;
 
     private final PriceRepository priceRepository;
@@ -56,19 +58,24 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public Purchase payCourse(Student student, StudyGroup studyGroup) throws Exception {
-        if (userAccountRepository.findOne(student.getId()) == null ||
-                studyGroupRepository.findOne(studyGroup.getId()) == null) {
-            logger.error("Student and Study group must not be null");
-            throw new NullPointerException();
+    public Purchase payCourse(Student student, StudyGroup studyGroup) throws UserAccountNoContentException, StudyGroupNoContentException, NoSuchStudyGroupException, NoSuchUserAccountException {
+        if (student == null) {
+            throw new UserAccountNoContentException("User account is null");
+        }
+        if (studyGroup == null) {
+            throw new StudyGroupNoContentException("Study group is null");
+        }
+        if (!userAccountRepository.exists(student.getId())) {
+            throw new NoSuchUserAccountException("No such user account exists");
+        }
+        if (!studyGroupRepository.exists(studyGroup.getId())) {
+            throw new NoSuchStudyGroupException("No such study group exists");
         }
 
         Purchase purchase = createPurchase(student, studyGroup);
 
         Purchase createdPurchase = purchaseRepository.save(purchase);
 
-        //adds a student to the group and created study of the student who paid for the course.
-//        studentService.joinStudyGroup(student,studyGroup);
 
         logger.info("Course {} was payed by Student with id: {}", purchase.getStudyGroup().getCourse().getName(), purchase.getStudent().getId());
         return createdPurchase;
@@ -97,7 +104,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     public void updatePurchase(Purchase purchase) throws NoSuchPurchaseException { //TODO
         if (!purchaseRepository.exists(purchase.getId())) {
             logger.error("Couldn't find purchase with id {}", purchase.getId());
-            throw new NoSuchPurchaseException();
+            throw new NoSuchPurchaseException("No such purchase exists");
         }
         purchaseRepository.save(purchase);
         logger.info("Purchase with id: {} was updated", purchase.getId());
@@ -114,12 +121,10 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public boolean refundMoney(Purchase purchase) throws Exception {
+    public boolean refundMoney(Purchase purchase) {
         purchase.setPurchaseStatus(lookupRepository.findOne(10L));
         purchase.setUpdatedDate(new Date());
 
-        //upon refund, the student leaves the group
-//        studentService.leaveStudyGroup(purchase.getStudent(), purchase.getStudyGroup());
         return true;
     }
 }

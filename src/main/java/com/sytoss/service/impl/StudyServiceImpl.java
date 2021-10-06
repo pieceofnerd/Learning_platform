@@ -83,7 +83,7 @@ public class StudyServiceImpl implements StudyService {
 
         if (!studyRepository.exists(study.getId())) {
             logger.error("Couldn't find study with id: {}", study.getId());
-            throw new NoSuchStudyException();
+            throw new NoSuchStudyException("No such study exists");
         }
 
         study.setDeleted(true);
@@ -93,12 +93,15 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public void updateProgress(UserAccount student, StudyGroup studyGroup) throws StudyNoContentException {
-        if (student == null || studyGroup == null) {
-            logger.error("Student and study group must not be null");
-            return;
+    public void updateProgress(UserAccount student, StudyGroup studyGroup) throws StudyNoContentException, UserAccountNoContentException, StudyGroupNoContentException {
+        if (student == null) {
+            logger.error("Student must not be null");
+            throw new UserAccountNoContentException("Student is null");
         }
-
+        if(studyGroup == null) {
+            logger.error("StudyGroup must not be null");
+            throw new StudyGroupNoContentException("StudyGroup is null");
+        }
         Study study = checkStudyExistence(student, studyGroup);
         Lookup fulfilmentHomework = lookupRepository.findOne(HomeworkStatus.PROVEN.getValue());
         List<Homework> homeworks = new ArrayList<>();
@@ -116,10 +119,14 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public void updateAssessment(UserAccount student, StudyGroup studyGroup) throws StudyNoContentException {
-        if (student == null || studyGroup == null) {
-            logger.error("Student and study group must not be null");
-            return;
+    public void updateAssessment(UserAccount student, StudyGroup studyGroup) throws StudyNoContentException, UserAccountNoContentException, StudyGroupNoContentException {
+        if (student == null) {
+            logger.error("Student must not be null");
+            throw new UserAccountNoContentException("Student is null");
+        }
+        if(studyGroup == null) {
+            logger.error("StudyGroup must not be null");
+            throw new StudyGroupNoContentException("StudyGroup is null");
         }
 
         Study study = checkStudyExistence(student, studyGroup);

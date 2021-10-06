@@ -1,5 +1,7 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.FeedbackNoContentException;
+import com.sytoss.exception.HomeworkNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchHomeworkException;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.communication.Feedback;
@@ -33,10 +35,10 @@ public class HomeworkServiceImpl implements HomeworkService {
     private final UserAccountRepository userAccountRepository;
 
     @Override
-    public void createHomework(Homework homework) {
+    public void createHomework(Homework homework) throws HomeworkNoContentException {
         if (homework == null) {
             logger.error("Homework must not be null");
-            return;
+            throw new HomeworkNoContentException("Homework is null");
         }
         Homework savedHomework = homeworkRepository.save(homework);
         logger.info("Homework {} was created", savedHomework.toString());
@@ -52,15 +54,15 @@ public class HomeworkServiceImpl implements HomeworkService {
     private void checkExistence(Homework homework) throws NoSuchHomeworkException {
         if (!homeworkRepository.exists(homework.getId())) {
             logger.error("couldn't find homework with id: {}", homework.getId());
-            throw new NoSuchHomeworkException();
+            throw new NoSuchHomeworkException("No such homework exists");
         }
     }
 
     @Override
-    public void deleteHomework(Homework homework) throws NoSuchHomeworkException {
+    public void deleteHomework(Homework homework) throws HomeworkNoContentException, NoSuchHomeworkException {
         if (homework == null) {
             logger.error("Homework must not be null");
-            return;
+            throw new HomeworkNoContentException("Homework is null");
         }
 
         checkExistence(homework);
@@ -70,7 +72,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public List<Homework> findHomeworkFindByFilter(FilterHomeworkDTO filter)  {
+    public List<Homework> findHomeworkFindByFilter(FilterHomeworkDTO filter) {
 
         List<Homework> homeworks = new ArrayList<>();
         switch (filter.getFilter()) {
@@ -83,17 +85,13 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public void leaveFeedback(Communication feedback) throws NoSuchHomeworkException  {
+    public void leaveFeedback(Communication feedback) throws FeedbackNoContentException, NoSuchHomeworkException {
         if (feedback == null) {
             logger.error("Feedback must not be null");
-            return;
+            throw new FeedbackNoContentException("Feedback is null");
         }
-        try {
-            checkExistence(((Feedback) feedback).getHomework());
-            communicationRepository.save(feedback);
-            logger.info("Feedback {} was created", feedback);
-        } catch (ClassCastException e) {
-            logger.error(e.getMessage());
-        }
+        checkExistence(((Feedback) feedback).getHomework());
+        communicationRepository.save(feedback);
+        logger.info("Feedback {} was created", feedback);
     }
 }

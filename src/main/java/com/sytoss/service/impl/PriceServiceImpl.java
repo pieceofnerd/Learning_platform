@@ -1,5 +1,6 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.no_contet_exception.PriceNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchPriceException;
 import com.sytoss.model.course.Price;
 import com.sytoss.repository.course.PriceRepository;
@@ -26,7 +27,7 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
-    public void createPrice(Price price) throws IllegalArgumentException {
+    public void createPrice(Price price) throws IllegalArgumentException, PriceNoContentException {
         savePrice(price);
         logger.info("Price {} was created ", price.toString());
     }
@@ -36,16 +37,16 @@ public class PriceServiceImpl implements PriceService {
     public void updatePrice(Price price) throws NoSuchPriceException, IllegalArgumentException {
         if (!priceRepository.exists(price.getId())) {
             logger.error("Couldn't find price with id: {}", price.getId());
-            throw new NoSuchPriceException();
+            throw new NoSuchPriceException("No such price exists");
         }
         validatePrice(price.getCost());
         priceRepository.save(price);
     }
 
-    private void savePrice(Price price) throws IllegalArgumentException {
+    private void savePrice(Price price) throws IllegalArgumentException, PriceNoContentException {
         if (price == null) {
             logger.error("Price must be not null");
-            return;
+            throw new PriceNoContentException("Price is null");
         }
         validatePrice(price.getCost());
         priceRepository.save(price);

@@ -1,9 +1,7 @@
 package com.sytoss.service;
 
 import com.sytoss.exception.*;
-import com.sytoss.exception.no_contet_exception.CourseNoContentException;
-import com.sytoss.exception.no_contet_exception.LessonTemplateNoContentException;
-import com.sytoss.exception.no_contet_exception.TopicNoContentException;
+import com.sytoss.exception.no_contet_exception.*;
 import com.sytoss.exception.no_such_exception.*;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.LessonTemplate;
@@ -24,9 +22,9 @@ public interface CourseService {
 
     void removeLessonTemplate(LessonTemplate lessonTemplate) throws NoSuchLessonTemplateException, LessonTemplateNoContentException;
 
-    void updateCourseRating(Course course) throws NoSuchCourseException;
+    void updateCourseRating(Course course) throws NoSuchCourseException, CourseNoContentException;
 
-    List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException, NoSuchCategoryException;
+    List<Course> findByFilter(FilterCourseDTO filter) throws NoSuchUserAccountException, NoSuchCategoryException, CategoryNoContentException, UserAccountNoContentException;
 
     List<Course> getAll();
 

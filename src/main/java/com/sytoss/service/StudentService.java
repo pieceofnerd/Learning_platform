@@ -1,6 +1,11 @@
 package com.sytoss.service;
 
+import com.sytoss.exception.*;
+import com.sytoss.exception.no_contet_exception.*;
 import com.sytoss.exception.no_such_exception.NoSuchCourseException;
+import com.sytoss.exception.no_such_exception.NoSuchStudyException;
+import com.sytoss.exception.no_such_exception.NoSuchStudyGroupException;
+import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.Purchase;
@@ -13,7 +18,7 @@ import java.util.List;
 
 public interface StudentService {
 
-    void rateCourse(Course course, Integer rateValue) throws NoSuchCourseException;
+    void rateCourse(Course course, Integer rateValue) throws NoSuchCourseException, CourseNoContentException, CourseNoContentException, NoSuchCourseException;
 
 
     //TODO
@@ -22,15 +27,15 @@ public interface StudentService {
     //TODO
     List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup);
 
-    List<Study> findStudiesByStudent(Student student) throws Exception;
+    List<Study> findStudiesByStudent(Student student) throws NoSuchUserAccountException, UserAccountNoContentException;
 
     List<Purchase> findPurchaseByStudent(UserAccount student);
 
-    Purchase payCourse(Student student, StudyGroup studyGroup) throws Exception;
+    Purchase payCourse(Student student, StudyGroup studyGroup) throws CourseNotPaidException, UserAccountNoContentException, PurchaseNoContentException, StudyGroupNoContentException, NoSuchStudyGroupException, NoSuchUserAccountException, NoSuchStudyGroupException, NoSuchUserAccountException;
 
-    void returnCourse(UserAccount student, StudyGroup studyGroup) throws Exception;
+    void returnCourse(UserAccount student, StudyGroup studyGroup) throws NoSuchStudyException, StudyNoContentException, StudyGroupNoContentException;
 
-    void joinStudyGroup(UserAccount student, StudyGroup studyGroup) throws Exception;
+    void joinStudyGroup(UserAccount student, StudyGroup studyGroup) throws PurchaseNoContentException, CourseNotPaidException, UserAccountNoContentException, StudyGroupNoContentException, UserAccountNoContentException, StudyGroupNoContentException;
 
-    void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) throws Exception;
+    void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) throws NoSuchStudyException, StudyNoContentException, StudyGroupNoContentException, NoSuchStudyException, StudyNoContentException;
 }

@@ -1,10 +1,7 @@
 package com.sytoss.controller;
 
 import com.sytoss.exception.*;
-import com.sytoss.exception.no_contet_exception.CommentNoContentException;
-import com.sytoss.exception.no_contet_exception.MediaNoContentException;
-import com.sytoss.exception.no_contet_exception.MessageNoContentException;
-import com.sytoss.exception.no_contet_exception.UserAccountNoContentException;
+import com.sytoss.exception.no_contet_exception.*;
 import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.mapper.*;
 import com.sytoss.model.Media;
@@ -80,7 +77,7 @@ public class UserAccountController {
         final Comment comment = commentMapper.toEntity(commentDTO);
         try {
             userAccountService.leaveComment(comment);
-        } catch (CommentNoContentException e) {
+        } catch (CommentNoContentException | CommunicationNoContentException e) {
             logger.error(e.getMessage());
         }
     }
@@ -89,7 +86,7 @@ public class UserAccountController {
         final Message message = messageMapper.toEntity(commentDTO);
         try {
             userAccountService.leaveMessage(message);
-        } catch (MessageNoContentException e) {
+        } catch (MessageNoContentException | CommunicationNoContentException e) {
             logger.error(e.getMessage());
         }
     }

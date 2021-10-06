@@ -1,5 +1,6 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.exception.no_contet_exception.PromotionNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchPromotionException;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.course.Promotion;
@@ -32,10 +33,10 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public void createPromotion(Promotion promotion) {
+    public void createPromotion(Promotion promotion) throws PromotionNoContentException {
         if (promotion == null) {
             logger.error("Cannot save promotion with null value");
-            throw new NullPointerException();
+            throw new PromotionNoContentException("Promotion is null");
         }
         Promotion savedPromotion = promotionRepository.save(promotion);
         logger.info("Promotion {} was created", savedPromotion.getId());
@@ -45,7 +46,7 @@ public class PromotionServiceImpl implements PromotionService {
     public void updatePromotion(Promotion promotion) throws NoSuchPromotionException {
         if (!promotionRepository.exists(promotion.getId())) {
             logger.error("Couldn't find promotion with id: {}", promotion.getId());
-            throw new NoSuchPromotionException();
+            throw new NoSuchPromotionException("No such promotion exists");
         }
         promotionRepository.save(promotion);
         logger.info("Promotion {} was updated", promotion.getId());

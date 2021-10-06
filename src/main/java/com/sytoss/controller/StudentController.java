@@ -1,6 +1,11 @@
 package com.sytoss.controller;
 
+import com.sytoss.exception.CourseNotPaidException;
+import com.sytoss.exception.no_contet_exception.*;
 import com.sytoss.exception.no_such_exception.NoSuchCourseException;
+import com.sytoss.exception.no_such_exception.NoSuchStudyException;
+import com.sytoss.exception.no_such_exception.NoSuchStudyGroupException;
+import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.mapper.*;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.StudyGroup;
@@ -10,6 +15,8 @@ import com.sytoss.service.StudentService;
 import com.sytoss.service.UserAccountService;
 import com.sytoss.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class StudentController {
+    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
     private final UserAccountService userAccountService;
     private final StudentService studentService;
     private final CommunicationMapper communicationMapper;
@@ -35,9 +43,10 @@ public class StudentController {
         List<Study> studies = null;
         try {
             studies = studentService.findStudiesByStudent(student);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NoSuchUserAccountException | UserAccountNoContentException e) {
+            logger.error(e.getMessage());
         }
+
         return studyMapper.toListDTO(studies);
     }
 
@@ -45,23 +54,33 @@ public class StudentController {
         Student student = studentMapper.toEntity(studentDTO);
         StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
         PurchaseDTO purchaseDTO = null;
+
         try {
             purchaseDTO = purchaseMapper.toDTO(studentService.payCourse(student, studyGroup));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (CourseNotPaidException | UserAccountNoContentException | StudyGroupNoContentException | PurchaseNoContentException | NoSuchUserAccountException | NoSuchStudyGroupException e) {
+            logger.error(e.getMessage());
         }
+
         return purchaseDTO;
     }
 
-    public void rateCourse(CourseDTO courseDTO, Integer rateValue) throws NoSuchCourseException {
+    public void rateCourse(CourseDTO courseDTO, Integer rateValue) {
         Course course = courseMapper.toEntity(courseDTO);
-        studentService.rateCourse(course, rateValue);
+        try {
+            studentService.rateCourse(course, rateValue);
+        } catch (NoSuchCourseException | CourseNoContentException e) {
+            logger.error(e.getMessage());
+        }
     }
 
-    public void returnCourse(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) throws Exception {
+    public void returnCourse(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) {
         Student student = studentMapper.toEntity(studentDTO);
         StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
-        studentService.returnCourse(student, studyGroup);
+        try {
+            studentService.returnCourse(student, studyGroup);
+        } catch (NoSuchStudyException | StudyNoContentException | StudyGroupNoContentException e) {
+            logger.error(e.getMessage());
+        }
     }
 
     public List<PurchaseDTO> findPurchaseByStudent(UserAccountDTO userAccountDTO) {
@@ -69,16 +88,24 @@ public class StudentController {
         return purchaseMapper.toListDTO(studentService.findPurchaseByStudent(student));
     }
 
-    public void joinStudyGroup(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) throws Exception {
+    public void joinStudyGroup(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) {
         Student student = studentMapper.toEntity(studentDTO);
         StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
-        studentService.joinStudyGroup(student, studyGroup);
+        try {
+            studentService.joinStudyGroup(student, studyGroup);
+        } catch (PurchaseNoContentException | CourseNotPaidException | StudyGroupNoContentException | UserAccountNoContentException e) {
+            logger.error(e.getMessage());
+        }
     }
 
-    public void leaveStudyGroup(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) throws Exception {
+    public void leaveStudyGroup(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) {
         Student student = studentMapper.toEntity(studentDTO);
         StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
-        studentService.leaveStudyGroup(student, studyGroup);
+        try {
+            studentService.leaveStudyGroup(student, studyGroup);
+        } catch (NoSuchStudyException | StudyNoContentException | StudyGroupNoContentException e) {
+            logger.error(e.getMessage());
+        }
     }
 
 }
