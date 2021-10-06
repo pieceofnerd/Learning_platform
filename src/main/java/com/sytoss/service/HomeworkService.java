@@ -1,7 +1,7 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.FeedbackNoContentException;
-import com.sytoss.exception.HomeworkNoContentException;
+import com.sytoss.exception.no_contet_exception.FeedbackNoContentException;
+import com.sytoss.exception.no_contet_exception.HomeworkNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchHomeworkException;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.Homework;
