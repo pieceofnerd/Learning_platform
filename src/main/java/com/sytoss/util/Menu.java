@@ -33,7 +33,7 @@ public class Menu {
                     "3. Go to Student menu",
                     "4. Go to Lesson menu",
                     "5. Go to UserAccount",
-                    "6. Go to course menu"
+                    "6. Go to Course menu"
             );
             switch (scanInt()) {
                 case -1:

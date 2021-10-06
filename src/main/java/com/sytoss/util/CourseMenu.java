@@ -1,16 +1,18 @@
 package com.sytoss.util;
 
 import com.sytoss.controller.CourseController;
-import com.sytoss.mapper.CategoryMapper;
-import com.sytoss.mapper.CourseMapper;
-import com.sytoss.mapper.LookupMapper;
+import com.sytoss.mapper.*;
 import com.sytoss.model.course.Course;
+import com.sytoss.model.course.Topic;
 import com.sytoss.model.enums.PriceType;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.course.CategoryRepository;
-import com.sytoss.repository.course.CourseRepository;
+import com.sytoss.repository.course.TopicRepository;
+import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.CourseService;
 import com.sytoss.web.dto.*;
+import com.sytoss.web.dto.filter.Filter;
+import com.sytoss.web.dto.filter.FilterCourseDTO;
 import com.sytoss.web.dto.save.*;
 import com.sytoss.web.dto.update.CourseUpdateDTO;
 import org.springframework.stereotype.Component;
@@ -50,10 +52,9 @@ public class CourseMenu {
 
     public CourseMenu(CourseController courseController, CategoryRepository categoryRepository,
                       CourseService courseService, LookupRepository lookupRepository,
-                      UserAccountRepository userAccountRepository, StudentMapper studentMapper, CategoryMapper categoryMapper,
-                      CourseMapper courseMapper, LookupMapper lookupMapper) {
-                      CourseService courseService, LookupRepository lookupRepository, TopicRepository topicRepository,
-                      CategoryMapper categoryMapper, CourseMapper courseMapper, TopicMapper topicMapper, LookupMapper lookupMapper) {
+                      UserAccountRepository userAccountRepository, StudentMapper studentMapper,
+                      CategoryMapper categoryMapper, CourseMapper courseMapper, TopicRepository topicRepository,
+                      TopicMapper topicMapper, LookupMapper lookupMapper) {
         this.courseController = courseController;
         this.categoryRepository = categoryRepository;
         this.courseService = courseService;
@@ -64,6 +65,7 @@ public class CourseMenu {
         this.categoryMapper = categoryMapper;
         this.courseMapper = courseMapper;
         this.lookupMapper = lookupMapper;
+        this.topicMapper = topicMapper;
     }
 
     public void start() {
@@ -163,7 +165,7 @@ public class CourseMenu {
             case 4: {
                 try {
                     printTopicsByCourse(findCourseDto());
-                    long topicId = scanInt("Please, enter topic id: ");
+                    long topicId = MenuUtils.scanInt("Please, enter topic id: ");
                     Topic topic = topicRepository.findOne(topicId);
                     courseController.removeTopic(topicMapper.toDTO(topic));
                 } catch (Exception e) {
@@ -173,12 +175,11 @@ public class CourseMenu {
                 break;
             }
             case 5: {
-                try{
+                try {
                     printTopicsByCourse(findCourseDto());
-                    long topicId = scanInt("Please, enter topic id: ");
+                    long topicId = MenuUtils.scanInt("Please, enter topic id: ");
                     Topic topic = topicRepository.findOne(topicId);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("There is no such course in our system");
                     return;
                 }
@@ -215,7 +216,7 @@ public class CourseMenu {
                             courses = courseController.findByFilter(new FilterCourseDTO(Filter.HIGH_LOW, null, null, studentId, null));
                             break;
                         }
-                        case 6:{
+                        case 6: {
                             long studentId = MenuUtils.scanInt("please, enter category id: ");
                             courses = courseController.findByFilter(new FilterCourseDTO(Filter.HIGH_LOW, null, null, studentId, null));
                             break;
@@ -229,7 +230,7 @@ public class CourseMenu {
                 }
                 break;
             }
-            case 7:{
+            case 7: {
                 printAllCourses(courseController.getAll());
             }
         }
@@ -427,7 +428,7 @@ public class CourseMenu {
         return MenuUtils.scanInt("Please, enter a topic : ") - 1;
     }
 
-    private void printTopicsByCourse(CourseUpdateDTO courseDTO) {
+    private int printTopicsByCourse(CourseUpdateDTO courseDTO) {
         for (TopicDTO topic : courseDTO.getTopics()) {
             MenuUtils.printField("topic number", courseDTO.getTopics().indexOf(topic) + 1);
             printTopic(topic);
@@ -470,7 +471,7 @@ public class CourseMenu {
             MenuUtils.printField("lesson template number", courseDTO.getTopics().get(topicId).getLessonTemplates().indexOf(lessonTemplate) + 1);
             printLessonTemplate(lessonTemplate);
         }
-        return MenuUtils.scanInt("Please, enter a lesson template : ")-1;
+        return MenuUtils.scanInt("Please, enter a lesson template : ") - 1;
     }
 
     private static MediaSaveDTO addMedia(String message) {
