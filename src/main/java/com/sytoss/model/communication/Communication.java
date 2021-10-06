@@ -18,6 +18,7 @@ import java.util.Date;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "communication_type")
+@DiscriminatorValue("null")
 @Table(name = "communication")
 public class Communication {
 

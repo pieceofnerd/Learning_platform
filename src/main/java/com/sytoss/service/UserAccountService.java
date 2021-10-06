@@ -1,7 +1,7 @@
 package com.sytoss.service;
 
-import com.sytoss.exception.EmailAlreadyExistsException;
-import com.sytoss.exception.NoSuchUserAccountException;
+import com.sytoss.exception.*;
+import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
@@ -12,15 +12,19 @@ public interface UserAccountService {
 
     List<UserAccount> findUsersByFilter(FilterUserAccountDTO filter);
 
-    void registerUserAccount(UserAccount userAccount) throws EmailAlreadyExistsException;
+    void registerUserAccount(UserAccount userAccount) throws EmailAlreadyExistsException, UserAccountNoContentException;
 
-    void updateUserAccount(UserAccount userAccount) throws NoSuchUserAccountException, EmailAlreadyExistsException;
+    void updateUserAccount(UserAccount userAccount) throws NoSuchUserAccountException, EmailAlreadyExistsException, UserAccountNoContentException;
 
-    void deleteUserAccount(UserAccount userAccount) throws NoSuchUserAccountException;
+    void deleteUserAccount(UserAccount userAccount) throws NoSuchUserAccountException, UserAccountNoContentException;
 
-    void resetPassword(UserAccount userAccount,char[] oldPassword, char[] newPassword) throws Exception;
+    void resetPassword(UserAccount userAccount, char[] oldPassword, char[] newPassword) throws Exception;
 
-    void forgotPassword(String email);
+    void saveCV(Media media) throws MediaNoContentException;
 
-    void leaveComment(Communication comment);
+    void forgotPassword(String email) throws UserAccountNoContentException;
+
+    void leaveComment(Communication comment) throws CommentNoContentException;
+
+    void leaveMessage(Communication message) throws MessageNoContentException;
 }

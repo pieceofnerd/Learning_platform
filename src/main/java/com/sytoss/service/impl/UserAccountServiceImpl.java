@@ -1,9 +1,10 @@
 package com.sytoss.service.impl;
 
-import com.sytoss.exception.EmailAlreadyExistsException;
-import com.sytoss.exception.NoSuchUserAccountException;
+import com.sytoss.exception.*;
+import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.repository.MediaRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.CommunicationService;
 import com.sytoss.service.UserAccountService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -21,23 +23,27 @@ import java.util.List;
 @Service
 @Transactional
 public class UserAccountServiceImpl implements UserAccountService {
-    private static final Logger logger = LoggerFactory.getLogger(UserAccountServiceImpl.class);
-
-    private final UserAccountRepository userAccountRepository;
+        private static final Logger logger = LoggerFactory.getLogger(UserAccountServiceImpl.class);
 
     private final CommunicationService communicationService;
 
+    private final UserAccountRepository userAccountRepository;
+
+    private final MediaRepository mediaRepository;
+
+
     @Autowired
-    public UserAccountServiceImpl(UserAccountRepository userAccountRepository, CommunicationService communicationService) {
+    public UserAccountServiceImpl(UserAccountRepository userAccountRepository, CommunicationService communicationService, MediaRepository mediaRepository) {
         this.userAccountRepository = userAccountRepository;
         this.communicationService = communicationService;
+        this.mediaRepository = mediaRepository;
     }
 
     @Override
-    public void registerUserAccount(UserAccount userAccount) throws EmailAlreadyExistsException {
+    public void registerUserAccount(UserAccount userAccount) throws EmailAlreadyExistsException, UserAccountNoContentException {
         if (userAccount == null) {
             logger.error("user account must be not null");
-            return;
+            throw new UserAccountNoContentException("User is null");
         }
 
         validateEmail(userAccount);
@@ -47,15 +53,15 @@ public class UserAccountServiceImpl implements UserAccountService {
     private void validateEmail(UserAccount userAccount) throws EmailAlreadyExistsException {
         if (userAccountRepository.findUserAccountByEmailAndDeletedIsFalse(userAccount.getEmail()) != null) {
             logger.error("User with email {} is already registered", userAccount.getEmail());
-            throw new EmailAlreadyExistsException();
+            throw new EmailAlreadyExistsException(String.format("User with email %s is already registered", userAccount.getEmail()));
         }
     }
 
     @Override
-    public void updateUserAccount(UserAccount userAccount) throws NoSuchUserAccountException, EmailAlreadyExistsException {
+    public void updateUserAccount(UserAccount userAccount) throws NoSuchUserAccountException, UserAccountNoContentException {
         if (userAccount == null) {
             logger.error("user account must be not null");
-            return;
+            throw new UserAccountNoContentException("User is null");
         }
         checkUserAccountExistence(userAccount);
 
@@ -73,15 +79,24 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public void deleteUserAccount(UserAccount userAccount) throws NoSuchUserAccountException {
+    public void deleteUserAccount(UserAccount userAccount) throws NoSuchUserAccountException, UserAccountNoContentException {
         if (userAccount == null) {
             logger.error("user account must be not null");
-            return;
+            throw new UserAccountNoContentException("User is null");
         }
         UserAccount user = userAccountRepository.findOne(userAccount.getId());
         checkUserAccountExistence(userAccount);
         user.setDeleted(true);
         userAccountRepository.save(user);
+    }
+
+    @Override
+    public void saveCV(Media media) throws MediaNoContentException {
+        if (media == null) {
+            logger.error("CV must be not null");
+            throw new MediaNoContentException("CV is null");
+        }
+        mediaRepository.save(media);
     }
 
     @Override
@@ -92,21 +107,21 @@ public class UserAccountServiceImpl implements UserAccountService {
         }
         checkUserAccountExistence(userAccount);
 
-        if(oldPassword == null){
+        if (oldPassword == null) {
             logger.info("Old password is empty");
             throw new Exception("Old password is empty");
         }
-        if(newPassword == null){
+        if (newPassword == null) {
             logger.info("New password is empty");
             throw new Exception("New password is empty");
         }
-        if(Arrays.toString(newPassword).equals(Arrays.toString(oldPassword))){
+        if (Arrays.toString(newPassword).equals(Arrays.toString(oldPassword))) {
             logger.info("Passwords are the same");
             throw new Exception("Passwords are the same");
         }
         UserAccount user = userAccountRepository.findOne(userAccount.getId());
 
-        if(!Arrays.toString(user.getPassword()).equals(Arrays.toString(oldPassword))){
+        if (!Arrays.toString(user.getPassword()).equals(Arrays.toString(oldPassword))) {
             logger.info("User password not equals old password");
             throw new Exception("User password not equals old password");
         }
@@ -116,10 +131,11 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public void forgotPassword(String email) {
+    public void forgotPassword(String email) throws UserAccountNoContentException {
         UserAccount userAccount = userAccountRepository.findUserAccountByEmailAndDeletedIsFalse(email);
         if (userAccount == null) {
             logger.error("Couldn't find user account by email {}", email);
+            throw new UserAccountNoContentException("User is null");
         }
 
         //send email
@@ -127,31 +143,45 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public void leaveComment(Communication comment) {
+    public void leaveComment(Communication comment) throws CommentNoContentException {
         if (comment == null) {
             logger.error("Comment must not be null");
-            return;
+            throw new CommentNoContentException("Comment is null");
         }
         communicationService.createCommunication(comment);
     }
 
     @Override
+    public void leaveMessage(Communication message) throws MessageNoContentException {
+        if (message == null) {
+            logger.error("Message must not be null");
+            throw new MessageNoContentException("Message is null");
+        }
+        communicationService.createCommunication(message);
+    }
+
+    @Override
     public List<UserAccount> findUsersByFilter(FilterUserAccountDTO filter) {
+        List<UserAccount> users = new ArrayList<>();
         switch (filter.getFilter()) {
             case FULL_NAME: {
-                return userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndSecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName(), filter.getSecondName());
+                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndSecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName(), filter.getSecondName()));
+                break;
             }
             case FIRST_NAME: {
-                return userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName());
+                users.addAll(userAccountRepository.findAllByFirstNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getFirstName()));
+                break;
             }
             case SECOND_NAME: {
-                return userAccountRepository.findAllBySecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getSecondName());
+                users.addAll(userAccountRepository.findAllBySecondNameStartingWithIgnoreCaseAndDeletedIsFalse(filter.getSecondName()));
+                break;
             }
             case DELETED: {
                 //TODO
+                break;
             }
         }
-        return null;
+        return users;
     }
 
     private void checkUserAccountExistence(UserAccount userAccount) throws NoSuchUserAccountException {
