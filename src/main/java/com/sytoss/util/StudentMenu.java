@@ -41,7 +41,9 @@ public class StudentMenu {
                 "4. Leave StudyGroup",
                 "5. Return course",
                 "6. Find all purchase by student",
-                "7. Find all studies by student"
+                "7. Find all studies by student",
+                "8. Leave comment",
+                "9. Leave message"
         );
 
         long studentId;
@@ -141,6 +143,12 @@ public class StudentMenu {
                     printField("createdDate", s.getCreatedDate());
                     printField("updatedDate", s.getUpdatedDate());
                 }
+                break;
+            case 8:
+
+                break;
+            case 9:
+
                 break;
         }
     }

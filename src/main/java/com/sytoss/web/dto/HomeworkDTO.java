@@ -1,7 +1,5 @@
 package com.sytoss.web.dto;
 
-import com.sytoss.model.communication.Feedback;
-import com.sytoss.model.communication.Message;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 public class HomeworkDTO {
 
+    private Long id;
+
     private UserAccountDTO author;
 
-    private String homeworkState;
+    private LookupDTO homeworkState;
 
     private String answerPath;
 

@@ -3,16 +3,22 @@ package com.sytoss.util;
 import com.sytoss.controller.UserAccountController;
 import com.sytoss.exception.EmailAlreadyExistsException;
 import com.sytoss.exception.NoSuchUserAccountException;
-import com.sytoss.mapper.AddressMapper;
-import com.sytoss.mapper.MediaMapper;
-import com.sytoss.mapper.UserAccountMapper;
-import com.sytoss.model.course.Course;
-import com.sytoss.model.course.StudyGroup;
+import com.sytoss.mapper.*;
+import com.sytoss.model.course.*;
+import com.sytoss.model.education.Homework;
+import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
+import com.sytoss.repository.course.LessonRepository;
+import com.sytoss.repository.course.LessonTemplateRepository;
+import com.sytoss.repository.course.StudyGroupRepository;
+import com.sytoss.repository.course.TopicRepository;
+import com.sytoss.repository.education.HomeworkRepository;
+import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.web.dto.*;
 import com.sytoss.web.dto.save.AddressSaveDTO;
+import com.sytoss.web.dto.save.CommunicationSaveDTO;
 import com.sytoss.web.dto.save.MediaSaveDTO;
 import com.sytoss.web.dto.save.UserAccountSaveDTO;
 import com.sytoss.web.dto.update.UserAccountUpdateDTO;
@@ -22,25 +28,36 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 import static com.sytoss.util.MenuUtils.*;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserAccountMenu {
     private final UserAccountController userAccountController;
     private final UserAccountRepository userAccountRepository;
+    private final LessonRepository lessonRepository;
+    private final StudyRepository studyRepository;
+    private final StudyGroupRepository studyGroupRepository;
+    private final TopicRepository topicRepository;
+    private final LessonTemplateRepository lessonTemplateRepository;
+    private final HomeworkRepository homeworkRepository;
+    private final HomeworkMapper homeworkMapper;
     private final AddressMapper addressMapper;
     private final MediaMapper mediaMapper;
+    private final LessonMapper lessonMapper;
     private final UserAccountMapper userAccountMapper;
 
-    @Transactional
     public void start() throws Exception {
         printMenu(
                 "-1. Quit",
                 "1. Register user",
-                "2. Update user",
-                "3. Delete user"
+                "2. Send CV",
+                "3. Update user",
+                "4. Delete user",
+                "5. Communication functions"
         );
 
         long userId;
@@ -87,19 +104,30 @@ public class UserAccountMenu {
                 userAccountController.registerUserAccount(userAccountSaveDTO);
                 break;
             case 2:
+                String cv = scanLine("Add your CV - ");
+                MediaSaveDTO mediaSaveDTO = new MediaSaveDTO();
+                mediaSaveDTO.setMediaPath(cv);
+
+                userAccountController.saveCV(mediaSaveDTO);
+                break;
+            case 3:
                 userId = scanInt("Write user id to update - ");
                 user = userAccountRepository.findOne(userId);
                 printUser(user);
                 userUpdate(getUserUpdate(user));
                 break;
-            case 3:
+            case 4:
                 userId = scanInt("Write user id to update - ");
                 user = userAccountRepository.findOne(userId);
                 UserAccountUpdateDTO userUpdate = getUserUpdate(user);
                 userAccountController.deleteUserAccount(userUpdate);
                 break;
+            case 5:
+                printUserRole();
+                break;
         }
     }
+
 
     private void userUpdate(UserAccountUpdateDTO userDTO) throws Exception {
         switch (scanInt("Write field which want to update - ")) {
@@ -166,5 +194,131 @@ public class UserAccountMenu {
         userUpdate.setEmail(user.getEmail());
         userUpdate.setPassword(user.getPassword());
         return userUpdate;
+    }
+
+
+
+    // TODO
+    private void printMentorCommunicationMenu(int i, UserAccount mentor) {
+        switch (i) {
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+        }
+    }
+
+    private void printStudentCommunicationMenu(int i, UserAccount student) {
+
+        switch (i) {
+            case 1:
+                for (Study study :
+                        studyRepository.findStudiesByDeletedIsFalseAndStudent(student)) {
+                    for (Lesson lesson :
+                            lessonRepository.findLessonsByActiveTrueAndStudyGroup(study.getStudyGroup())) {
+                        printClassName(lesson.getClass().getSimpleName());
+                        printField("id", lesson.getId());
+                        printField("mentor", lesson.getMentor().getId());
+                        printField("home task", lesson.getHomeTask().getId());
+                    }
+                }
+                long lessonId = scanInt("Write lesson id to leave comment - ");
+                Lesson lesson = lessonRepository.findById(lessonId);
+                CommunicationSaveDTO comment = new CommunicationSaveDTO();
+                comment.setSender(userAccountMapper.toDTO(student));
+                comment.setLesson(lessonMapper.toDTO(lesson));
+                comment.setContent(scanLine("Write comment content - "));
+                userAccountController.leaveComment(comment);
+                break;
+            case 2:
+                for (Homework homework :
+                        homeworkRepository.findAllByAuthorAndActiveIsTrue(student)) {
+                    printClassName(homework.getClass().getSimpleName());
+                    printField("id", homework.getId());
+                    printField("author", homework.getAuthor().getId());
+                    printField("homework state", homework.getHomeworkState().getValue());
+                    printField("Home task", homework.getHomeTask().getId());
+                }
+                long homeworkId = scanInt("Write homework id to leave message - ");
+                Homework homework = homeworkRepository.findOne(homeworkId);
+
+                CommunicationSaveDTO message = new CommunicationSaveDTO();
+                message.setSender(userAccountMapper.toDTO(homework.getAuthor()));
+                message.setReceiver(userAccountMapper.toDTO(homework.getHomeTask().getLesson().getMentor()));
+                message.setHomework(homeworkMapper.toDTO(homework));
+                message.setContent(scanLine("Write message content - "));
+                userAccountController.leaveMessage(message);
+                break;
+        }
+    }
+
+    private void printStudents() {
+        List<UserAccount> users = userAccountRepository.findUserAccountsByDeletedIsFalseAndRole(3L);
+        for (UserAccount user : users) {
+            printClassName(user.getClass().getSimpleName());
+            printField("Id", user.getId());
+            printField("Full name", user.getFirstName() + " " + user.getSecondName());
+            printField("Last activity", user.getLastActivity());
+        }
+    }
+
+    private void printMentors() {
+        List<UserAccount> users = userAccountRepository.findUserAccountsByDeletedIsFalseAndRole(2L);
+        for (UserAccount user : users) {
+            printClassName(user.getClass().getSimpleName());
+            printField("Id", user.getId());
+            printField("Full name", user.getFirstName() + " " + user.getSecondName());
+            printField("Last activity", user.getLastActivity());
+        }
+    }
+
+    private void printAdmins() {
+        List<UserAccount> users = userAccountRepository.findUserAccountsByDeletedIsFalseAndRole(1L);
+        for (UserAccount user : users) {
+            printClassName(user.getClass().getSimpleName());
+            printField("Id", user.getId());
+            printField("Full name", user.getFirstName() + " " + user.getSecondName());
+            printField("Last activity", user.getLastActivity());
+        }
+    }
+
+    private List<UserAccount> printUserRole() {
+        List<UserAccount> users = null;
+        UserAccount user;
+        long userId;
+        printMenu(
+                "1. Students",
+                "2. Mentors",
+                "3. Admins"
+        );
+        switch (scanInt("Write 1,2 or 3 - ")) {
+            case 1:
+                printStudents();
+                userId = scanInt("Write student id - ");
+                user = userAccountRepository.findOne(userId);
+                printMenu(
+                        "1. Comment",
+                        "2. Message"
+                );
+                printStudentCommunicationMenu(scanInt("Write 1 or 2 - "), user);
+                break;
+            case 2:
+                //TODO
+                printMentors();
+                userId = scanInt("Write mentor id - ");
+                user = userAccountRepository.findOne(userId);
+                printMenu(
+                        "1. Feedback",
+                        "2. Message"
+                );
+                break;
+
+            case 3:
+                printAdmins();
+                break;
+        }
+        return users;
     }
 }

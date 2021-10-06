@@ -33,7 +33,7 @@ public class Homework {
     private UserAccount author;
 
     @JoinColumn(name = "homework_state_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.ALL)
     private Lookup homeworkState;
 
     @Column(name = "answer_path")
@@ -45,7 +45,7 @@ public class Homework {
     @OneToMany(
             mappedBy = "homework",
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.REMOVE, CascadeType.REFRESH}
+            cascade = {CascadeType.ALL}
     )
     private List<Message> dialog;
 

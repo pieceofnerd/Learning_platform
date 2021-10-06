@@ -2,6 +2,7 @@ package com.sytoss.web.dto.save;
 
 import com.sytoss.web.dto.HomeworkDTO;
 import com.sytoss.web.dto.LessonDTO;
+import com.sytoss.web.dto.UserAccountDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class CommunicationSaveDTO {
 
-    private Long sender;
+    private UserAccountDTO sender;
 
-    private Long receiver;
+    private UserAccountDTO receiver;
 
     private String content;
 
@@ -27,5 +28,5 @@ public class CommunicationSaveDTO {
 
     private Integer score;
 
-    private Boolean active;
+    private Boolean active = true;
 }

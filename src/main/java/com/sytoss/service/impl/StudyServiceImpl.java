@@ -1,6 +1,9 @@
 package com.sytoss.service.impl;
 
 import com.sytoss.exception.NoSuchStudyException;
+import com.sytoss.exception.StudyGroupNoContentException;
+import com.sytoss.exception.StudyNoContentException;
+import com.sytoss.exception.UserAccountNoContentException;
 import com.sytoss.model.enums.HomeworkStatus;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.course.Lesson;
@@ -54,10 +57,14 @@ public class StudyServiceImpl implements StudyService {
 
 
     @Override
-    public void saveStudy(UserAccount student, StudyGroup studyGroup) throws Exception {
-        if (student == null || studyGroup == null) {
-            logger.error("Student and study group must not be null");
-            return;
+    public void saveStudy(UserAccount student, StudyGroup studyGroup) throws StudyGroupNoContentException, UserAccountNoContentException {
+        if (student == null) {
+            logger.error("Student must not be null");
+            throw new UserAccountNoContentException("Student is null");
+        }
+        if(studyGroup == null) {
+            logger.error("StudyGroup must not be null");
+            throw new StudyGroupNoContentException("StudyGroup is null");
         }
 
         Study study = new Study();
@@ -68,10 +75,10 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public void deleteStudy(Study study) throws Exception {
+    public void deleteStudy(Study study) throws StudyNoContentException, NoSuchStudyException {
         if (study == null) {
             logger.error("Study must not be null");
-            return;
+            throw new StudyNoContentException("Study is null");
         }
 
         if (!studyRepository.exists(study.getId())) {
@@ -86,7 +93,7 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public void updateProgress(UserAccount student, StudyGroup studyGroup) throws Exception {
+    public void updateProgress(UserAccount student, StudyGroup studyGroup) throws StudyNoContentException {
         if (student == null || studyGroup == null) {
             logger.error("Student and study group must not be null");
             return;
@@ -109,7 +116,7 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public void updateAssessment(UserAccount student, StudyGroup studyGroup) throws Exception {
+    public void updateAssessment(UserAccount student, StudyGroup studyGroup) throws StudyNoContentException {
         if (student == null || studyGroup == null) {
             logger.error("Student and study group must not be null");
             return;
@@ -145,7 +152,7 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public List<Study> findStudiesByFilter(FilterStudyDTO filter) throws Exception {
+    public List<Study> findStudiesByFilter(FilterStudyDTO filter)  {
         List<Study> studies = new ArrayList<>();
         switch (filter.getFilter()) {
             case STUDENT:
@@ -154,18 +161,16 @@ public class StudyServiceImpl implements StudyService {
             case STUDY_GROUP:
                 studies.addAll(studyRepository.findStudiesByDeletedIsFalseAndStudyGroup(studyGroupRepository.findOne(filter.getStudyGroup())));
                 break;
-            default:
-                throw new Exception("FILTER ERROR");
         }
         return studies;
     }
 
-    private Study checkStudyExistence(UserAccount student, StudyGroup studyGroup) throws NoSuchStudyException {
+    private Study checkStudyExistence(UserAccount student, StudyGroup studyGroup) throws StudyNoContentException {
         Study study = studyRepository.findStudyByDeletedIsFalseAndStudentAndStudyGroup(student, studyGroup);
 
         if (study == null) {
             logger.error("Couldn't find study of {} student from {} study group", student.getId(), studyGroup.getId());
-            throw new NoSuchStudyException();
+            throw new StudyNoContentException("Study is null");
         }
         return study;
     }
