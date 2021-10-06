@@ -4,11 +4,13 @@ import com.sytoss.controller.CourseController;
 import com.sytoss.mapper.CategoryMapper;
 import com.sytoss.mapper.CourseMapper;
 import com.sytoss.mapper.LookupMapper;
+import com.sytoss.mapper.TopicMapper;
 import com.sytoss.model.course.Course;
+import com.sytoss.model.course.Topic;
 import com.sytoss.model.enums.PriceType;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.course.CategoryRepository;
-import com.sytoss.repository.course.CourseRepository;
+import com.sytoss.repository.course.TopicRepository;
 import com.sytoss.service.CourseService;
 import com.sytoss.web.dto.*;
 import com.sytoss.web.dto.save.*;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.sytoss.util.MenuUtils.printField;
+import static com.sytoss.util.MenuUtils.scanInt;
 
 @Component
 @Transactional
@@ -34,21 +37,27 @@ public class CourseMenu {
 
     private final LookupRepository lookupRepository;
 
+    private final TopicRepository topicRepository;
+
     private final CategoryMapper categoryMapper;
 
     private final CourseMapper courseMapper;
 
+    private final TopicMapper topicMapper;
+
     private final LookupMapper lookupMapper;
 
     public CourseMenu(CourseController courseController, CategoryRepository categoryRepository,
-                      CourseService courseService, LookupRepository lookupRepository, CategoryMapper categoryMapper,
-                      CourseMapper courseMapper, LookupMapper lookupMapper) {
+                      CourseService courseService, LookupRepository lookupRepository, TopicRepository topicRepository,
+                      CategoryMapper categoryMapper, CourseMapper courseMapper, TopicMapper topicMapper, LookupMapper lookupMapper) {
         this.courseController = courseController;
         this.categoryRepository = categoryRepository;
         this.courseService = courseService;
         this.lookupRepository = lookupRepository;
+        this.topicRepository = topicRepository;
         this.categoryMapper = categoryMapper;
         this.courseMapper = courseMapper;
+        this.topicMapper = topicMapper;
         this.lookupMapper = lookupMapper;
     }
 
@@ -145,6 +154,31 @@ public class CourseMenu {
                 }
                 break;
             }
+
+            case 4: {
+                try {
+                    printTopicsByCourse(findCourseDto());
+                    long topicId = scanInt("Please, enter topic id: ");
+                    Topic topic = topicRepository.findOne(topicId);
+                    courseController.removeTopic(topicMapper.toDTO(topic));
+                } catch (Exception e) {
+                    System.out.println("There is no such course in our system");
+                    return;
+                }
+                break;
+            }
+            case 5: {
+                try{
+                    printTopicsByCourse(findCourseDto());
+                    long topicId = scanInt("Please, enter topic id: ");
+                    Topic topic = topicRepository.findOne(topicId);
+                }
+                catch (Exception e){
+                    System.out.println("There is no such course in our system");
+                    return;
+                }
+                break;
+            }
         }
     }
 
@@ -155,8 +189,8 @@ public class CourseMenu {
         if (course != null) {
             return courseMapper.toDTO(course);
         } else throw new Exception();
-
     }
+
 
     private static void menu() {
         MenuUtils.printMenu(
@@ -308,12 +342,23 @@ public class CourseMenu {
     }
 
     private int getTopicId(CourseUpdateDTO courseDTO) {
+        printTopicsByCourse(courseDTO);
+        return MenuUtils.scanInt("Please, enter a topic : ") - 1;
+    }
+
+    private void printTopicsByCourse(CourseUpdateDTO courseDTO) {
         for (TopicDTO topic : courseDTO.getTopics()) {
             MenuUtils.printField("topic number", courseDTO.getTopics().indexOf(topic) + 1);
             printTopic(topic);
         }
-        return MenuUtils.scanInt("Please, enter a topic : ") -1;
     }
+
+    private void printTopicsByCourse(CourseDTO courseDTO) {
+        for (TopicDTO topic : courseDTO.getTopics()) {
+            printTopic(topic);
+        }
+    }
+
 
     private void setLessonTemplateName(CourseUpdateDTO courseDTO) {
         int topicId = getTopicId(courseDTO);
@@ -343,7 +388,7 @@ public class CourseMenu {
             MenuUtils.printField("lesson template number", courseDTO.getTopics().get(topicId).getLessonTemplates().indexOf(lessonTemplate) + 1);
             printLessonTemplate(lessonTemplate);
         }
-        return MenuUtils.scanInt("Please, enter a lesson template : ")-1;
+        return MenuUtils.scanInt("Please, enter a lesson template : ") - 1;
     }
 
     private static MediaSaveDTO addMedia(String message) {
