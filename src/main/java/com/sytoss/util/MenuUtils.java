@@ -42,10 +42,10 @@ public class MenuUtils {
             scanner.nextLine();// java just ignore first Scanner.nextLine() after Scanner.nextInt();
         lastScanInteger = false;
         String date = scanner.nextLine();
-        DateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         if (date.equals("")) {
-            return format.parse("2000/01/01 00:00");
+            return format.parse("2000/01/01");
         }
         return format.parse(date);
     }

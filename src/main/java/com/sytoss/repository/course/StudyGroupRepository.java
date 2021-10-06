@@ -11,9 +11,11 @@ import java.util.List;
 
 public interface StudyGroupRepository extends JpaRepository<StudyGroup, Long> {
 
+    // this method should be deleted
+    List<StudyGroup> findStudyGroupsByDeletedFalseAndCourse(Course course);
+
     @Query("select s from StudyGroup s left join fetch s.studies where s.id = ?1")
     StudyGroup findById(Long id);
-
 
     @Query("select s from StudyGroup s where s.course = ?1 and s.deleted = false")
     List<StudyGroup> findStudyGroupsByCourseAndDeletedIsFalse(Course course);

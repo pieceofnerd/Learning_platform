@@ -13,6 +13,12 @@ import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
+    // this method should be deleted
+    List<Lesson> findLessonsByActiveTrueAndStudyGroup(StudyGroup studyGroup);
+
+    // this method should be deleted
+    List<Lesson> findLessonsByActiveTrueAndLessonTemplate(LessonTemplate lessonTemplate);
+
     @Query("select l from Lesson l left  join  fetch  l.comments where l.id = ?1")
     Lesson findById(Long id);
 

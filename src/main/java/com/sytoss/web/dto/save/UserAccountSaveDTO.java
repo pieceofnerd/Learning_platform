@@ -28,4 +28,5 @@ public class UserAccountSaveDTO {
     private char[] password;
 
     private MediaSaveDTO photo;
+
 }
