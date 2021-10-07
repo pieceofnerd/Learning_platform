@@ -1,21 +1,33 @@
 package com.sytoss.util;
 
 import com.sytoss.controller.StudentController;
+import com.sytoss.controller.UserAccountController;
 import com.sytoss.mapper.*;
 import com.sytoss.model.course.Course;
+import com.sytoss.model.course.Lesson;
 import com.sytoss.model.course.StudyGroup;
+import com.sytoss.model.education.Homework;
+import com.sytoss.model.education.Study;
+import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
 import com.sytoss.repository.course.CourseRepository;
+import com.sytoss.repository.course.LessonRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
+import com.sytoss.repository.education.HomeworkRepository;
+import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.repository.education.UserAccountRepository;
+import com.sytoss.service.UserAccountService;
 import com.sytoss.web.dto.PurchaseDTO;
 import com.sytoss.web.dto.StudyDTO;
 import com.sytoss.web.dto.StudyGroupDTO;
 import com.sytoss.web.dto.UserAccountDTO;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
+import com.sytoss.web.dto.save.CommunicationSaveDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.sytoss.util.MenuUtils.*;
 
@@ -24,9 +36,15 @@ import static com.sytoss.util.MenuUtils.*;
 public class StudentMenu {
 
     private final StudentController studentController;
+    private final UserAccountController userAccountController;
     private final UserAccountRepository userAccountRepository;
     private final StudyGroupRepository studyGroupRepository;
     private final CourseRepository courseRepository;
+    private final StudyRepository studyRepository;
+    private final HomeworkRepository homeworkRepository;
+    private final LessonRepository lessonRepository;
+    private final LessonMapper lessonMapper;
+    private final HomeworkMapper homeworkMapper;
     private final StudyGroupMapper studyGroupMapper;
     private final UserAccountMapper userAccountMapper;
     private final CourseMapper courseMapper;
@@ -42,8 +60,7 @@ public class StudentMenu {
                 "5. Return course",
                 "6. Find all purchase by student",
                 "7. Find all studies by student",
-                "8. Leave comment",
-                "9. Leave message"
+                "8. Communication functions"
         );
 
         long studentId;
@@ -62,8 +79,6 @@ public class StudentMenu {
                 studyGroup = studyGroupRepository.findById(studyGroupId);
                 userAccountDTO = userAccountMapper.toDTO(student);
                 studyGroupDTO = studyGroupMapper.toDTO(studyGroup);
-
-//                Student userAccount = studentMapper.toEntity(userAccountDTO);
 
                 PurchaseDTO purchaseDTO = studentController.payForCourse(userAccountDTO, studyGroupDTO);
                 printClassName(purchaseDTO.getClass().getSimpleName());
@@ -145,11 +160,66 @@ public class StudentMenu {
                 }
                 break;
             case 8:
-
+                printStudents();
+                studentId = scanInt("Write student id - ");
+                student = (Student) userAccountRepository.findOne(studentId);
+                printMenu("1. Leave comment", "2. Leave message");
+                printStudentCommunicationMenu(scanInt("Write 1 or 2 - "), student);
                 break;
-            case 9:
+        }
+    }
 
+    private void printStudentCommunicationMenu(int i, UserAccount student) {
+
+        switch (i) {
+            case 1:
+                for (Study study :
+                        studyRepository.findStudiesByDeletedIsFalseAndStudent(student)) {
+                    for (Lesson lesson :
+                            lessonRepository.findLessonsByActiveTrueAndStudyGroup(study.getStudyGroup())) {
+                        printClassName(lesson.getClass().getSimpleName());
+                        printField("id", lesson.getId());
+                        printField("mentor", lesson.getMentor().getId());
+                        printField("home task", lesson.getHomeTask().getId());
+                    }
+                }
+                long lessonId = scanInt("Write lesson id to leave comment - ");
+                Lesson lesson = lessonRepository.findById(lessonId);
+                CommunicationSaveDTO comment = new CommunicationSaveDTO();
+                comment.setSender(userAccountMapper.toDTO(student));
+                comment.setLesson(lessonMapper.toDTO(lesson));
+                comment.setContent(scanLine("Write comment content - "));
+                userAccountController.leaveComment(comment);
                 break;
+            case 2:
+                for (Homework homework :
+                        homeworkRepository.findAllByAuthorAndActiveIsTrue(student)) {
+                    printClassName(homework.getClass().getSimpleName());
+                    printField("id", homework.getId());
+                    printField("author", homework.getAuthor().getId());
+                    printField("homework state", homework.getHomeworkState().getValue());
+                    printField("Home task", homework.getHomeTask().getId());
+                }
+                long homeworkId = scanInt("Write homework id to leave message - ");
+                Homework homework = homeworkRepository.findOne(homeworkId);
+
+                CommunicationSaveDTO message = new CommunicationSaveDTO();
+                message.setSender(userAccountMapper.toDTO(homework.getAuthor()));
+                message.setReceiver(userAccountMapper.toDTO(homework.getHomeTask().getLesson().getMentor()));
+                message.setHomework(homeworkMapper.toDTO(homework));
+                message.setContent(scanLine("Write message content - "));
+                userAccountController.leaveMessage(message);
+                break;
+        }
+    }
+
+    private void printStudents() {
+        List<UserAccount> users = userAccountRepository.findUserAccountsByDeletedIsFalseAndRole(3L);
+        for (UserAccount user : users) {
+            printClassName(user.getClass().getSimpleName());
+            printField("Id", user.getId());
+            printField("Full name", user.getFirstName() + " " + user.getSecondName());
+            printField("Last activity", user.getLastActivity());
         }
     }
 

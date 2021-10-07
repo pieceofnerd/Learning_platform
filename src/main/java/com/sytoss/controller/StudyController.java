@@ -51,26 +51,6 @@ public class StudyController {
         }
     }
 
-    public void updateAssessment(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) {
-        final UserAccount student = userAccountMapper.toEntity(studentDTO);
-        final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
-        try {
-            studyService.updateAssessment(student, studyGroup);
-        } catch (StudyNoContentException | UserAccountNoContentException | StudyGroupNoContentException e) {
-            logger.error(e.getMessage());
-        }
-    }
-
-    public void updateProgress(UserAccountDTO studentDTO, StudyGroupDTO studyGroupDTO) {
-        final UserAccount student = userAccountMapper.toEntity(studentDTO);
-        final StudyGroup studyGroup = studyGroupMapper.toEntity(studyGroupDTO);
-
-        try {
-            studyService.updateProgress(student, studyGroup);
-        } catch (StudyNoContentException | UserAccountNoContentException | StudyGroupNoContentException e) {
-            logger.error(e.getMessage());
-        }
-    }
 
     public List<StudyDTO> findStudiesByFilter(FilterStudyDTO filter)  {
         final List<Study> studies = studyService.findStudiesByFilter(filter);

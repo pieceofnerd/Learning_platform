@@ -37,9 +37,7 @@ public class StudyMenu {
                 "-1. Quit",
                 "1. Save study",
                 "2. Delete study",
-                "3. Update student assessment",
-                "4. Update student progress",
-                "5. Find studies by filter"
+                "3. Find studies by filter"
         );
         long studentId = 0L;
         long studyGroupId = 0L;
@@ -61,20 +59,6 @@ public class StudyMenu {
                 studyController.deleteStudy(studyDTO);
                 break;
             case 3:
-                studentId = scanInt("Write student id to update his assessment- ");
-                studentDTO = userAccountMapper.toDTO(userAccountRepository.findOne(studentId));
-                studyGroupId = scanInt("Write his study group id - ");
-                studyGroupDTO = studyGroupMapper.toDTO(studyGroupRepository.findOne(studyGroupId));
-                studyController.updateAssessment(studentDTO, studyGroupDTO);
-                break;
-            case 4:
-                studentId = scanInt("Write student id to update his study progress - ");
-                studentDTO = userAccountMapper.toDTO(userAccountRepository.findOne(studentId));
-                studyGroupId = scanInt("Write his study group id - ");
-                studyGroupDTO = studyGroupMapper.toDTO(studyGroupRepository.findOne(studyGroupId));
-                studyController.updateProgress(studentDTO, studyGroupDTO);
-                break;
-            case 5:
                 printMenu(
                         "1. Filter by student",
                         "2. Filter by study group"
