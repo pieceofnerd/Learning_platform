@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -31,9 +32,11 @@ public class Promotion {
     private Integer percent;
 
     @Column(name = "start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm aa")
     private Date startDate;
 
     @Column(name = "end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm aa")
     private Date endDate;
 
     @ManyToOne(optional = false)
