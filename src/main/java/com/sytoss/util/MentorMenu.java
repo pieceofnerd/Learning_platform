@@ -60,7 +60,7 @@ public class MentorMenu {
         printMenu(
                 "-1. Quit",
                 "1. Find all lesson of the mentor",
-                "8. Communication functions"
+                "2. Communication functions"
         );
 
         long mentorId;
@@ -89,7 +89,7 @@ public class MentorMenu {
                     printField("Lesson date", lesson.getLessonDate());
                 }
                 break;
-            case 8:
+            case 2:
                 printMentors();
                 mentorId = scanInt("Write mentor id - ");
                 mentor = (Mentor) userAccountRepository.findOne(mentorId);

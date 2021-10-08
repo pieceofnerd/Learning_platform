@@ -26,7 +26,6 @@ public class UserAccountDTO {
     private List<HomeworkDTO> homeworks;
     private List<LessonDTO> lessons;
     private boolean deleted;
-//    private Long role;
     private Date lastActivity;
     private Date createdDate;
     private Date updatedDate;
