@@ -1,22 +1,15 @@
 package com.sytoss.util;
 
 import com.sytoss.controller.UserAccountController;
-import com.sytoss.mapper.*;
-import com.sytoss.model.course.*;
-import com.sytoss.model.education.Homework;
-import com.sytoss.model.education.Study;
+import com.sytoss.mapper.AddressMapper;
+import com.sytoss.mapper.MediaMapper;
+import com.sytoss.model.course.StudyGroup;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.model.education.user.Student;
-import com.sytoss.repository.course.LessonRepository;
-import com.sytoss.repository.course.LessonTemplateRepository;
-import com.sytoss.repository.course.StudyGroupRepository;
-import com.sytoss.repository.course.TopicRepository;
-import com.sytoss.repository.education.HomeworkRepository;
-import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.repository.education.UserAccountRepository;
-import com.sytoss.web.dto.*;
+import com.sytoss.web.dto.AddressDTO;
+import com.sytoss.web.dto.StudyGroupDTO;
 import com.sytoss.web.dto.save.AddressSaveDTO;
-import com.sytoss.web.dto.save.CommunicationSaveDTO;
 import com.sytoss.web.dto.save.MediaSaveDTO;
 import com.sytoss.web.dto.save.UserAccountSaveDTO;
 import com.sytoss.web.dto.update.UserAccountUpdateDTO;
@@ -25,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
 
 import static com.sytoss.util.MenuUtils.*;
 
@@ -35,17 +27,8 @@ import static com.sytoss.util.MenuUtils.*;
 public class UserAccountMenu {
     private final UserAccountController userAccountController;
     private final UserAccountRepository userAccountRepository;
-    private final LessonRepository lessonRepository;
-    private final StudyRepository studyRepository;
-    private final StudyGroupRepository studyGroupRepository;
-    private final TopicRepository topicRepository;
-    private final LessonTemplateRepository lessonTemplateRepository;
-    private final HomeworkRepository homeworkRepository;
-    private final HomeworkMapper homeworkMapper;
     private final AddressMapper addressMapper;
     private final MediaMapper mediaMapper;
-    private final LessonMapper lessonMapper;
-    private final UserAccountMapper userAccountMapper;
 
     public void start() throws Exception {
         printMenu(
@@ -53,16 +36,12 @@ public class UserAccountMenu {
                 "1. Register user",
                 "2. Send CV",
                 "3. Update user",
-                "4. Delete user",
-                "5. Communication functions"
+                "4. Delete user"
         );
 
         long userId;
         UserAccount user;
-        Student student;
-        StudyGroup studyGroup;
         UserAccountSaveDTO userAccountSaveDTO;
-        StudyGroupDTO studyGroupDTO;
         switch (scanInt()) {
             case -1:
                 return;
@@ -118,9 +97,6 @@ public class UserAccountMenu {
                 user = userAccountRepository.findOne(userId);
                 UserAccountUpdateDTO userUpdate = getUserUpdate(user);
                 userAccountController.deleteUserAccount(userUpdate);
-                break;
-            case 5:
-//                printUserRole();
                 break;
         }
     }
