@@ -40,7 +40,6 @@ public class CourseMapper extends BaseMapper<Course, CourseDTO> {
         return super.toListDTO(courses);
     }
 
-
     public Course toEntity(CourseUpdateDTO courseUpdateDTO){
         if (courseUpdateDTO == null) return null;
         else return mapper.map(courseUpdateDTO, Course.class);

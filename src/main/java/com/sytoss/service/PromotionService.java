@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PromotionService {
 
-    void createPromotion(Promotion promotion) throws PromotionNoContentException;
+    Promotion createPromotion(Promotion promotion) throws PromotionNoContentException;
 
     void updatePromotion(Promotion promotion) throws NoSuchPromotionException;
 

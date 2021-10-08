@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-    @Query("select c from Course c where c.active = true")
+    @Query("select c from Course c left join fetch c.prices p  where c.active = true")
     List<Course> findCoursesByActiveIsTrue();
 
     List<Course> findDistinctFirst10ByActiveIsTrueOrderByCreatedDateDesc();

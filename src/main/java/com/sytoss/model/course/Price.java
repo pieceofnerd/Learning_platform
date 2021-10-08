@@ -33,7 +33,7 @@ public class Price {
     @ManyToOne(optional = false)
     private Lookup priceType;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "promotion_id")
     private Promotion promotion;
 

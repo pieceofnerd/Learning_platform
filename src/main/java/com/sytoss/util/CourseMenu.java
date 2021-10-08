@@ -309,13 +309,14 @@ public class CourseMenu {
         printField("Lesson template duration", lessonTemplateDTO.getDuration());
     }
 
-    private static void printCourse(CourseDTO courseDTO) {
+    public static void printCourse(CourseDTO courseDTO) {
         printField("Course", courseDTO.getId());
         printField("Course title", courseDTO.getName());
         printField("Course description", courseDTO.getDescription());
         printField("Course recommended literature", courseDTO.getRecommendedLiterature());
         printField("Course category", courseDTO.getCategory().getName());
         printField("Course rating", courseDTO.getRating());
+        System.out.println();
     }
 
     private CourseUpdateDTO updateCourseDTO(CourseUpdateDTO courseDTO, int option) {

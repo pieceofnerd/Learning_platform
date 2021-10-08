@@ -26,5 +26,4 @@ public class PromotionDTO {
 
     private LookupDTO promotionState;
 
-    private List<PriceDTO> prices;
 }

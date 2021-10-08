@@ -43,7 +43,7 @@ public class Promotion {
     @OneToMany(
             mappedBy = "promotion",
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.REFRESH}
+            cascade = {CascadeType.MERGE}
     )
     private List<Price> prices;
 

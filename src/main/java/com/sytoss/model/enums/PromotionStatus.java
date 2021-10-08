@@ -1,15 +1,14 @@
 package com.sytoss.model.enums;
 
-public enum HomeworkStatus {
+public enum PromotionStatus {
 
-    CREATED(15L),
-    DONE(16L),
-    OVERDUE(17L),
-    PROVEN(23L);
+    ANNOUNCED(20L),
+    ACTIVE(21L),
+    FINISHED(22L);
 
     private final Long value;
 
-    HomeworkStatus(final Long value) {
+    PromotionStatus(final Long value) {
         this.value = value;
     }
 

@@ -80,6 +80,7 @@ public class CourseController {
     }
 
     public List<CourseDTO> getAll() {
+        List<Course> courses = courseService.getAll();
         return courseMapper.toListDTO(courseService.getAll());
     }
 
