@@ -9,8 +9,6 @@ import static com.sytoss.util.MenuUtils.scanInt;
 @RequiredArgsConstructor
 public class Menu {
 
-    private final StudyMenu studyMenu;
-
     private final StudyGroupMenu studyGroupMenu;
 
     private final StudentMenu studentMenu;
@@ -37,14 +35,12 @@ public class Menu {
                     "4. Go to Student menu",
                     "5. Go to Mentor menu",
                     "6. Go to Lesson menu",
-                    "7. Go to Course menu"
+                    "7. Go to Course menu",
+                    "8. Go to Promotion menu"
             );
             switch (scanInt()) {
                 case -1:
                     return;
-                case 1:
-                    studyMenu.start();
-                    break;
                 case 2:
                     studyGroupMenu.start();
                     break;
