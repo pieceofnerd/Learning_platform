@@ -9,6 +9,8 @@ import static com.sytoss.util.MenuUtils.scanInt;
 @RequiredArgsConstructor
 public class Menu {
 
+    private final StudyMenu studyMenu;
+
     private final StudyGroupMenu studyGroupMenu;
 
     private final StudentMenu studentMenu;
@@ -29,26 +31,28 @@ public class Menu {
             MenuUtils.printMenu(
                     "What do you want to see?",
                     "-1. Quit",
-                    "1. Go to Study menu",
-                    "2. Go to StudyGroup menu",
-                    "3. Go to UserAccount menu",
-                    "4. Go to Student menu",
-                    "5. Go to Mentor menu",
-                    "6. Go to Lesson menu",
-                    "7. Go to Course menu",
-                    "8. Go to Promotion menu"
+                    "1. Go to StudyGroup menu",
+                    "2. Go to UserAccount menu",
+                    "3. Go to Student menu",
+                    "4. Go to Mentor menu",
+                    "5. Go to Lesson menu",
+                    "6. Go to Course menu",
+                    "7. Go to Promotion menu"
             );
             switch (scanInt()) {
                 case -1:
                     return;
-                case 2:
+                case 1:
                     studyGroupMenu.start();
                     break;
-                case 3:
+                case 2:
                     userAccountMenu.start();
                     break;
-                case 4:
+                case 3:
                     studentMenu.start();
+                    break;
+                case 4:
+                    mentorMenu.start();
                     break;
                 case 5:
                     mentorMenu.start();
@@ -57,9 +61,6 @@ public class Menu {
                     lessonMenu.start();
                     break;
                 case 7:
-                    courseMenu.start();
-                    break;
-                case 8:
                     promotionMenu.start();
                     break;
             }
