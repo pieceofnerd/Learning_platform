@@ -50,6 +50,9 @@ public class PromotionMenu {
             case 1:
                 createPromotion();
                 break;
+            case 2:
+                updatePromotion();
+                break;
         }
     }
 
@@ -88,14 +91,11 @@ public class PromotionMenu {
         }
 
 
-        List<CourseDTO> courseDTOS = courseController.getAll();
-
         for (CourseDTO courseDTO : courseController.getAll()) {
             CourseMenu.printCourse(courseDTO);
         }
 
         List<Long> coursesId = new ArrayList<>();
-        boolean continueFlag = true;
         String input = MenuUtils.scanLine("Please, enter a course id in order to apply promotion separate values by coma: ");
         input = input.trim();
         String[] values = input.split("\\s+");
@@ -112,6 +112,10 @@ public class PromotionMenu {
         PromotionSaveDTO promotionSaveDTO = new PromotionSaveDTO(promotionName, percent, startDate, endDate, prices);
 
         promotionController.createPromotion(promotionSaveDTO);
+    }
+
+    private void updatePromotion(){
+
     }
 
 }

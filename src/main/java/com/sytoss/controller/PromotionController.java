@@ -1,6 +1,7 @@
 package com.sytoss.controller;
 
 import com.sytoss.exception.no_contet_exception.PromotionNoContentException;
+import com.sytoss.exception.no_such_exception.NoSuchPriceException;
 import com.sytoss.mapper.PromotionMapper;
 import com.sytoss.model.course.Promotion;
 import com.sytoss.service.PromotionService;
@@ -25,7 +26,7 @@ public class PromotionController {
         Promotion promotion = promotionMapper.toEntity(promotionSaveDTO);
         try {
            promotion= promotionService.createPromotion(promotion);
-        } catch (PromotionNoContentException e) {
+        } catch (PromotionNoContentException | NoSuchPriceException e) {
             e.printStackTrace();
         }
         return promotionMapper.toDTO(promotion);

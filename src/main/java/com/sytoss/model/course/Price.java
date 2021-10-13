@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -33,7 +34,8 @@ public class Price {
     @ManyToOne(optional = false)
     private Lookup priceType;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+
+    @ManyToOne()
     @JoinColumn(name = "promotion_id")
     private Promotion promotion;
 
