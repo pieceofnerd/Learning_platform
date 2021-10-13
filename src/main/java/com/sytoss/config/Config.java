@@ -11,6 +11,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -29,6 +30,7 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
         "com.sytoss.util"
 })
 @EnableTransactionManagement
+@EnableScheduling
 public class Config {
     @Bean
     public DataSource dataSource() {

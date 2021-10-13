@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -68,15 +69,17 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public List<Promotion> findPromotionsByFilter(FilterPromotionDTO filter) {
+        List<Promotion> promotions = new ArrayList<>();
         switch (filter.getFilter()) {
             case TIME_PERIOD:
-                return promotionRepository.findPromotionsByTimePeriod(filter.getStartTimePeriod(), filter.getEndTimePeriod());
-            case PROMOTION_STATE: {
+                promotions.addAll(promotionRepository.findPromotionsByTimePeriod(filter.getStartTimePeriod(), filter.getEndTimePeriod()));
+                break;
+            case PROMOTION_STATE:
                 Lookup lookup = lookupRepository.findOne(filter.getPromotionStateId());
-                return promotionRepository.findPromotionsByPromotionState(lookup);
-            }
+                promotions.addAll(promotionRepository.findPromotionsByPromotionState(lookup));
+            break;
         }
-        return null;
+        return promotions;
     }
 
 }
