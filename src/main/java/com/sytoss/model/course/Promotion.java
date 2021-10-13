@@ -32,11 +32,11 @@ public class Promotion {
     private Integer percent;
 
     @Column(name = "start_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm aa")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date startDate;
 
     @Column(name = "end_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm aa")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date endDate;
 
     @ManyToOne(optional = false)
