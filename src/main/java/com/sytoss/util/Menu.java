@@ -9,8 +9,6 @@ import static com.sytoss.util.MenuUtils.scanInt;
 @RequiredArgsConstructor
 public class Menu {
 
-    private final StudyMenu studyMenu;
-
     private final StudyGroupMenu studyGroupMenu;
 
     private final StudentMenu studentMenu;
