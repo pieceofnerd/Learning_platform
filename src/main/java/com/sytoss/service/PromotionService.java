@@ -12,7 +12,7 @@ public interface PromotionService {
 
     Promotion createPromotion(Promotion promotion) throws PromotionNoContentException, NoSuchPriceException;
 
-    void updatePromotion(Promotion promotion) throws NoSuchPromotionException;
+    Promotion updatePromotion(Promotion promotion) throws NoSuchPromotionException;
 
     List<Promotion> findPromotionsByFilter(FilterPromotionDTO filter);
 

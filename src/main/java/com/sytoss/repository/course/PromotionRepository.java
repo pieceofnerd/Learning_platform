@@ -16,4 +16,6 @@ public interface PromotionRepository extends JpaRepository<Promotion,Long> {
     @Query("select p from Promotion p where p.promotionState = ?1")
     List<Promotion> findPromotionsByPromotionState(Lookup promotionState);
 
+    List<Promotion> findAllByOrderByStartDateDesc();
+
 }

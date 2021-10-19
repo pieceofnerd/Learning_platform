@@ -14,8 +14,6 @@ public interface StudyRepository extends JpaRepository<Study,Long> {
 
     List<Study> findStudiesByDeletedIsFalseAndStudyGroup(StudyGroup studyGroup);
 
-
     Study findStudyByDeletedIsFalseAndStudentAndStudyGroup(UserAccount student, StudyGroup studyGroup);
-
 
 }

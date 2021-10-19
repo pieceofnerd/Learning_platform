@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -58,28 +60,31 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public void updatePromotion(Promotion promotion) throws NoSuchPromotionException {
+    public Promotion updatePromotion(Promotion promotion) throws NoSuchPromotionException {
         if (!promotionRepository.exists(promotion.getId())) {
             logger.error("Couldn't find promotion with id: {}", promotion.getId());
             throw new NoSuchPromotionException("No such promotion exists");
         }
-        promotionRepository.save(promotion);
+        promotion= promotionRepository.save(promotion);
         logger.info("Promotion {} was updated", promotion.getId());
+        return promotion;
     }
 
     @Override
     public List<Promotion> findPromotionsByFilter(FilterPromotionDTO filter) {
-        List<Promotion> promotions = new ArrayList<>();
         switch (filter.getFilter()) {
             case TIME_PERIOD:
-                promotions.addAll(promotionRepository.findPromotionsByTimePeriod(filter.getStartTimePeriod(), filter.getEndTimePeriod()));
-                break;
+                return promotionRepository.findPromotionsByTimePeriod(filter.getStartTimePeriod(), filter.getEndTimePeriod());
+
             case PROMOTION_STATE:
                 Lookup lookup = lookupRepository.findOne(filter.getPromotionStateId());
-                promotions.addAll(promotionRepository.findPromotionsByPromotionState(lookup));
-            break;
+                return promotionRepository.findPromotionsByPromotionState(lookup);
+
+            case NEWEST:
+                return promotionRepository.findAllByOrderByStartDateDesc();
+
         }
-        return promotions;
+        return Collections.emptyList();
     }
 
 }

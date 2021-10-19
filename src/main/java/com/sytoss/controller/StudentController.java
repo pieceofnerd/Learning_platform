@@ -27,12 +27,9 @@ import java.util.List;
 @Transactional
 public class StudentController {
     private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
-    private final UserAccountService userAccountService;
     private final StudentService studentService;
-    private final CommunicationMapper communicationMapper;
     private final PurchaseMapper purchaseMapper;
     private final StudyGroupMapper studyGroupMapper;
-    private final UserAccountMapper userAccountMapper;
     private final StudentMapper studentMapper;
     private final CourseMapper courseMapper;
     private final StudyMapper studyMapper;
