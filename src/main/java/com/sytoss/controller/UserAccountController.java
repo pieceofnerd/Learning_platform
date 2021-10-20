@@ -4,6 +4,9 @@ import com.sytoss.exception.*;
 import com.sytoss.exception.no_contet_exception.*;
 import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.mapper.*;
+import com.sytoss.mapper.communication.CommentMapper;
+import com.sytoss.mapper.communication.MessageMapper;
+import com.sytoss.mapper.education.UserAccountMapper;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.communication.Message;
@@ -40,7 +43,7 @@ public class UserAccountController {
     public void registerUserAccount(UserAccountSaveDTO userAccountSaveDTO) {
         final UserAccount userAccount = userAccountMapper.toEntity(userAccountSaveDTO);
         try {
-            userAccountService.registerUserAccount(userAccount);
+          UserAccount user =  userAccountService.registerUserAccount(userAccount);
         } catch (EmailAlreadyExistsException | UserAccountNoContentException e) {
             logger.error(e.getMessage());
         }
@@ -104,5 +107,9 @@ public class UserAccountController {
 
     public void forgetPassword(String email) {
         //TODO
+    }
+
+    public void showTags(){
+
     }
 }

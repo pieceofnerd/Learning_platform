@@ -19,7 +19,6 @@ import com.sytoss.repository.education.PurchaseRepository;
 import com.sytoss.repository.education.StudyRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.*;
-import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,15 +50,6 @@ public class StudentServiceImpl implements StudentService {
         this.courseService = courseService;
     }
 
-    @Override
-    public List<Course> findCoursesByStudentByFilter(UserAccount student, FilterUserAccountDTO filter) {
-        return null;
-    }
-
-    @Override
-    public List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup) {
-        return null;
-    }
 
     @Override
     public List<Study> findStudiesByStudent(Student student) throws NoSuchUserAccountException, UserAccountNoContentException {

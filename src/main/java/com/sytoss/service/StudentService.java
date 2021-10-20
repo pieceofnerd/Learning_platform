@@ -20,13 +20,6 @@ public interface StudentService {
 
     void rateCourse(Course course, Integer rateValue) throws NoSuchCourseException, CourseNoContentException, CourseNoContentException, NoSuchCourseException;
 
-
-    //TODO
-    List<Course> findCoursesByStudentByFilter(UserAccount student, FilterUserAccountDTO filter);
-
-    //TODO
-    List<UserAccount> findStudentsByStudyGroup(StudyGroup studyGroup);
-
     List<Study> findStudiesByStudent(Student student) throws NoSuchUserAccountException, UserAccountNoContentException;
 
     List<Purchase> findPurchaseByStudent(UserAccount student);

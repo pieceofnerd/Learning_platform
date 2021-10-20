@@ -1,6 +1,7 @@
-package com.sytoss.mapper;
+package com.sytoss.mapper.course;
 
 
+import com.sytoss.mapper.BaseMapper;
 import com.sytoss.model.course.Category;
 import com.sytoss.web.dto.CategoryDTO;
 import com.sytoss.web.dto.save.CategorySaveDTO;

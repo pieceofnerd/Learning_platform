@@ -2,8 +2,8 @@ package com.sytoss.util;
 
 import com.sytoss.controller.CourseController;
 import com.sytoss.controller.PromotionController;
-import com.sytoss.mapper.CourseMapper;
-import com.sytoss.mapper.PromotionMapper;
+import com.sytoss.mapper.course.CourseMapper;
+import com.sytoss.mapper.course.PromotionMapper;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.PromotionRepository;

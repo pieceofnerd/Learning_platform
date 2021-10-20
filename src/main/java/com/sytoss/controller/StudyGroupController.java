@@ -2,9 +2,9 @@ package com.sytoss.controller;
 
 import com.sytoss.exception.no_contet_exception.StudyGroupNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchStudyGroupException;
-import com.sytoss.mapper.CourseMapper;
-import com.sytoss.mapper.StudyGroupMapper;
-import com.sytoss.mapper.UserAccountMapper;
+import com.sytoss.mapper.course.CourseMapper;
+import com.sytoss.mapper.course.StudyGroupMapper;
+import com.sytoss.mapper.education.UserAccountMapper;
 import com.sytoss.model.course.StudyGroup;
 import com.sytoss.service.StudyGroupService;
 import com.sytoss.web.dto.StudyGroupDTO;

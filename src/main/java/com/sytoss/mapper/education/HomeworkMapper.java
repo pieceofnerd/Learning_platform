@@ -1,5 +1,6 @@
-package com.sytoss.mapper;
+package com.sytoss.mapper.education;
 
+import com.sytoss.mapper.BaseMapper;
 import com.sytoss.model.education.Homework;
 import com.sytoss.web.dto.HomeworkDTO;
 import org.springframework.stereotype.Component;

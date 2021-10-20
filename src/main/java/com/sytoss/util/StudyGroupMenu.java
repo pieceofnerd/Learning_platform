@@ -1,13 +1,12 @@
 package com.sytoss.util;
 
 import com.sytoss.controller.StudyGroupController;
-import com.sytoss.mapper.CourseMapper;
-import com.sytoss.mapper.StudyGroupMapper;
+import com.sytoss.mapper.course.CourseMapper;
+import com.sytoss.mapper.course.StudyGroupMapper;
 import com.sytoss.model.course.Course;
 import com.sytoss.repository.course.CourseRepository;
 import com.sytoss.repository.course.StudyGroupRepository;
 import com.sytoss.web.dto.StudyGroupDTO;
-import com.sytoss.web.dto.UserAccountDTO;
 import com.sytoss.web.dto.filter.Filter;
 import com.sytoss.web.dto.filter.FilterStudyGroupDTO;
 import com.sytoss.web.dto.save.StudyGroupSaveDTO;

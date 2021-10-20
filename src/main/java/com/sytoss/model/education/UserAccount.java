@@ -64,4 +64,9 @@ public class UserAccount {
     @Column(name = "updated_date")
     private Date updatedDate = new Date();
 
+    @Transient
+    public String getDiscriminatorValue() {
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+    }
+
 }

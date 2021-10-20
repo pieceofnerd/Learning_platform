@@ -11,7 +11,6 @@ import java.util.List;
 @Component
 public class MediaMapper extends BaseMapper<Media, MediaDTO> {
 
-
     public MediaMapper() {
         super(Media.class, MediaDTO.class);
     }

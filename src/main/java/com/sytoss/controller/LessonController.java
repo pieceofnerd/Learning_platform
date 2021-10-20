@@ -2,9 +2,9 @@ package com.sytoss.controller;
 
 import com.sytoss.exception.no_contet_exception.LessonNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchLessonException;
-import com.sytoss.mapper.CommunicationMapper;
-import com.sytoss.mapper.HomeTaskMapper;
-import com.sytoss.mapper.LessonMapper;
+import com.sytoss.mapper.communication.CommunicationMapper;
+import com.sytoss.mapper.course.HomeTaskMapper;
+import com.sytoss.mapper.course.LessonMapper;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.course.Lesson;
 import com.sytoss.service.LessonService;

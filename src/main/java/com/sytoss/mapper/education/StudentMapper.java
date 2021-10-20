@@ -1,4 +1,4 @@
-package com.sytoss.mapper;
+package com.sytoss.mapper.education;
 
 import com.sytoss.mapper.BaseMapper;
 import com.sytoss.model.course.Category;

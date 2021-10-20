@@ -1,12 +1,16 @@
 package com.sytoss.service.impl;
 
+import com.sytoss.config.Constant;
 import com.sytoss.exception.*;
 import com.sytoss.exception.no_contet_exception.*;
 import com.sytoss.exception.no_contet_exception.CommunicationNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
+import com.sytoss.model.LookupName;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.repository.LookupNameRepository;
+import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.MediaRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.service.CommunicationService;
@@ -34,12 +38,18 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private final MediaRepository mediaRepository;
 
+    private final LookupRepository lookupRepository;
+
+    private final LookupNameRepository lookupNameRepository;
 
     @Autowired
-    public UserAccountServiceImpl(UserAccountRepository userAccountRepository, CommunicationService communicationService, MediaRepository mediaRepository) {
+    public UserAccountServiceImpl(UserAccountRepository userAccountRepository, CommunicationService communicationService,
+                                  MediaRepository mediaRepository, LookupRepository lookupRepository, LookupNameRepository lookupNameRepository) {
         this.userAccountRepository = userAccountRepository;
         this.communicationService = communicationService;
         this.mediaRepository = mediaRepository;
+        this.lookupRepository = lookupRepository;
+        this.lookupNameRepository = lookupNameRepository;
     }
 
     @Override
@@ -50,7 +60,8 @@ public class UserAccountServiceImpl implements UserAccountService {
         }
 
         validateEmail(userAccount);
-        userAccountRepository.save(userAccount);
+        userAccount = userAccountRepository.save(userAccount);
+
     }
 
     private void validateEmail(UserAccount userAccount) throws EmailAlreadyExistsException {
@@ -190,6 +201,11 @@ public class UserAccountServiceImpl implements UserAccountService {
     private void checkUserAccountExistence(UserAccount userAccount) throws NoSuchUserAccountException {
         if (!userAccountRepository.exists(userAccount.getId())) {
             throw new NoSuchUserAccountException("Couldn't find user account with id: "+ userAccount.getId());
+        }
+    }
+
+    private void addPreferenceTags(UserAccount userAccount){
+        if(userAccount.getDiscriminatorValue().equals("3")){
         }
     }
 

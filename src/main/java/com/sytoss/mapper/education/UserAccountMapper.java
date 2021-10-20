@@ -1,5 +1,6 @@
-package com.sytoss.mapper;
+package com.sytoss.mapper.education;
 
+import com.sytoss.mapper.BaseMapper;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.web.dto.UserAccountDTO;
 import org.springframework.stereotype.Component;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserAccountMapper extends BaseMapper<UserAccount, UserAccountDTO>{
+public class UserAccountMapper extends BaseMapper<UserAccount, UserAccountDTO> {
 
     protected UserAccountMapper() {
         super(UserAccount.class,UserAccountDTO.class);

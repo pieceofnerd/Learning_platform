@@ -3,7 +3,7 @@ package com.sytoss.controller;
 import com.sytoss.exception.no_contet_exception.PromotionNoContentException;
 import com.sytoss.exception.no_such_exception.NoSuchPriceException;
 import com.sytoss.exception.no_such_exception.NoSuchPromotionException;
-import com.sytoss.mapper.PromotionMapper;
+import com.sytoss.mapper.course.PromotionMapper;
 import com.sytoss.model.course.Promotion;
 import com.sytoss.service.PromotionService;
 import com.sytoss.web.dto.PromotionDTO;

@@ -1,5 +1,7 @@
 package com.sytoss.mapper;
 
+import com.sytoss.model.education.Address;
+import com.sytoss.web.dto.AddressDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,12 +13,12 @@ import java.util.List;
 @Component
 public abstract class BaseMapper<E, D> implements Mapper<E, D> {
     @Autowired
-    private ModelMapper mapper;
+    protected ModelMapper mapper;
 
     private Class<E> entityClass;
     private Class<D> dtoClass;
 
-    BaseMapper(Class<E> entityClass, Class<D> dtoClass) {
+   public BaseMapper(Class<E> entityClass, Class<D> dtoClass) {
         this.entityClass = entityClass;
         this.dtoClass = dtoClass;
     }
@@ -24,6 +26,8 @@ public abstract class BaseMapper<E, D> implements Mapper<E, D> {
     protected BaseMapper(ModelMapper mapper) {
         this.mapper = mapper;
     }
+
+
 
     @Override
     public E toEntity(Object dto) {

@@ -2,6 +2,10 @@ package com.sytoss.util;
 
 import com.sytoss.controller.LessonController;
 import com.sytoss.mapper.*;
+import com.sytoss.mapper.course.LessonMapper;
+import com.sytoss.mapper.course.LessonTemplateMapper;
+import com.sytoss.mapper.course.StudyGroupMapper;
+import com.sytoss.mapper.education.UserAccountMapper;
 import com.sytoss.model.Media;
 import com.sytoss.repository.MediaRepository;
 import com.sytoss.repository.course.LessonRepository;

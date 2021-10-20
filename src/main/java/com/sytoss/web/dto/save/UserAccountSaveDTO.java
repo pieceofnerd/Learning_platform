@@ -1,11 +1,13 @@
 package com.sytoss.web.dto.save;
 
+import com.sytoss.web.dto.TagDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,5 +30,7 @@ public class UserAccountSaveDTO {
     private char[] password;
 
     private MediaSaveDTO photo;
+
+    private List<TagDTO> tags;
 
 }

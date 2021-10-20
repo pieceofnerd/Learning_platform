@@ -1,5 +1,6 @@
-package com.sytoss.mapper;
+package com.sytoss.mapper.communication;
 
+import com.sytoss.mapper.BaseMapper;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.web.dto.CommunicationDTO;
 import org.springframework.stereotype.Component;

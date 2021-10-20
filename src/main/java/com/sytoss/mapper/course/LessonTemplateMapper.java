@@ -1,5 +1,6 @@
-package com.sytoss.mapper;
+package com.sytoss.mapper.course;
 
+import com.sytoss.mapper.BaseMapper;
 import com.sytoss.model.course.LessonTemplate;
 import com.sytoss.web.dto.LessonTemplateDTO;
 import org.modelmapper.ModelMapper;

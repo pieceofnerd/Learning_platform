@@ -1,5 +1,6 @@
-package com.sytoss.mapper;
+package com.sytoss.mapper.communication;
 
+import com.sytoss.mapper.BaseMapper;
 import com.sytoss.model.communication.Message;
 import com.sytoss.web.dto.CommunicationDTO;
 import org.springframework.stereotype.Component;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class MessageMapper extends BaseMapper<Message, CommunicationDTO>{
+public class MessageMapper extends BaseMapper<Message, CommunicationDTO> {
     MessageMapper() {
         super(Message.class,CommunicationDTO.class);
     }

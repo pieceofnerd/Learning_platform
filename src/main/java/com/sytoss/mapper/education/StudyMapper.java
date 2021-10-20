@@ -1,5 +1,6 @@
-package com.sytoss.mapper;
+package com.sytoss.mapper.education;
 
+import com.sytoss.mapper.BaseMapper;
 import com.sytoss.model.education.Study;
 import com.sytoss.web.dto.StudyDTO;
 import org.modelmapper.ModelMapper;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class StudyMapper extends BaseMapper<Study,StudyDTO>{
+public class StudyMapper extends BaseMapper<Study,StudyDTO> {
 
 
     public StudyMapper() {

@@ -2,6 +2,10 @@ package com.sytoss.util;
 
 import com.sytoss.controller.CourseController;
 import com.sytoss.mapper.*;
+import com.sytoss.mapper.course.CategoryMapper;
+import com.sytoss.mapper.course.CourseMapper;
+import com.sytoss.mapper.course.TopicMapper;
+import com.sytoss.mapper.education.StudentMapper;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.Topic;
 import com.sytoss.model.enums.PriceType;

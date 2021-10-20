@@ -1,14 +1,15 @@
 package com.sytoss.util;
 
+import com.sytoss.config.Constant;
 import com.sytoss.controller.UserAccountController;
-import com.sytoss.mapper.AddressMapper;
+import com.sytoss.mapper.education.AddressMapper;
 import com.sytoss.mapper.MediaMapper;
-import com.sytoss.model.course.StudyGroup;
+import com.sytoss.model.Lookup;
 import com.sytoss.model.education.UserAccount;
-import com.sytoss.model.education.user.Student;
+import com.sytoss.repository.LookupNameRepository;
+import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.web.dto.AddressDTO;
-import com.sytoss.web.dto.StudyGroupDTO;
 import com.sytoss.web.dto.save.AddressSaveDTO;
 import com.sytoss.web.dto.save.MediaSaveDTO;
 import com.sytoss.web.dto.save.UserAccountSaveDTO;
@@ -17,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.sytoss.util.MenuUtils.*;
 
@@ -25,9 +28,17 @@ import static com.sytoss.util.MenuUtils.*;
 @RequiredArgsConstructor
 @Transactional
 public class UserAccountMenu {
+
     private final UserAccountController userAccountController;
+
     private final UserAccountRepository userAccountRepository;
+
+    private final LookupRepository lookupRepository;
+
+    private final LookupNameRepository lookupNameRepository;
+
     private final AddressMapper addressMapper;
+
     private final MediaMapper mediaMapper;
 
     public void start() throws Exception {
@@ -76,6 +87,22 @@ public class UserAccountMenu {
                 userAccountSaveDTO.setBirthday(birthday);
                 userAccountSaveDTO.setEmail(email);
                 userAccountSaveDTO.setPassword(password.toCharArray());
+
+              List<Lookup> tags = lookupRepository.findAllByLookupName(lookupNameRepository.findByName(Constant.TAG));
+                for (Lookup tag : tags) {
+                    MenuUtils.printField(tag.getId().toString()+" - ", tag.getValue());
+                }
+                List<Long> tagId = new ArrayList<>();
+                String input = MenuUtils.scanLine("Please, enter a tag id to add to your account separate values by coma: ");
+                input = input.trim();
+                String[] values = input.split("\\s+");
+                for (String value : values) {
+                    tagId.add(Long.valueOf(value));
+                }
+
+                for (Long id : tagId) {
+                    lookupRepository.findOne(id);
+                }
 
                 userAccountController.registerUserAccount(userAccountSaveDTO);
                 break;
