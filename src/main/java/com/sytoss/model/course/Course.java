@@ -1,6 +1,7 @@
 package com.sytoss.model.course;
 
 import com.sytoss.model.Media;
+import com.sytoss.model.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -75,6 +76,9 @@ public class Course {
             cascade = {CascadeType.ALL}
     )
     private List<CourseRating> courseRatings;
+
+    @OneToMany(mappedBy = "course")
+    private List<Tag> tags;
 
     @Column(name = "created_date")
     private Date createdDate = new Date();
