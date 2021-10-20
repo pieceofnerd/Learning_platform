@@ -1,6 +1,7 @@
 package com.sytoss.model.education.user;
 
 import com.sytoss.model.Lookup;
+import com.sytoss.model.Tag;
 import com.sytoss.model.education.Homework;
 import com.sytoss.model.education.Study;
 import com.sytoss.model.education.UserAccount;
@@ -31,4 +32,6 @@ public class Student extends UserAccount {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Homework> homeworks;
 
+    @OneToMany(mappedBy = "student")
+    private List<Tag> tags;
 }
