@@ -2,16 +2,22 @@ package com.sytoss.util;
 
 import com.sytoss.config.Constant;
 import com.sytoss.controller.UserAccountController;
+import com.sytoss.mapper.LookupMapper;
+import com.sytoss.mapper.TagMapper;
 import com.sytoss.mapper.education.AddressMapper;
 import com.sytoss.mapper.MediaMapper;
 import com.sytoss.model.Lookup;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.LookupNameRepository;
 import com.sytoss.repository.LookupRepository;
+import com.sytoss.repository.TagRepository;
 import com.sytoss.repository.education.UserAccountRepository;
 import com.sytoss.web.dto.AddressDTO;
+import com.sytoss.web.dto.LookupDTO;
+import com.sytoss.web.dto.TagDTO;
 import com.sytoss.web.dto.save.AddressSaveDTO;
 import com.sytoss.web.dto.save.MediaSaveDTO;
+import com.sytoss.web.dto.save.TagSaveDTO;
 import com.sytoss.web.dto.save.UserAccountSaveDTO;
 import com.sytoss.web.dto.update.UserAccountUpdateDTO;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +43,16 @@ public class UserAccountMenu {
 
     private final LookupNameRepository lookupNameRepository;
 
+    private final TagRepository tagRepository;
+
     private final AddressMapper addressMapper;
 
     private final MediaMapper mediaMapper;
+
+    private final TagMapper tagMapper;
+
+    private final LookupMapper lookupMapper;
+
 
     public void start() throws Exception {
         printMenu(
@@ -88,9 +101,9 @@ public class UserAccountMenu {
                 userAccountSaveDTO.setEmail(email);
                 userAccountSaveDTO.setPassword(password.toCharArray());
 
-              List<Lookup> tags = lookupRepository.findAllByLookupName(lookupNameRepository.findByName(Constant.TAG));
+                List<Lookup> tags = lookupRepository.findAllByLookupName(lookupNameRepository.findByName(Constant.TAG));
                 for (Lookup tag : tags) {
-                    MenuUtils.printField(tag.getId().toString()+" - ", tag.getValue());
+                    MenuUtils.printField(tag.getId().toString() + " - ", tag.getValue());
                 }
                 List<Long> tagId = new ArrayList<>();
                 String input = MenuUtils.scanLine("Please, enter a tag id to add to your account separate values by coma: ");
@@ -101,8 +114,11 @@ public class UserAccountMenu {
                 }
 
                 for (Long id : tagId) {
-                    lookupRepository.findOne(id);
+                    Lookup tag = lookupRepository.findOne(id);
+                 //   TagSaveDTO tagDTO = new TagSaveDTO(null,);
+
                 }
+
 
                 userAccountController.registerUserAccount(userAccountSaveDTO);
                 break;

@@ -43,7 +43,7 @@ public class UserAccountController {
     public void registerUserAccount(UserAccountSaveDTO userAccountSaveDTO) {
         final UserAccount userAccount = userAccountMapper.toEntity(userAccountSaveDTO);
         try {
-          UserAccount user =  userAccountService.registerUserAccount(userAccount);
+           userAccountService.registerUserAccount(userAccount);
         } catch (EmailAlreadyExistsException | UserAccountNoContentException e) {
             logger.error(e.getMessage());
         }
