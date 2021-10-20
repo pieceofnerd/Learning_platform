@@ -25,6 +25,7 @@ public class UserAccountDTO {
     private List<StudyDTO> studies;
     private List<HomeworkDTO> homeworks;
     private List<LessonDTO> lessons;
+    private List<TagDTO> tags;
     private boolean deleted;
     private Date lastActivity;
     private Date createdDate;

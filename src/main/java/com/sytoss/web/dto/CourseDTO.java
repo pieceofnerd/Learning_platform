@@ -35,4 +35,6 @@ public class CourseDTO {
 
     private List<PriceDTO> prices;
 
+    private List<TagDTO> tags;
+
 }
