@@ -1,11 +1,14 @@
 package com.sytoss.util;
 
+import com.sytoss.config.Constant;
 import com.sytoss.controller.CourseController;
 import com.sytoss.mapper.*;
 import com.sytoss.mapper.course.CategoryMapper;
 import com.sytoss.mapper.course.CourseMapper;
 import com.sytoss.mapper.course.TopicMapper;
 import com.sytoss.mapper.education.StudentMapper;
+import com.sytoss.model.Lookup;
+import com.sytoss.model.Tag;
 import com.sytoss.model.course.Course;
 import com.sytoss.model.course.Topic;
 import com.sytoss.model.enums.PriceType;
@@ -19,6 +22,7 @@ import com.sytoss.web.dto.filter.Filter;
 import com.sytoss.web.dto.filter.FilterCourseDTO;
 import com.sytoss.web.dto.save.*;
 import com.sytoss.web.dto.update.CourseUpdateDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +33,7 @@ import java.util.List;
 import static com.sytoss.util.MenuUtils.printField;
 
 @Component
+@RequiredArgsConstructor
 @Transactional
 public class CourseMenu {
 
@@ -54,23 +59,6 @@ public class CourseMenu {
 
     private final LookupMapper lookupMapper;
 
-    public CourseMenu(CourseController courseController, CategoryRepository categoryRepository,
-                      CourseService courseService, LookupRepository lookupRepository,
-                      UserAccountRepository userAccountRepository, StudentMapper studentMapper,
-                      CategoryMapper categoryMapper, CourseMapper courseMapper, TopicRepository topicRepository,
-                      TopicMapper topicMapper, LookupMapper lookupMapper) {
-        this.courseController = courseController;
-        this.categoryRepository = categoryRepository;
-        this.courseService = courseService;
-        this.lookupRepository = lookupRepository;
-        this.userAccountRepository = userAccountRepository;
-        this.studentMapper = studentMapper;
-        this.topicRepository = topicRepository;
-        this.categoryMapper = categoryMapper;
-        this.courseMapper = courseMapper;
-        this.lookupMapper = lookupMapper;
-        this.topicMapper = topicMapper;
-    }
 
     public void start() {
         menu();
@@ -99,7 +87,7 @@ public class CourseMenu {
                         MediaSaveDTO mediaSaveDTO = addMedia("Please, enter a path to content: ");
                         lessons.add(new LessonTemplateSaveDTO(lessonTemplateName, lessonTemplateDescription,
                                 mediaSaveDTO, duration));
-                        if (MenuUtils.scanInt("Do you want to add one more lesson template? \n" +
+                        if (MenuUtils.  scanInt("Do you want to add one more lesson template? \n" +
                                 "1. Yes\n" +
                                 "or press any key: ") != 1)
                             addLessonTemplate = false;
@@ -120,6 +108,30 @@ public class CourseMenu {
 
                 courseDTO.setTopics(topics);
                 courseDTO.setPrices(prices);
+
+                List<Lookup> tags = lookupRepository.findAllByLookupName(Constant.TAG);
+
+                for (Lookup tag : tags) {
+                    MenuUtils.printField(tag.getId().toString() + " - ", tag.getValue());
+                }
+                List<Long> tagIds = new ArrayList<>();
+                String input = MenuUtils.scanLine("Please, enter a tag id to add to course separate values by coma: ");
+                input = input.trim();
+                String[] values = input.split("\\s+");
+                for (String value : values) {
+                    tagIds.add(Long.valueOf(value));
+                }
+
+                List<Lookup> tagsToAdd = new ArrayList<>();
+                List<TagSaveDTO> tagSaveDTOS = new ArrayList<>();
+                for (Long id : tagIds) {
+                    Lookup tag = lookupRepository.findOne(id);
+                    TagSaveDTO tagSaveDTO = new TagSaveDTO();
+                    tagSaveDTO.setTag(lookupMapper.toDTO(tag));
+                    tagSaveDTOS.add(tagSaveDTO);
+                }
+
+                courseDTO.setTags(tagSaveDTOS);
                 courseController.createCourse(courseDTO);
                 break;
             }
@@ -255,7 +267,6 @@ public class CourseMenu {
             return courseMapper.toDTO(course);
         } else throw new Exception();
     }
-
 
     private static void menu() {
         MenuUtils.printMenu(

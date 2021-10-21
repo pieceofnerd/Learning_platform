@@ -1,6 +1,7 @@
 package com.sytoss.web.dto.save;
 
 import com.sytoss.web.dto.CategoryDTO;
+import com.sytoss.web.dto.TagDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,5 +30,7 @@ public class CourseSaveDTO {
     private List<TopicSaveDTO> topics;
 
     private List<PriceSaveDTO> prices;
+
+    private List<TagSaveDTO> tags;
 
 }

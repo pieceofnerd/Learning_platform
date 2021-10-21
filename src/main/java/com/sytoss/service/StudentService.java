@@ -22,13 +22,13 @@ public interface StudentService {
 
     List<Study> findStudiesByStudent(Student student) throws NoSuchUserAccountException, UserAccountNoContentException;
 
-    List<Purchase> findPurchaseByStudent(UserAccount student);
+    List<Purchase> findPurchaseByStudent(Student student);
 
     Purchase payCourse(Student student, StudyGroup studyGroup) throws CourseNotPaidException, UserAccountNoContentException, PurchaseNoContentException, StudyGroupNoContentException, NoSuchStudyGroupException, NoSuchUserAccountException, NoSuchStudyGroupException, NoSuchUserAccountException;
 
-    void returnCourse(UserAccount student, StudyGroup studyGroup) throws NoSuchStudyException, StudyNoContentException, StudyGroupNoContentException;
+    void returnCourse(Student student, StudyGroup studyGroup) throws NoSuchStudyException, StudyNoContentException, StudyGroupNoContentException;
 
-    void joinStudyGroup(UserAccount student, StudyGroup studyGroup) throws PurchaseNoContentException, CourseNotPaidException, UserAccountNoContentException, StudyGroupNoContentException, UserAccountNoContentException, StudyGroupNoContentException;
+    void joinStudyGroup(Student student, StudyGroup studyGroup) throws PurchaseNoContentException, CourseNotPaidException, UserAccountNoContentException, StudyGroupNoContentException, UserAccountNoContentException, StudyGroupNoContentException;
 
-    void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) throws NoSuchStudyException, StudyNoContentException, StudyGroupNoContentException, NoSuchStudyException, StudyNoContentException;
+    void leaveStudyGroup(Student student, StudyGroup studyGroup) throws NoSuchStudyException, StudyNoContentException, StudyGroupNoContentException, NoSuchStudyException, StudyNoContentException;
 }
