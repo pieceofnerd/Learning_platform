@@ -1,7 +1,4 @@
 package com.sytoss.mapper;
-
-import com.sytoss.model.education.Address;
-import com.sytoss.web.dto.AddressDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

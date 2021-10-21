@@ -33,7 +33,14 @@ public class Student extends UserAccount {
     private List<Homework> homeworks;
 
     @OneToMany(mappedBy = "student",
-            cascade = {CascadeType.PERSIST},
+            cascade = {CascadeType.ALL},
             fetch = FetchType.LAZY)
     private List<Tag> tags;
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+        for (Tag tag : tags) {
+            tag.setStudent(this);
+        }
+    }
 }

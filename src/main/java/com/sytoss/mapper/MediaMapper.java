@@ -2,8 +2,6 @@ package com.sytoss.mapper;
 
 import com.sytoss.model.Media;
 import com.sytoss.web.dto.MediaDTO;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

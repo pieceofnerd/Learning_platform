@@ -29,9 +29,13 @@ import java.util.List;
 public class CourseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
+
     private final CourseService courseService;
+
     private final CourseMapper courseMapper;
+
     private final TopicMapper topicMapper;
+
     private final LessonTemplateMapper lessonTemplateMapper;
 
     public void createCourse(CourseSaveDTO courseSaveDTO) {
@@ -61,7 +65,7 @@ public class CourseController {
         }
     }
 
-    public void removeTopic(TopicDTO topicDTO) throws NoSuchTopicException, TopicNoContentException {
+    public void removeTopic(TopicDTO topicDTO) throws NoSuchTopicException {
         final Topic topic = topicMapper.toEntity(topicDTO);
         try {
             courseService.removeTopic(topic);
@@ -80,7 +84,6 @@ public class CourseController {
     }
 
     public List<CourseDTO> getAll() {
-        List<Course> courses = courseService.getAll();
         return courseMapper.toListDTO(courseService.getAll());
     }
 

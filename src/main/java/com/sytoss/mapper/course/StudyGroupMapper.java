@@ -13,7 +13,6 @@ public class StudyGroupMapper extends BaseMapper<StudyGroup, StudyGroupDTO> {
         super(StudyGroup.class, StudyGroupDTO.class);
     }
 
-
     @Override
     public StudyGroup toEntity(Object dto) {
         return super.toEntity(dto);
