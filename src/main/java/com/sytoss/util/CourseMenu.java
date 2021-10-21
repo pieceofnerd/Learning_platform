@@ -82,7 +82,7 @@ public class CourseMenu {
                     boolean addLessonTemplate = true;
                     while (addLessonTemplate) {
                         String lessonTemplateName = MenuUtils.scanLine("Please, enter a lesson template name: ");
-                        String lessonTemplateDescription = MenuUtils.scanLine("Please, enter an topic description: ");
+                        String lessonTemplateDescription = MenuUtils.scanLine("Please, enter an lesson template  description: ");
                         int duration = MenuUtils.scanInt("Please, enter lesson duration in minutes: ");
                         MediaSaveDTO mediaSaveDTO = addMedia("Please, enter a path to content: ");
                         lessons.add(new LessonTemplateSaveDTO(lessonTemplateName, lessonTemplateDescription,
@@ -117,7 +117,7 @@ public class CourseMenu {
                 List<Long> tagIds = new ArrayList<>();
                 String input = MenuUtils.scanLine("Please, enter a tag id to add to course separate values by coma: ");
                 input = input.trim();
-                String[] values = input.split("\\s+");
+                String[] values = input.split(",\\s*");
                 for (String value : values) {
                     tagIds.add(Long.valueOf(value));
                 }
