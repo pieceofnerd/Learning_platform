@@ -9,14 +9,17 @@ import java.util.List;
 
 public interface LookupRepository extends JpaRepository<Lookup, Long> {
 
-    @Query("select l from Lookup l where l.lookupName.id = 8 and upper(l.value) like upper(concat(?1, '%'))")
-    List<Lookup> findLookupsByValueStartingWithIgnoreCase(String value);
+    @Query("select l from Lookup l where l.lookupName.name = ?2 and upper(l.value) like upper(concat(?1, '%'))")
+    List<Lookup> findLookupsByValueStartingWithIgnoreCase(String value, LookupName lookupName);
 
 
     // Is it a wrong decision?
 
 //    @Query("select l From Lookup l where l.lookupName.name='tag'")
 //    List<Lookup> findAllTags();
+
+    @Query("select l From Lookup l where l.lookupName.name =?1")
+    List<Lookup> findAllByLookupName(String lookupName);
 
     @Query("select l From Lookup l where l.lookupName =?1")
     List<Lookup> findAllByLookupName(LookupName lookupName);

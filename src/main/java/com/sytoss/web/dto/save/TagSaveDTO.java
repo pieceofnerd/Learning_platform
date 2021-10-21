@@ -13,11 +13,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TagSaveDTO {
-    private UserAccountDTO mentor;
-
-    private UserAccountDTO student;
-
-    private CourseDTO course;
+//    private UserAccountDTO mentor;
+//
+//    private UserAccountDTO student;
+//
+//    private CourseDTO course;
 
     private LookupDTO tag;
 }

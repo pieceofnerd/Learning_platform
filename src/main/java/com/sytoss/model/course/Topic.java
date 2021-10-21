@@ -24,7 +24,7 @@ public class Topic {
     private Course course;
 
     @Column(name = "active")
-    private Boolean active;
+    private Boolean active = true;
 
     @OneToMany(
             mappedBy = "topic",

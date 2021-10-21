@@ -77,7 +77,7 @@ public class Course {
     )
     private List<CourseRating> courseRatings;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
     private List<Tag> tags;
 
     @Column(name = "created_date")

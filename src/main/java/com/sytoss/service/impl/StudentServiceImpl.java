@@ -72,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Purchase> findPurchaseByStudent(UserAccount student) {
+    public List<Purchase> findPurchaseByStudent(Student student) {
         return purchaseService.findPurchasesByStudent((Student) student);
     }
 
@@ -84,7 +84,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void returnCourse(UserAccount student, StudyGroup studyGroup) throws StudyGroupNoContentException, NoSuchStudyException, StudyNoContentException {
+    public void returnCourse(Student student, StudyGroup studyGroup) throws StudyGroupNoContentException, NoSuchStudyException, StudyNoContentException {
         Purchase purchase = purchaseRepository.findByStudentAndStudyGroup(student, studyGroup);
 
         purchaseService.refundMoney(purchase);
@@ -92,7 +92,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void joinStudyGroup(UserAccount student, StudyGroup studyGroup) throws PurchaseNoContentException, CourseNotPaidException, UserAccountNoContentException, StudyGroupNoContentException {
+    public void joinStudyGroup(Student student, StudyGroup studyGroup) throws PurchaseNoContentException, CourseNotPaidException, UserAccountNoContentException, StudyGroupNoContentException {
         Purchase purchase = purchaseRepository.findByStudentAndStudyGroup(student, studyGroup);
 
         if (purchase == null)
@@ -107,7 +107,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void leaveStudyGroup(UserAccount student, StudyGroup studyGroup) throws NoSuchStudyException, StudyNoContentException, StudyGroupNoContentException {
+    public void leaveStudyGroup(Student student, StudyGroup studyGroup) throws NoSuchStudyException, StudyNoContentException, StudyGroupNoContentException {
 
         //when a student leaves the group, all studies of the student in this group are deleted.
         Study study = studyRepository.findStudyByDeletedIsFalseAndStudentAndStudyGroup(student, studyGroup);

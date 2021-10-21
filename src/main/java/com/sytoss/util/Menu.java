@@ -53,10 +53,10 @@ public class Menu {
                     mentorMenu.start();
                     break;
                 case 5:
-                    mentorMenu.start();
+                    lessonMenu.start();
                     break;
                 case 6:
-                    lessonMenu.start();
+                    courseMenu.start();
                     break;
                 case 7:
                     promotionMenu.start();
