@@ -15,8 +15,6 @@ import lombok.Setter;
 public class TagSaveDTO {
     private UserAccountDTO mentor;
 
-    private UserAccountDTO student;
-
     private CourseDTO course;
 
     private LookupDTO tag;

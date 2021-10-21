@@ -7,6 +7,7 @@ import com.sytoss.mapper.TagMapper;
 import com.sytoss.mapper.education.AddressMapper;
 import com.sytoss.mapper.MediaMapper;
 import com.sytoss.model.Lookup;
+import com.sytoss.model.LookupName;
 import com.sytoss.model.education.UserAccount;
 import com.sytoss.repository.LookupNameRepository;
 import com.sytoss.repository.LookupRepository;
@@ -53,7 +54,7 @@ public class UserAccountMenu {
 
     private final LookupMapper lookupMapper;
 
-
+    @Transactional
     public void start() throws Exception {
         printMenu(
                 "-1. Quit",
@@ -101,24 +102,24 @@ public class UserAccountMenu {
                 userAccountSaveDTO.setEmail(email);
                 userAccountSaveDTO.setPassword(password.toCharArray());
 
-                List<Lookup> tags = lookupRepository.findAllByLookupName(lookupNameRepository.findByName(Constant.TAG));
+                LookupName lookupName = lookupNameRepository.findByName(Constant.TAG);
+                List<Lookup> tags = lookupRepository.findAllByLookupName(lookupName);
                 for (Lookup tag : tags) {
                     MenuUtils.printField(tag.getId().toString() + " - ", tag.getValue());
                 }
                 List<Long> tagId = new ArrayList<>();
                 String input = MenuUtils.scanLine("Please, enter a tag id to add to your account separate values by coma: ");
                 input = input.trim();
-                String[] values = input.split("\\s+");
+                String[] values = input.split(",\\s*");
                 for (String value : values) {
                     tagId.add(Long.valueOf(value));
                 }
-
+                List<TagSaveDTO> tagSaveDTOS = new ArrayList<>();
                 for (Long id : tagId) {
                     Lookup tag = lookupRepository.findOne(id);
-                 //   TagSaveDTO tagDTO = new TagSaveDTO(null,);
-
+                    tagSaveDTOS.add(new TagSaveDTO(null, null, lookupMapper.toDTO(tag)));
                 }
-
+                userAccountSaveDTO.setTags(tagSaveDTOS);
 
                 userAccountController.registerUserAccount(userAccountSaveDTO);
                 break;

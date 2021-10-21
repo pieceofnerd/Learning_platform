@@ -3,6 +3,7 @@ package com.sytoss.model;
 
 import com.sytoss.model.course.Course;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.model.education.user.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +24,11 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
-    private UserAccount student;
+    private Student student;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "mentor_id")
     private UserAccount mentor;
 

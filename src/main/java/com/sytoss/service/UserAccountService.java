@@ -6,6 +6,7 @@ import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.model.education.user.Student;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface UserAccountService {
 
     List<UserAccount> findUsersByFilter(FilterUserAccountDTO filter);
 
-    void registerUserAccount(UserAccount userAccount) throws EmailAlreadyExistsException, UserAccountNoContentException;
+    void registerUserAccount(Student userAccount) throws EmailAlreadyExistsException, UserAccountNoContentException;
 
     void updateUserAccount(UserAccount userAccount) throws NoSuchUserAccountException, EmailAlreadyExistsException, UserAccountNoContentException;
 

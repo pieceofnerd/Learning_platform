@@ -6,11 +6,13 @@ import com.sytoss.exception.no_such_exception.NoSuchUserAccountException;
 import com.sytoss.mapper.*;
 import com.sytoss.mapper.communication.CommentMapper;
 import com.sytoss.mapper.communication.MessageMapper;
+import com.sytoss.mapper.education.StudentMapper;
 import com.sytoss.mapper.education.UserAccountMapper;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Comment;
 import com.sytoss.model.communication.Message;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.model.education.user.Student;
 import com.sytoss.service.UserAccountService;
 import com.sytoss.web.dto.filter.FilterUserAccountDTO;
 import com.sytoss.web.dto.save.CommunicationSaveDTO;
@@ -30,6 +32,7 @@ public class UserAccountController {
     private static final Logger logger = LoggerFactory.getLogger(UserAccountController.class);
     private final UserAccountService userAccountService;
     private final UserAccountMapper userAccountMapper;
+    private final StudentMapper studentMapper;
     private final MediaMapper mediaMapper;
     private final CommentMapper commentMapper;
     private final MessageMapper messageMapper;
@@ -41,7 +44,7 @@ public class UserAccountController {
     }
 
     public void registerUserAccount(UserAccountSaveDTO userAccountSaveDTO) {
-        final UserAccount userAccount = userAccountMapper.toEntity(userAccountSaveDTO);
+        final Student userAccount = studentMapper.toEntity(userAccountSaveDTO);
         try {
            userAccountService.registerUserAccount(userAccount);
         } catch (EmailAlreadyExistsException | UserAccountNoContentException e) {
