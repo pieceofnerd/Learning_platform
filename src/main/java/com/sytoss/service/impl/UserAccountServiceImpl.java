@@ -9,6 +9,8 @@ import com.sytoss.model.LookupName;
 import com.sytoss.model.Media;
 import com.sytoss.model.communication.Communication;
 import com.sytoss.model.education.UserAccount;
+import com.sytoss.model.education.user.Student;
+import com.sytoss.model.enums.StudentStatus;
 import com.sytoss.repository.LookupNameRepository;
 import com.sytoss.repository.LookupRepository;
 import com.sytoss.repository.MediaRepository;
@@ -30,7 +32,7 @@ import java.util.List;
 @Service
 @Transactional
 public class UserAccountServiceImpl implements UserAccountService {
-        private static final Logger logger = LoggerFactory.getLogger(UserAccountServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserAccountServiceImpl.class);
 
     private final CommunicationService communicationService;
 
@@ -53,14 +55,14 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public void registerUserAccount(UserAccount userAccount) throws EmailAlreadyExistsException, UserAccountNoContentException {
+    public void registerUserAccount(Student userAccount) throws EmailAlreadyExistsException, UserAccountNoContentException {
         if (userAccount == null) {
             logger.error("user account must be not null");
             throw new UserAccountNoContentException("User is null");
         }
-
+        userAccount.setStudentStatus(lookupRepository.findOne(StudentStatus.NEWBIE.getValue()));
         validateEmail(userAccount);
-        userAccount = userAccountRepository.save(userAccount);
+        userAccountRepository.save(userAccount);
 
     }
 
@@ -200,12 +202,12 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     private void checkUserAccountExistence(UserAccount userAccount) throws NoSuchUserAccountException {
         if (!userAccountRepository.exists(userAccount.getId())) {
-            throw new NoSuchUserAccountException("Couldn't find user account with id: "+ userAccount.getId());
+            throw new NoSuchUserAccountException("Couldn't find user account with id: " + userAccount.getId());
         }
     }
 
-    private void addPreferenceTags(UserAccount userAccount){
-        if(userAccount.getDiscriminatorValue().equals("3")){
+    private void addPreferenceTags(UserAccount userAccount) {
+        if (userAccount.getDiscriminatorValue().equals("3")) {
         }
     }
 

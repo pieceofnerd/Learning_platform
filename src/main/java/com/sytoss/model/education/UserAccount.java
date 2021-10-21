@@ -2,6 +2,7 @@ package com.sytoss.model.education;
 
 
 import com.sytoss.model.Media;
+import com.sytoss.model.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -63,6 +65,7 @@ public class UserAccount {
 
     @Column(name = "updated_date")
     private Date updatedDate = new Date();
+
 
     @Transient
     public String getDiscriminatorValue() {

@@ -31,6 +31,6 @@ public class UserAccountSaveDTO {
 
     private MediaSaveDTO photo;
 
-    private List<TagDTO> tags;
+    private List<TagSaveDTO> tags;
 
 }

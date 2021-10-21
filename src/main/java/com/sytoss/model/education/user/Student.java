@@ -32,6 +32,8 @@ public class Student extends UserAccount {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Homework> homeworks;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",
+            cascade = {CascadeType.PERSIST},
+            fetch = FetchType.LAZY)
     private List<Tag> tags;
 }

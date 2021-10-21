@@ -2,9 +2,10 @@ package com.sytoss.mapper;
 
 import com.sytoss.model.Tag;
 import com.sytoss.web.dto.TagDTO;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public class TagMapper extends BaseMapper<Tag, TagDTO> {
 
     public TagMapper() {
