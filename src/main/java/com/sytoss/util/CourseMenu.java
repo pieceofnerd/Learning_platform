@@ -87,7 +87,7 @@ public class CourseMenu {
                         MediaSaveDTO mediaSaveDTO = addMedia("Please, enter a path to content: ");
                         lessons.add(new LessonTemplateSaveDTO(lessonTemplateName, lessonTemplateDescription,
                                 mediaSaveDTO, duration));
-                        if (MenuUtils.  scanInt("Do you want to add one more lesson template? \n" +
+                        if (MenuUtils.scanInt("Do you want to add one more lesson template? \n" +
                                 "1. Yes\n" +
                                 "or press any key: ") != 1)
                             addLessonTemplate = false;
@@ -122,13 +122,10 @@ public class CourseMenu {
                     tagIds.add(Long.valueOf(value));
                 }
 
-                List<Lookup> tagsToAdd = new ArrayList<>();
                 List<TagSaveDTO> tagSaveDTOS = new ArrayList<>();
                 for (Long id : tagIds) {
                     Lookup tag = lookupRepository.findOne(id);
-                    TagSaveDTO tagSaveDTO = new TagSaveDTO();
-                    tagSaveDTO.setTag(lookupMapper.toDTO(tag));
-                    tagSaveDTOS.add(tagSaveDTO);
+                    tagSaveDTOS.add(new TagSaveDTO(lookupMapper.toDTO(tag)));
                 }
 
                 courseDTO.setTags(tagSaveDTOS);

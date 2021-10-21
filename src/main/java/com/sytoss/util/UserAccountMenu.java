@@ -117,7 +117,7 @@ public class UserAccountMenu {
                 List<TagSaveDTO> tagSaveDTOS = new ArrayList<>();
                 for (Long id : tagId) {
                     Lookup tag = lookupRepository.findOne(id);
-                    tagSaveDTOS.add(new TagSaveDTO(null, null, lookupMapper.toDTO(tag)));
+                    tagSaveDTOS.add(new TagSaveDTO(lookupMapper.toDTO(tag)));
                 }
                 userAccountSaveDTO.setTags(tagSaveDTOS);
 
