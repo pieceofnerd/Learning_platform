@@ -32,7 +32,7 @@ public class Tag {
     @JoinColumn(name = "mentor_id")
     private Mentor mentor;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 

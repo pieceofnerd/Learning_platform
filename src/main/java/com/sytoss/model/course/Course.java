@@ -77,7 +77,10 @@ public class Course {
     )
     private List<CourseRating> courseRatings;
 
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "course",
+            cascade = CascadeType.ALL
+    )
     private List<Tag> tags;
 
     @Column(name = "created_date")
@@ -85,6 +88,13 @@ public class Course {
 
     @Column(name = "updated_date")
     private Date updatedDate = new Date();
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+        for (Tag tag : this.tags) {
+            tag.setCourse(this);
+        }
+    }
 
     public void setPrices(List<Price> prices) {
         this.prices = prices;
